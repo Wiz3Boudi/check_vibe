@@ -2,12 +2,15 @@ import styled from 'styled-components';
 import { ArrowRight } from 'lucide-react';
 import SlideShow from '../componants/SlideShow';
 import { Link } from 'react-router';
+import Logo from '../componants/Logo';
+
 
 export default function Onboarding(){
     return(
         <Container>
             <ContentContainer>
                 <Header>
+                    <Logo/>
                     <h1>VibeCheck</h1>
                 </Header>
                 <MobileSlideShowContainer>
@@ -68,8 +71,10 @@ const ContentContainer = styled(Container)`
  `;
 
 const Header = styled.div`
-   h1{
+    display:flex;
+    align-items:center;
     margin-top: 2rem;
+   h1{
     color: #5516be;
     font-size: 48px;
     line-height: 56px;
