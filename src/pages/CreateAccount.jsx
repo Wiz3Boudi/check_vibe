@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components"
 import Logo from '../componants/Logo';
-import { FaFacebook, FaGoogle } from "react-icons/fa";
 import Input from "../componants/Input";
 import Button from "../componants/Button";
 import { Link } from "react-router";
-import google from '/images/google.png'
+import google from '/images/google.png';
+import { FaFacebook } from "react-icons/fa6";
 
 export default function CreateAccount(){
 
@@ -14,32 +14,42 @@ export default function CreateAccount(){
         password:''
     })
 
-    console.log(formValues)
-
     function formHandelChange(e){
         const id = e.target.id;
         const value = e.target.value
         setFormValues((prev)=> {
             return {...prev, [id]:value}
         })
-        console.log(value, id)
+    }
+
+    function formSubmitHandeler(e){
+        e.preventDefault();
+        console.log('Hello from form submit handeler')
     }
 
     return(
         <Container>
             <Header>
-                <Logo/>
+                <Logo width='80px' height='80px' />
                  <h1>VibeCheck</h1>
                  <p>Sign in to sync your vibe.</p>
             </Header>
             <ContinueWith>
-                <button aria-label="continue with google "> <FaGoogle/> Continue with Google </button>
-                <button aria-label="continue with facebook "> <FaFacebook/> Continue with Facebook</button>
+                <button 
+                    aria-label="continue with google ">
+                    <img src={google}/>
+                    Continue with Google 
+                </button>
+                <button 
+                    aria-label="continue with facebook "> 
+                    <FaFacebook size={25}/>
+                    Continue with Facebook
+                </button>
             </ContinueWith>
             <Pragraph>
                 Or
             </Pragraph>
-            <Form>
+            <Form onSubmit={formSubmitHandeler}>
                 <Input
                     inputType='text'
                     htmlFor='email'
@@ -88,6 +98,28 @@ const Header = styled(Container)`
 const ContinueWith = styled.div`
     display:flex;
     flex-direction:column;
+    gap:10px;
+    width:80%;
+    button{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:5px;
+        padding:0.9rem 0;
+        border-radius: 20px; 
+        font-size:1.1rem;
+        cursor:pointer;
+    }
+    button:first-child img{
+        width:50px;
+    }
+    button:last-child{
+         background-color: #1e60f0;
+         color:white;
+    }
+    button:last-child svg{
+        margin-bottom:2px;
+    }
 `;
 const Form = styled.form`
     display:flex;
