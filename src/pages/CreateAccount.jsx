@@ -1,11 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components"
 import Logo from '../componants/Logo';
-import Input from "../componants/Input";
 import Button from "../componants/Button";
 import { Link } from "react-router";
 import google from '/images/google.png';
 import { FaFacebook } from "react-icons/fa6";
+import { LockIcon, EyeClosed, Eye } from "lucide-react";
+import { MdEmail } from "react-icons/md";
 
 export default function CreateAccount(){
 
@@ -13,6 +14,9 @@ export default function CreateAccount(){
         email:'',
         password:''
     })
+
+    const [showPassword, setShowPassword] = useState(false);
+
 
     function formHandelChange(e){
         const id = e.target.id;
@@ -50,24 +54,43 @@ export default function CreateAccount(){
                 Or
             </Pragraph>
             <Form onSubmit={formSubmitHandeler}>
-                <Input
-                    inputType='text'
-                    htmlFor='email'
-                    labelTitle='Eamil'
-                    placeholder="hello@vibecheck.com"
-                    name='email'
-                    onClick={formHandelChange}
-                    value={formValues.email}
+                <label htmlFor="email">Email</label>
+                <EmailInputContainer>
+                    <input 
+                        type="text"
+                        placeholder="hello@checkvibe.com"
+                        id="email"
+                        value={formValues.email}
+                        onChange={formHandelChange}
                 />
-                  <Input
-                    inputType='password'
-                    htmlFor='password'
-                    labelTitle='Password'
-                    placeholder="........"
-                    name='password'
-                    onClick={formHandelChange}
-                    value={formValues.password}
+                    <EamilIconContainer>
+                        <MdEmail size={22}/>
+                    </EamilIconContainer>
+                </EmailInputContainer>
+
+                <label htmlFor="password">Password</label>
+                 <PasswordInputContainer>
+                    <input 
+                        type={showPassword? 'text' :'password'}
+                        placeholder=". . . . . . ."
+                        id="password"
+                        value={formValues.password}
+                        onChange={formHandelChange}
                 />
+                <LockIconContainer>
+                    <LockIcon size={20}/>
+                </LockIconContainer>
+                {showPassword? (
+                    <EyeCloseIconContainer onClick={()=> setShowPassword(prev => !prev)}>
+                        <EyeClosed size={20}/>
+                    </EyeCloseIconContainer>
+                ):(
+                    <EyeIconContainer onClick={()=> setShowPassword(prev => !prev)}>
+                        <Eye size={20}/>
+                    </EyeIconContainer>
+                )}
+                </PasswordInputContainer>
+                
                 <p>Forget Password</p>
                 <Button
                 text='Sign Up'
@@ -85,6 +108,7 @@ const Container = styled.div`
     flex-direction:column;
     align-items:center;
     gap:1rem;
+    padding:1rem;
 `;
 const Header = styled(Container)`
         h1{
@@ -119,11 +143,100 @@ const ContinueWith = styled.div`
     }
     button:last-child svg{
         margin-bottom:2px;
-    }
+    }v--secondary
 `;
 const Form = styled.form`
     display:flex;
     flex-direction:column;
-    gap:1rem;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    width:90%;
+    label{
+        align-self:start;
+    }
 `;
 const Pragraph = styled.p``;
+
+const EmailInputContainer = styled.div`
+    width:100%;
+    position:relative;
+    input{
+        width:100%;
+        height: 40px;
+        font-size:1.2rem;
+        border:1px solid var(--secondary);
+        background-color: var(--surface-dim);
+        padding-left: 36px;
+        padding-right:20px;
+        box-sizing: border-box;
+        &:focus{
+            outline-color: var(--on-primary-fixed-variant);
+        }
+    }
+`;
+const PasswordInputContainer = styled.div`
+    width:100%;
+    position:relative;
+    input{
+        width:100%;
+        height: 40px;
+        font-size:1.2rem;
+        border:1px solid var(--secondary);
+        background-color: var(--secondary-fixed);
+        padding-left: 36px;
+        padding-right:36px;
+        box-sizing: border-box;
+        &:focus{
+            outline-color: var(--on-primary-fixed-variant); 
+        }
+    }
+`;
+
+const EyeIconContainer = styled.button`
+    position: absolute;
+    right:5px;
+    top:7px;
+    background:none;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:fit-content;
+
+`;
+const EyeCloseIconContainer = styled.button`
+    position: absolute;
+    right:5px;
+    top:7px;
+    background:none;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:fit-content;
+
+`;
+const EamilIconContainer = styled.button`
+    position: absolute;
+    left:5px;
+    top:7px;
+    background:none;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:fit-content;
+`
+const LockIconContainer = styled.button`
+    position: absolute;
+    left:5px;
+    top:7px;
+    background:none;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:fit-content;
+`
+;
