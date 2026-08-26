@@ -11,6 +11,7 @@ import { MdEmail } from "react-icons/md";
 export default function CreateAccount(){
 
     const [formValues, setFormValues] = useState({
+        username:'',
         email:'',
         password:''
     })
@@ -33,10 +34,11 @@ export default function CreateAccount(){
 
     return(
         <Container>
+            <Content>
             <Header>
                 <Logo width='80px' height='80px' />
                  <h1>VibeCheck</h1>
-                 <p>Sign in to sync your vibe.</p>
+                 <p>Create Account to sync your vibe.</p>
             </Header>
             <ContinueWith>
                 <button 
@@ -54,15 +56,24 @@ export default function CreateAccount(){
                 Or
             </Pragraph>
             <Form onSubmit={formSubmitHandeler}>
+                <label htmlFor="username">Username</label>
+                    <input 
+                        type="text"
+                        placeholder="Enter username"
+                        id="username"
+                        value={formValues.username}
+                        onChange={formHandelChange}
+                    />
                 <label htmlFor="email">Email</label>
                 <EmailInputContainer>
                     <input 
-                        type="text"
+                        type="email"
                         placeholder="hello@checkvibe.com"
                         id="email"
                         value={formValues.email}
                         onChange={formHandelChange}
-                />
+                        className="usenameInput"
+                    />
                     <EamilIconContainer>
                         <MdEmail size={22}/>
                     </EamilIconContainer>
@@ -76,7 +87,7 @@ export default function CreateAccount(){
                         id="password"
                         value={formValues.password}
                         onChange={formHandelChange}
-                />
+                    />
                 <LockIconContainer>
                     <LockIcon size={20}/>
                 </LockIconContainer>
@@ -99,18 +110,23 @@ export default function CreateAccount(){
                 />
                 <p>Do have an Account? <Link to='/login'> Login </Link> </p>
             </Form>
+            </Content>
         </Container>
     )
 }
-
-const Container = styled.div`
+const Container = styled.div``
+const Content = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;
     gap:1rem;
     padding:1rem;
+    background-color:var(--background);
+    margin:1rem;
+    border-radius:20px;
+    padding-bottom:2rem;
 `;
-const Header = styled(Container)`
+const Header = styled(Content)`
         h1{
         color: #5516be;
         font-size: 48px;
@@ -123,7 +139,7 @@ const ContinueWith = styled.div`
     display:flex;
     flex-direction:column;
     gap:10px;
-    width:80%;
+    width:90%;
     button{
         display:flex;
         justify-content:center;
@@ -143,7 +159,7 @@ const ContinueWith = styled.div`
     }
     button:last-child svg{
         margin-bottom:2px;
-    }v--secondary
+    }
 `;
 const Form = styled.form`
     display:flex;
@@ -155,18 +171,12 @@ const Form = styled.form`
     label{
         align-self:start;
     }
-`;
-const Pragraph = styled.p``;
-
-const EmailInputContainer = styled.div`
-    width:100%;
-    position:relative;
     input{
         width:100%;
         height: 40px;
         font-size:1.2rem;
-        border:1px solid var(--secondary);
-        background-color: var(--surface-dim);
+        border:1px solid var(--border-subtle);
+        background-color: var(--secondary-fixed);
         padding-left: 36px;
         padding-right:20px;
         box-sizing: border-box;
@@ -174,24 +184,17 @@ const EmailInputContainer = styled.div`
             outline-color: var(--on-primary-fixed-variant);
         }
     }
-`;
-const PasswordInputContainer = styled.div`
-    width:100%;
-    position:relative;
-    input{
-        width:100%;
-        height: 40px;
-        font-size:1.2rem;
-        border:1px solid var(--secondary);
-        background-color: var(--secondary-fixed);
-        padding-left: 36px;
-        padding-right:36px;
-        box-sizing: border-box;
-        &:focus{
-            outline-color: var(--on-primary-fixed-variant); 
-        }
+    input:last-child{
+    background-color:red;   
     }
 `;
+const Pragraph = styled.p``;
+
+const EmailInputContainer = styled.div`
+    width:100%;
+    position:relative;
+`;
+const PasswordInputContainer = styled(EmailInputContainer)``;
 
 const EyeIconContainer = styled.button`
     position: absolute;
