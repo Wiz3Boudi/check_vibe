@@ -6,7 +6,7 @@ export default function Button({color, backgroundColor, text}){
             $color={color}
             $backgroundColor={backgroundColor}
         >
-            {text || 'Submit'}
+            {text || 'Send'}
         </CustomButton>
     )
 }
