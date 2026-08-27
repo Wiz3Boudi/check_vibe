@@ -12,8 +12,8 @@ function App(style){
       <Routes>
         <Route path='/' element={<Onboarding/>}/>
           <Route path='/home' element={<Home/>}/>
-          <Route path='login' element={<Login/>}/>
-          <Route path='/sign-up' element={<CreateAccount/>} />
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/create-account' element={<CreateAccount/>}/>
     </Routes>
     </div>
   )

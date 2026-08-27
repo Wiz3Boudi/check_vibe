@@ -20,7 +20,7 @@ export default function Onboarding(){
                     <Content>
                         <h2>Find Your Tribe</h2>
                         <p>Connect with creatives, share your vibe, and explore a world of inspiration in an airy, sophisticated space.</p>
-                        <Link to='/sign-up'>
+                        <Link to='/create-account'>
                             <button aria-label='get started'> Get Started <ArrowRight/></button>
                         </Link>
                         <Link to='/login'>

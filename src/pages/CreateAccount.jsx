@@ -1,12 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components"
 import Logo from '../componants/Logo';
-import Button from "../componants/Button";
 import { Link } from "react-router";
 import google from '/images/google.png';
 import { FaFacebook } from "react-icons/fa6";
-import { LockIcon, EyeClosed, Eye } from "lucide-react";
-import { MdEmail } from "react-icons/md";
+import {Mail, LockIcon, EyeOff, Eye } from "lucide-react";
 
 export default function CreateAccount(){
 
@@ -29,18 +27,24 @@ export default function CreateAccount(){
 
     function formSubmitHandeler(e){
         e.preventDefault();
-        console.log('Hello from form submit handeler')
+
+        if(!formValues.username.trim()) return;
+        if(!formValues.email.trim()) return;
+        if(!formValues.password.trim()) return;
+
+        console.log('create account function ')
     }
 
     return(
         <Container>
             <Content>
-            <Header>
+            <Header className="header">
                 <Logo width='80px' height='80px' />
                  <h1>VibeCheck</h1>
                  <p>Create Account to sync your vibe.</p>
             </Header>
-            <ContinueWith>
+            <p className="chosse">Chosse the method you prefer</p>
+            <ContinueWith className="social">
                 <button 
                     aria-label="continue with google ">
                     <img src={google}/>
@@ -52,17 +56,18 @@ export default function CreateAccount(){
                     Continue with Facebook
                 </button>
             </ContinueWith>
-            <Pragraph>
+            <Pragraph className="or">
                 Or
             </Pragraph>
-            <Form onSubmit={formSubmitHandeler}>
+            <Form onSubmit={formSubmitHandeler} className="form">
                 <label htmlFor="username">Username</label>
                     <input 
                         type="text"
-                        placeholder="Enter username"
+                        placeholder="OfficialUsername.example"
                         id="username"
                         value={formValues.username}
                         onChange={formHandelChange}
+                        className='username'
                     />
                 <label htmlFor="email">Email</label>
                 <EmailInputContainer>
@@ -75,7 +80,7 @@ export default function CreateAccount(){
                         className="usenameInput"
                     />
                     <EamilIconContainer>
-                        <MdEmail size={22}/>
+                        <Mail size={22}/>
                     </EamilIconContainer>
                 </EmailInputContainer>
 
@@ -83,7 +88,7 @@ export default function CreateAccount(){
                  <PasswordInputContainer>
                     <input 
                         type={showPassword? 'text' :'password'}
-                        placeholder=". . . . . . ."
+                        placeholder="••••••••"
                         id="password"
                         value={formValues.password}
                         onChange={formHandelChange}
@@ -93,7 +98,7 @@ export default function CreateAccount(){
                 </LockIconContainer>
                 {showPassword? (
                     <EyeCloseIconContainer onClick={()=> setShowPassword(prev => !prev)}>
-                        <EyeClosed size={20}/>
+                        <EyeOff size={20}/>
                     </EyeCloseIconContainer>
                 ):(
                     <EyeIconContainer onClick={()=> setShowPassword(prev => !prev)}>
@@ -102,19 +107,15 @@ export default function CreateAccount(){
                 )}
                 </PasswordInputContainer>
                 
-                <p>Forget Password</p>
-                <Button
-                text='Sign Up'
-                backgroundColor='#6d3bd7'
-                color='white'
-                />
+                <Link to='/forget-password' className="gorgetPassword">Forget Password</Link>
+                <button type="submit" className="submit"> Register </button>
                 <p>Do have an Account? <Link to='/login'> Login </Link> </p>
             </Form>
             </Content>
         </Container>
     )
 }
-const Container = styled.div``
+const Container = styled.div``;
 const Content = styled.div`
     display:flex;
     flex-direction:column;
@@ -125,6 +126,50 @@ const Content = styled.div`
     margin:1rem;
     border-radius:20px;
     padding-bottom:2rem;
+    a{
+        color:var(--on-primary-fixed-variant);
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+    .chosse{
+        display:none;
+    }
+    @media(min-width: 768px){
+        .chosse{
+            display:block;
+        }
+        display:grid;
+            grid-template-columns:1fr 1fr;
+            grid-template-rows: auto;
+            grid-template-areas:
+                "header chosse"
+                "header social"
+                "header or"
+                "header form";
+        }
+        .header {
+            grid-area: header;
+            display: flex;
+            flex-direction: column;
+        }
+        .social {
+            grid-area: social;
+        }
+        .or {
+            grid-area: or;
+            text-align:center;
+       }
+       .form {
+            grid-area: form;
+        }
+        .chosse{
+            gird-area: chosse;
+            margin-top:20px;
+            text-align:center;
+        }
+        padding:0;
+        gap:10px;
 `;
 const Header = styled(Content)`
         h1{
@@ -149,6 +194,7 @@ const ContinueWith = styled.div`
         border-radius: 20px; 
         font-size:1.1rem;
         cursor:pointer;
+        border:2px solid var(--input-border-color);
     }
     button:first-child img{
         width:50px;
@@ -156,6 +202,7 @@ const ContinueWith = styled.div`
     button:last-child{
          background-color: #1e60f0;
          color:white;
+         border:none;
     }
     button:last-child svg{
         margin-bottom:2px;
@@ -173,73 +220,62 @@ const Form = styled.form`
     }
     input{
         width:100%;
-        height: 40px;
+        height: 50px;
         font-size:1.2rem;
-        border:1px solid var(--border-subtle);
-        background-color: var(--secondary-fixed);
+        border:2px solid var(--input-border-color);
+        background-color: var(--input-background);
+        outline:none;
         padding-left: 36px;
         padding-right:20px;
         box-sizing: border-box;
+        color: var(--text-secondary-color);
         &:focus{
-            outline-color: var(--on-primary-fixed-variant);
+            border-color: var(--primary);
         }
     }
-    input:last-child{
-    background-color:red;   
+    .username{
+        padding: 0 10px;
+    }
+    button{
+        position: absolute;
+        top:12px;
+        background:none;
+        border:none;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        width:fit-content;
+    }
+    .submit{
+        position:static;
+        height: 50px;
+        font-size:1.1rem;
+        font-weight:700;
+        border-radius:20px;
+        background-color:#6d3bd7;
+        color:white;
+        width:100%;
+    }
+    .gorgetPassword{
+        display:flex;
+        text-align:right;
     }
 `;
 const Pragraph = styled.p``;
-
 const EmailInputContainer = styled.div`
     width:100%;
     position:relative;
 `;
 const PasswordInputContainer = styled(EmailInputContainer)``;
-
 const EyeIconContainer = styled.button`
-    position: absolute;
-    right:5px;
-    top:7px;
-    background:none;
-    border:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:fit-content;
-
+    right:10px;
 `;
 const EyeCloseIconContainer = styled.button`
-    position: absolute;
-    right:5px;
-    top:7px;
-    background:none;
-    border:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:fit-content;
-
+    right:10px;
 `;
 const EamilIconContainer = styled.button`
-    position: absolute;
-    left:5px;
-    top:7px;
-    background:none;
-    border:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:fit-content;
+    left:10px;
 `
 const LockIconContainer = styled.button`
-    position: absolute;
-    left:5px;
-    top:7px;
-    background:none;
-    border:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:fit-content;
-`
-;
+    left:10px;
+`;

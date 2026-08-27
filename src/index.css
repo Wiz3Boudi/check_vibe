@@ -1,5 +1,11 @@
 :root {
   /* Colors */
+  --input-border-color:#E2E8F0;
+  --input-background: #F8FAFC;
+  --primary: #6b38d4;
+  --text-secondary-color:#494454;
+
+
   --surface: #f9f9f9;
   --surface-dim: #dadada;
   --surface-bright: #f9f9f9;
@@ -15,7 +21,6 @@
   --outline: #f3f2f5;
   --outline-variant: #cbc3d7;
   --surface-tint: #6d3bd7;
-  --primary: #6b38d4;
   --on-primary: #ffffff;
   --primary-container: #8455ef;
   --on-primary-container: #fffbff;
