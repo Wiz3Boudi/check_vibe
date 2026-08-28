@@ -129,13 +129,18 @@
   padding:0;
 }
 body{
-  font-family: 'Roboto'
+  font-family: 'Roboto';
+  color: var(--on-surface-variant);
+
 }
 button{
   border:none;
 }
 a{
   text-decoration:none;
+}
+li{
+  list-style: none;
 }
 
 
