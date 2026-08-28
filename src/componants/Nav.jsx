@@ -58,16 +58,19 @@ const List = styled.ul`
     justify-content: space-between;
     padding: 0 1rem;
     span{
-        display:none
+        display:none;
     }
-    li button{
+    button{
         background:none;
         cursor:pointer;
+        display:flex;
+        justify-content:center;
+        align-items:center;
     }
     svg{
        color: var(--inverse-surface);
     }
-    @midea(min-width:768px){
+    @media(min-width: 768px){
         span{
         display:block;
         }
