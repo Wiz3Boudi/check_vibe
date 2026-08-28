@@ -14,5 +14,5 @@ export default function MainLayout(){
 }
 
 const Conntianer = styled.div`
-    padding:4rem 10px;
+    padding:4rem 0;
 `;
