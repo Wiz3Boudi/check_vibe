@@ -99,7 +99,7 @@ const Content = styled.div`
         max-width: 80%;
         font-size: 1.1rem;
         word-spacing: 2px;
-        color: var(--secondary,#2f3131);
+        color: #595c5c;
         @media(min-width:768px){
             max-width:50%;
         }

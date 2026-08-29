@@ -1,25 +1,39 @@
 import styled from "styled-components"
 import { initialStories as StoriesDate, initialPosts as postsData } from "../data/feeds";
 import { Heart, MessageCircle, Send, Bookmark } from 'lucide-react';
-import { useState } from "react";
+import { useReducer, useState } from "react";
+import { updatePostsReducer } from "../reducer/feeds";
 
 
 export default function Feeds(){
 
+    const [initialPosts, dispatch] = useReducer(updatePostsReducer, postsData )
     const [initialStories, setInitialStories] = useState(StoriesDate);
-    const [initialPosts, setInitialPosts] = useState(postsData);
-    console.log(initialPosts)
+
+    function updatStoriesFunction(id){
+        setInitialStories(prev => 
+            prev.map(post => 
+                post.id === id
+                ? {...post, hasUnseenStory: true}
+                :post
+            )            
+        )
+    }
 
     return(
         <Container>
             <Stories>
-                {initialStories?.map((story)=> {
+                {initialStories?.sort((a, b )=> {
+                    if(a.id === 'story-alex') return -1;
+                    if(b.id === 'story-alex') return 1;
+                    return a.hasUnseenStory - b.hasUnseenStory
+                }).map((story)=> {
                     return(
-                        <Story key={story.id}>
-                            <div>
+                        <Story key={story.id} onClick={()=>updatStoriesFunction(story.id)}>
+                            <div className={story.hasUnseenStory? 'hasSeen': ''}>
                                 <img src={story.avatarUrl} alt={story.id} />
                             </div>
-                            <h4>{ story.username}</h4>
+                            <h4>{ story.id === 'story-alex'? 'Your story': story.username}</h4>
                         </Story>
                     )
                 })}
@@ -41,11 +55,19 @@ export default function Feeds(){
                             <div className="detials">
                                 <div className="reactions">
                                     <div>
-                                        <button aria-label="like"> <Heart/> </button>
+                                        <button aria-label="like"
+                                             onClick={()=> dispatch({type: post.isLiked? 'decrease': 'increase', id: post.id})}
+                                        > 
+                                            <Heart fill={post.isLiked? 'red': 'white'} color={post.isLiked? 'red': 'black'}/> 
+                                        </button>
                                          <button aria-label="comment"> <MessageCircle/> </button>
                                          <button aria-label="send"> <Send/> </button>
                                     </div>
-                                    <button aria-label="bookmark"> <Bookmark/> </button>
+                                    <button aria-label="bookmark"
+                                        onClick={()=> dispatch({type: 'save', id:post.id})}
+                                    > 
+                                        <Bookmark fill={post.isSaved? 'black': 'white'} color={post.isSaved ? 'black': 'black'}/> 
+                                    </button>
                                 </div>
                                 <h3 className="liksCounts"> {post.likesCount.toLocaleString()} Likes  </h3>
                                 <div className="caption">
@@ -108,6 +130,9 @@ const Story = styled.div`
         align-item: center;
         justify-content: center;
     }
+    .hasSeen{
+        border-color:gray;
+    }
     img{
         width: 60px;
         height:60px;
@@ -168,14 +193,14 @@ const Post = styled.div`
         }
     }
     .caption{
-    //     width-width: 60px;
-    //     white-space: nowrap;
-    //     overflow:hidden;
-    //     text-overflow: ellipsis;
-    //     margin:0;
-    //     text-align: center;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0;
+        line-height: 1.4;
         span:first-child{
-            color:var(--on-surface);
+            color:black;
             font-size:1.2rem;
             margin-right: 5px;
         }

@@ -130,8 +130,6 @@
 }
 body{
   font-family: 'Roboto';
-  color: var(--on-surface-variant);
-
 }
 button{
   border:none;
