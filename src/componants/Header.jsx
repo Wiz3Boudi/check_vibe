@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MessageCircle, Camera} from "lucide-react";
+import { MessageSquare, Camera} from "lucide-react";
 
 export default function Header(){
     return(
@@ -7,7 +7,7 @@ export default function Header(){
             <UnorderedList>
                 <li><button aria-label="camera"> <Camera/> </button></li>
                 <li><h1>Check Vibe</h1></li>
-                <li><button aria-label="messages"> <MessageCircle/></button></li>
+                <li><button aria-label="messages"> <MessageSquare/></button></li>
             </UnorderedList>
         </UpBar>
     )

@@ -1,6 +1,16 @@
 import styled from "styled-components";
-import { initialStories as StoriesData, initialPosts as postsData } from "../data/feeds";
-import { Heart, MessageCircle, Send, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  initialStories as StoriesData,
+  initialPosts as postsData,
+} from "../data/feeds";
+import {
+  Heart,
+  MessageCircle,
+  Send,
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { useReducer, useState } from "react";
 import { updatePostsReducer } from "../reducer/feeds";
 
@@ -11,26 +21,28 @@ export default function Feeds() {
   function updateStoriesFunction(id) {
     setInitialStories((prev) =>
       prev.map((story) =>
-        story.id === id ? { ...story, hasUnseenStory: false } : story
-      )
+        story.id === id ? { ...story, hasUnseenStory: true } : story,
+      ),
     );
   }
 
-  const sortedStories = initialStories ? [...initialStories].sort((a, b) => {
-    if (a.id === 'story-alex') return -1;
-    if (b.id === 'story-alex') return 1;
-    return (a.hasUnseenStory === b.hasUnseenStory) ? 0 : a.hasUnseenStory ? -1 : 1;
-  }) : [];
+  const sortedStories = initialStories
+    ? [...initialStories].sort((a, b) => {
+        if (a.id === "story-alex") return -1;
+        if (b.id === "story-alex") return 1;
+        return a.hasUnseenStory - b.hasUnseenStory;
+      })
+    : [];
 
   return (
     <Container>
       <Stories>
         {sortedStories.map((story) => (
           <Story key={story.id} onClick={() => updateStoriesFunction(story.id)}>
-            <div className={!story.hasUnseenStory ? 'hasSeen' : ''}>
+            <div className={story.hasUnseenStory ? "hasSeen" : ""}>
               <img src={story.avatarUrl} alt={story.username || story.id} />
             </div>
-            <h4>{story.id === 'story-alex' ? 'Your story' : story.username}</h4>
+            <h4>{story.id === "story-alex" ? "Your story" : story.username}</h4>
           </Story>
         ))}
       </Stories>
@@ -44,7 +56,6 @@ export default function Feeds() {
   );
 }
 
-// Extracted PostCard component to isolate `currentIndex` per post
 function PostCard({ post, dispatch }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -62,15 +73,24 @@ function PostCard({ post, dispatch }) {
       </div>
 
       <div className="img-container">
-        <img src={post.images[currentIndex]} alt={`Post slide ${currentIndex + 1}`} />
+        <img
+          src={post.images[currentIndex]}
+          alt={`Post slide ${currentIndex + 1}`}
+        />
 
         {showNext && (
-          <button className="nav-btn next" onClick={() => setCurrentIndex((prev) => prev + 1)}>
+          <button
+            className="nav-btn next"
+            onClick={() => setCurrentIndex((prev) => prev + 1)}
+          >
             <ChevronRight />
           </button>
         )}
         {showPrev && (
-          <button className="nav-btn prev" onClick={() => setCurrentIndex((prev) => prev - 1)}>
+          <button
+            className="nav-btn prev"
+            onClick={() => setCurrentIndex((prev) => prev - 1)}
+          >
             <ChevronLeft />
           </button>
         )}
@@ -78,7 +98,10 @@ function PostCard({ post, dispatch }) {
         {post.images.length > 1 && (
           <div className="dots">
             {post.images.map((_, index) => (
-              <span key={index} className={index === currentIndex ? 'dot active' : 'dot'} />
+              <span
+                key={index}
+                className={index === currentIndex ? "dot active" : "dot"}
+              />
             ))}
           </div>
         )}
@@ -89,22 +112,36 @@ function PostCard({ post, dispatch }) {
           <div>
             <button
               aria-label="like"
-              onClick={() => dispatch({ type: post.isLiked ? 'decrease' : 'increase', id: post.id })}
+              onClick={() =>
+                dispatch({
+                  type: post.isLiked ? "decrease" : "increase",
+                  id: post.id,
+                })
+              }
             >
-              <Heart fill={post.isLiked ? 'red' : 'none'} color={post.isLiked ? 'red' : 'black'} />
+              <Heart
+                fill={post.isLiked ? "red" : "none"}
+                color={post.isLiked ? "red" : "black"}
+              />
             </button>
-            <button aria-label="comment"><MessageCircle /></button>
-            <button aria-label="send"><Send /></button>
+            <button aria-label="comment">
+              <MessageCircle />
+            </button>
+            <button aria-label="send">
+              <Send />
+            </button>
           </div>
           <button
             aria-label="bookmark"
-            onClick={() => dispatch({ type: 'save', id: post.id })}
+            onClick={() => dispatch({ type: "save", id: post.id })}
           >
-            <Bookmark fill={post.isSaved ? 'black' : 'none'} color="black" />
+            <Bookmark fill={post.isSaved ? "black" : "none"} color="black" />
           </button>
         </div>
 
-        <h3 className="likes-count">{post.likesCount?.toLocaleString()} Likes</h3>
+        <h3 className="likes-count">
+          {post.likesCount?.toLocaleString()} Likes
+        </h3>
         <div className="caption">
           <span>{post.username}</span>
           <span>{post.caption}</span>
@@ -116,7 +153,6 @@ function PostCard({ post, dispatch }) {
   );
 }
 
-/* Styled Components fixes applied below */
 const Container = styled.div`
   background-color: var(--secondary, #fafafa);
 `;
@@ -156,7 +192,7 @@ const Story = styled.div`
   & > div {
     background-color: white;
     padding: 3px;
-    border: 3px solid var(--primary, #e1306c);
+    border: 2px solid var(--primary, #e1306c);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -200,7 +236,8 @@ const Post = styled.div`
       cursor: pointer;
     }
 
-    div h4, div p {
+    div h4,
+    div p {
       margin: 0;
       cursor: pointer;
     }
@@ -209,10 +246,9 @@ const Post = styled.div`
   .img-container {
     position: relative;
     width: 100%;
-
     img {
       width: 100%;
-      display: block; /* Fixed CSS typo: display: noen */
+      display: block;
       max-height: 500px;
       object-fit: cover;
     }
@@ -231,8 +267,12 @@ const Post = styled.div`
       justify-content: center;
       cursor: pointer;
 
-      &.next { right: 10px; }
-      &.prev { left: 10px; }
+      &.next {
+        right: 10px;
+      }
+      &.prev {
+        left: 10px;
+      }
     }
 
     .dots {
@@ -244,8 +284,8 @@ const Post = styled.div`
       gap: 5px;
 
       .dot {
-        width: 6px;
-        height: 6px;
+        width: 10px;
+        height: 10px;
         background: rgba(255, 255, 255, 0.5);
         border-radius: 50%;
 
