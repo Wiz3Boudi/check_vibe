@@ -1,10 +1,9 @@
 :root {
   /* Colors */
-  --input-border-color:#E2E8F0;
-  --input-background: #F8FAFC;
+  --input-border-color: #e2e8f0;
+  --input-background: #f8fafc;
   --primary: #6b38d4;
-  --text-secondary-color:#494454;
-
+  --text-secondary-color: #494454;
 
   --surface: #f9f9f9;
   --surface-dim: #dadada;
@@ -52,51 +51,51 @@
   --background: #f9f9f9;
   --on-background: #1a1c1c;
   --surface-variant: #e2e2e2;
-  --border-subtle: #E2E8F0;
-  --text-main: #0F172A;
-  --text-muted: #64748B;
-  --accent-orange: #FF8C42;
+  --border-subtle: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent-orange: #ff8c42;
 
   /* Typography - Display LG */
-  --font-display-lg-family: 'Inter', sans-serif;
+  --font-display-lg-family: "Inter", sans-serif;
   --font-display-lg-size: 48px;
   --font-display-lg-weight: 800;
   --font-display-lg-line-height: 56px;
   --font-display-lg-letter-spacing: -0.02em;
 
   /* Typography - Headline LG */
-  --font-headline-lg-family: 'Inter', sans-serif;
+  --font-headline-lg-family: "Inter", sans-serif;
   --font-headline-lg-size: 32px;
   --font-headline-lg-weight: 700;
   --font-headline-lg-line-height: 40px;
   --font-headline-lg-letter-spacing: -0.01em;
 
   /* Typography - Headline LG Mobile */
-  --font-headline-lg-mobile-family: 'Inter', sans-serif;
+  --font-headline-lg-mobile-family: "Inter", sans-serif;
   --font-headline-lg-mobile-size: 24px;
   --font-headline-lg-mobile-weight: 700;
   --font-headline-lg-mobile-line-height: 32px;
 
   /* Typography - Title MD */
-  --font-title-md-family: 'Inter', sans-serif;
+  --font-title-md-family: "Inter", sans-serif;
   --font-title-md-size: 18px;
   --font-title-md-weight: 600;
   --font-title-md-line-height: 24px;
 
   /* Typography - Body LG */
-  --font-body-lg-family: 'Inter', sans-serif;
+  --font-body-lg-family: "Inter", sans-serif;
   --font-body-lg-size: 16px;
   --font-body-lg-weight: 400;
   --font-body-lg-line-height: 24px;
 
   /* Typography - Body SM */
-  --font-body-sm-family: 'Inter', sans-serif;
+  --font-body-sm-family: "Inter", sans-serif;
   --font-body-sm-size: 14px;
   --font-body-sm-weight: 400;
   --font-body-sm-line-height: 20px;
 
   /* Typography - Label Caps */
-  --font-label-caps-family: 'Inter', sans-serif;
+  --font-label-caps-family: "Inter", sans-serif;
   --font-label-caps-size: 12px;
   --font-label-caps-weight: 700;
   --font-label-caps-line-height: 16px;
@@ -122,25 +121,22 @@
   --spacing-margin-desktop: 40px;
 }
 
-
-
-*{
+* {
   margin: 0;
-  padding:0;
+  padding: 0;
 }
-body{
-  font-family: 'Roboto';
+body {
+  font-family: "Roboto";
 }
-button{
-  border:none;
+button {
+  border: none;
 }
-a{
-  text-decoration:none;
+a {
+  text-decoration: none;
 }
-li{
+li {
   list-style: none;
 }
-
 
 /* :root {
   --text: #6b6375;

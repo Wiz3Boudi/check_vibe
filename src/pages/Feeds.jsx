@@ -58,6 +58,7 @@ export default function Feeds() {
 
 function PostCard({ post, dispatch }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const showPrev = currentIndex > 0;
   const showNext = currentIndex < post.images.length - 1;
@@ -142,9 +143,16 @@ function PostCard({ post, dispatch }) {
         <h3 className="likes-count">
           {post.likesCount?.toLocaleString()} Likes
         </h3>
-        <div className="caption">
+        <div className={`caption ${!isExpanded ? "expandedCaption" : ""}`}>
           <span>{post.username}</span>
-          <span>{post.caption}</span>
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsExpanded((prev) => !prev);
+            }}
+          >
+            {post.caption}
+          </span>
         </div>
         <p className="view-comments">View all {post.commentsCount} comments</p>
         <h5 className="timestamp">{post.timestamp}</h5>
@@ -246,6 +254,7 @@ const Post = styled.div`
   .img-container {
     position: relative;
     width: 100%;
+    z-index: 1;
     img {
       width: 100%;
       display: block;
@@ -325,18 +334,18 @@ const Post = styled.div`
       font-size: 0.9rem;
     }
   }
-
   .caption {
+    span:first-child {
+      font-weight: bold;
+      margin-right: 5px;
+      line-height: 1.4;
+    }
+  }
+  .expandedCaption {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    line-height: 1.4;
-
-    span:first-child {
-      font-weight: bold;
-      margin-right: 5px;
-    }
   }
 
   .view-comments {

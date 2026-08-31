@@ -1,10 +1,17 @@
 import { Link } from "react-router";
 import styled from "styled-components";
 import { Home, Search, PlusSquare, PlayCircle, Bell, User } from "lucide-react";
-
+import Logo from "../componants/Logo";
 export default function Nav() {
   return (
     <Container>
+      <CheckVibe>
+        <Logo />
+        <div>
+          <h1>VibeCheck</h1>
+          <p>Light </p>
+        </div>
+      </CheckVibe>
       <List>
         <li>
           <Link to="/feeds" className="active">
@@ -56,7 +63,6 @@ export default function Nav() {
 const Container = styled.nav`
   display: flex;
   align-items: center;
-  justify-content: center;
   position: fixed;
   z-index: 1000;
   bottom: 0;
@@ -64,6 +70,19 @@ const Container = styled.nav`
   width: 100%;
   height: 50px;
   background-color: white;
+  @media (min-width: 768px) {
+    position: static;
+    flex-direction: column;
+    background-color: white;
+    height: 100vh;
+    width: 100%;
+  }
+`;
+const CheckVibe = styled.div`
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+  }
 `;
 const List = styled.ul`
   width: 100%;
@@ -84,6 +103,9 @@ const List = styled.ul`
     color: var(--inverse-surface);
   }
   @media (min-width: 768px) {
+    flex-direction: column;
+    background-color: white;
+
     span {
       display: block;
     }
