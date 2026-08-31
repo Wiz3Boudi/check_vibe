@@ -87,39 +87,39 @@ export const initialStories = [
     timestamp: "4h ago",
     caption: "Pure joy running across the park! 🐾🎾",
   },
-  // {
-  //   id: "storycafe",
-  //   username: "cafe_vibes",
-  //   avatarUrl:
-  //     "https://lh3.googleusercontent.com/aida-public/AB6AXuDfL1AaO3tM6jcQf5oXVpdScJJxRfqrLGp7FrhmqS1YmMSWZDTpdn71j7kTkBuJShz9pd_62LOMAZpma14Q0u4CBPxG1GDPU4dBOBkTUVOCQEUJ6LVC9dATkAru3J6A9sQkDUxkZPg7kJtYTYd54QobCQnwjkAUL20pZ1e9abizOe61VL9HR2u2Z7xA7Rsg4WwZprK0w7fgDhwLKGHPGbixCYGYP8QodP3UcYhySA2WZqtjJ15vG3AR6Q",
-  //   hasUnseenStory: false,
-  //   storyImage:
-  //     "https://lh3.googleusercontent.com/aida-public/AB6AXuDfL1AaO3tM6jcQf5oXVpdScJJxRfqrLGp7FrhmqS1YmMSWZDTpdn71j7kTkBuJShz9pd_62LOMAZpma14Q0u4CBPxG1GDPU4dBOBkTUVOCQEUJ6LVC9dATkAru3J6A9sQkDUxkZPg7kJtYTYd54QobCQnwjkAUL20pZ1e9abizOe61VL9HR2u2Z7xA7Rsg4WwZprK0w7fgDhwLKGHPGbixCYGYP8QodP3UcYhySA2WZqtjJ15vG3AR6Q",
-  //   timestamp: "6h ago",
-  //   caption: "Minimalist latte art vibes today.",
-  // },
-  // {
-  //   id: "storysklvmskmtreet",
-  //   username: "street_style",
-  //   avatarUrl:
-  //     "https://lh3.googleusercontent.com/aida-public/AB6AXuC2rbCiGUDYWgSpchaqOxyO5tQnB9M9jUg-B-NFGi4VrnZsviqAhwwo1Gsns7zOaVdvAVSdCAIPWeL_8CPJZEzOLkY0GFCo_7wIKdBze_mOePnADughescDpXn-hkxf4FKA4godbG1fB1Soll2C4kAtxXKKl7iDI_Oz1PknUaXj9GgV2uE3pXrBq5vpBqQuU7tQnEgLpvGjgP6DtJwH3TKDQCUERn3n-aWwspiQ8VvjlXhg1855f-rwLA",
-  //   hasUnseenStory: false,
-  //   storyImage:
-  //     "https://lh3.googleusercontent.com/aida-public/AB6AXuC2rbCiGUDYWgSpchaqOxyO5tQnB9M9jUg-B-NFGi4VrnZsviqAhwwo1Gsns7zOaVdvAVSdCAIPWeL_8CPJZEzOLkY0GFCo_7wIKdBze_mOePnADughescDpXn-hkxf4FKA4godbG1fB1Soll2C4kAtxXKKl7iDI_Oz1PknUaXj9GgV2uE3pXrBq5vpBqQuU7tQnEgLpvGjgP6DtJwH3TKDQCUERn3n-aWwspiQ8VvjlXhg1855f-rwLA",
-  //   timestamp: "8h ago",
-  //   caption: "Monochrome structured fit.",
-  // },
-  // {
-  //   id: "storydfdstreet",
-  //   username: "street_style",
-  //   avatarUrl:
-  //     "https://lh3.googleusercontent.com/aida-public/AB6AXuC2rbCiGUDYWgSpchaqOxyO5tQnB9M9jUg-B-NFGi4VrnZsviqAhwwo1Gsns7zOaVdvAVSdCAIPWeL_8CPJZEzOLkY0GFCo_7wIKdBze_mOePnADughescDpXn-hkxf4FKA4godbG1fB1Soll2C4kAtxXKKl7iDI_Oz1PknUaXj9GgV2uE3pXrBq5vpBqQuU7tQnEgLpvGjgP6DtJwH3TKDQCUERn3n-aWwspiQ8VvjlXhg1855f-rwLA",
-  //   hasUnseenStory: false,
-  //   storyImage:
-  //     "https://lh3.googleusercontent.com/aida-public/AB6AXuC2rbCiGUDYWgSpchaqOxyO5tQnB9M9jUg-B-NFGi4VrnZsviqAhwwo1Gsns7zOaVdvAVSdCAIPWeL_8CPJZEzOLkY0GFCo_7wIKdBze_mOePnADughescDpXn-hkxf4FKA4godbG1fB1Soll2C4kAtxXKKl7iDI_Oz1PknUaXj9GgV2uE3pXrBq5vpBqQuU7tQnEgLpvGjgP6DtJwH3TKDQCUERn3n-aWwspiQ8VvjlXhg1855f-rwLA",
-  //   timestamp: "8h ago",
-  //   caption: "Monochrome structured fit.",
-  // },
+  {
+    id: "storycafe",
+    username: "cafe_vibes",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDfL1AaO3tM6jcQf5oXVpdScJJxRfqrLGp7FrhmqS1YmMSWZDTpdn71j7kTkBuJShz9pd_62LOMAZpma14Q0u4CBPxG1GDPU4dBOBkTUVOCQEUJ6LVC9dATkAru3J6A9sQkDUxkZPg7kJtYTYd54QobCQnwjkAUL20pZ1e9abizOe61VL9HR2u2Z7xA7Rsg4WwZprK0w7fgDhwLKGHPGbixCYGYP8QodP3UcYhySA2WZqtjJ15vG3AR6Q",
+    hasUnseenStory: false,
+    storyImage:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDfL1AaO3tM6jcQf5oXVpdScJJxRfqrLGp7FrhmqS1YmMSWZDTpdn71j7kTkBuJShz9pd_62LOMAZpma14Q0u4CBPxG1GDPU4dBOBkTUVOCQEUJ6LVC9dATkAru3J6A9sQkDUxkZPg7kJtYTYd54QobCQnwjkAUL20pZ1e9abizOe61VL9HR2u2Z7xA7Rsg4WwZprK0w7fgDhwLKGHPGbixCYGYP8QodP3UcYhySA2WZqtjJ15vG3AR6Q",
+    timestamp: "6h ago",
+    caption: "Minimalist latte art vibes today.",
+  },
+  {
+    id: "storysklvmskmtreet",
+    username: "street_style",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuC2rbCiGUDYWgSpchaqOxyO5tQnB9M9jUg-B-NFGi4VrnZsviqAhwwo1Gsns7zOaVdvAVSdCAIPWeL_8CPJZEzOLkY0GFCo_7wIKdBze_mOePnADughescDpXn-hkxf4FKA4godbG1fB1Soll2C4kAtxXKKl7iDI_Oz1PknUaXj9GgV2uE3pXrBq5vpBqQuU7tQnEgLpvGjgP6DtJwH3TKDQCUERn3n-aWwspiQ8VvjlXhg1855f-rwLA",
+    hasUnseenStory: false,
+    storyImage:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuC2rbCiGUDYWgSpchaqOxyO5tQnB9M9jUg-B-NFGi4VrnZsviqAhwwo1Gsns7zOaVdvAVSdCAIPWeL_8CPJZEzOLkY0GFCo_7wIKdBze_mOePnADughescDpXn-hkxf4FKA4godbG1fB1Soll2C4kAtxXKKl7iDI_Oz1PknUaXj9GgV2uE3pXrBq5vpBqQuU7tQnEgLpvGjgP6DtJwH3TKDQCUERn3n-aWwspiQ8VvjlXhg1855f-rwLA",
+    timestamp: "8h ago",
+    caption: "Monochrome structured fit.",
+  },
+  {
+    id: "storydfdstreet",
+    username: "street_style",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuC2rbCiGUDYWgSpchaqOxyO5tQnB9M9jUg-B-NFGi4VrnZsviqAhwwo1Gsns7zOaVdvAVSdCAIPWeL_8CPJZEzOLkY0GFCo_7wIKdBze_mOePnADughescDpXn-hkxf4FKA4godbG1fB1Soll2C4kAtxXKKl7iDI_Oz1PknUaXj9GgV2uE3pXrBq5vpBqQuU7tQnEgLpvGjgP6DtJwH3TKDQCUERn3n-aWwspiQ8VvjlXhg1855f-rwLA",
+    hasUnseenStory: false,
+    storyImage:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuC2rbCiGUDYWgSpchaqOxyO5tQnB9M9jUg-B-NFGi4VrnZsviqAhwwo1Gsns7zOaVdvAVSdCAIPWeL_8CPJZEzOLkY0GFCo_7wIKdBze_mOePnADughescDpXn-hkxf4FKA4godbG1fB1Soll2C4kAtxXKKl7iDI_Oz1PknUaXj9GgV2uE3pXrBq5vpBqQuU7tQnEgLpvGjgP6DtJwH3TKDQCUERn3n-aWwspiQ8VvjlXhg1855f-rwLA",
+    timestamp: "8h ago",
+    caption: "Monochrome structured fit.",
+  },
 ];
 
 export const initialPosts = [

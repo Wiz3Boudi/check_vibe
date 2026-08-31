@@ -32,28 +32,7 @@ export default function Nav() {
   );
 }
 
-const Container = styled.nav`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: white;
-  z-index: 1000;
-  border-top: 1px solid #eee;
-
-  @media (min-width: 768px) {
-    top: 0;
-    right: auto;
-    width: 240px;
-    height: 100vh;
-    border-top: none;
-    border-right: 1px solid #eee;
-    padding: 1.5rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-`;
+const Container = styled.nav``;
 
 const CheckVibe = styled.div`
   display: none;

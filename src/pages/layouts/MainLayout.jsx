@@ -26,9 +26,11 @@ export default function MainLayout() {
 const Conntianer = styled.div`
   @media (min-width: 768px) {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 2.3fr 1.7fr;
     grid-template-rows: auto;
     grid-template-areas: "sider outlet follow";
+    gap: 1rem;
+    background-color: var(--secondary);
   }
 `;
 const UpperNav = styled.div`
@@ -48,17 +50,13 @@ const UpperNav = styled.div`
 const SiderNav = styled.div`
   position: fixed;
   bottom: 0;
-  left: 0;
   width: 100%;
   background-color: white;
   z-index: 1000;
-  height: 60px;
-  display: flex;
-  align-items: center;
   @media (min-width: 768px) {
     position: static;
     grid-area: sider;
-    justify-content: center;
+    background-color: white;
   }
 `;
 const OutletContainer = styled.div`
@@ -66,6 +64,13 @@ const OutletContainer = styled.div`
   @media (min-width: 768px) {
     padding: 0;
     grid-area: outlet;
+    max-height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 const Following = styled.div`
@@ -74,5 +79,6 @@ const Following = styled.div`
     grid-area: follow;
     display: flex;
     flex-direction: column;
+    background-color: white;
   }
 `;
