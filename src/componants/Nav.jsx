@@ -1,116 +1,139 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { Home, Search, PlusSquare, PlayCircle, Bell, User } from "lucide-react";
 import Logo from "../componants/Logo";
+import { navItems } from "../data/navItems";
+
 export default function Nav() {
+  const location = useLocation();
+
   return (
     <Container>
       <CheckVibe>
         <Logo />
         <div>
           <h1>VibeCheck</h1>
-          <p>Light </p>
+          <p>Light</p>
         </div>
       </CheckVibe>
       <List>
-        <li>
-          <Link to="/feeds" className="active">
-            <button>
-              <Home /> <span> Home Feeds </span>
-            </button>
-          </Link>
-        </li>
-        <li>
-          <Link to="/search-explore">
-            <button>
-              <Search /> <span> Explore & Search </span>
-            </button>
-          </Link>
-        </li>
-        <li>
-          <Link to="/reels">
-            <button>
-              <PlusSquare /> <span> Vibe Reels </span>
-            </button>
-          </Link>
-        </li>
-        <li>
-          <Link to="/messages">
-            <button>
-              <PlayCircle /> <span> Direct Messages </span>
-            </button>
-          </Link>
-        </li>
-        <li>
-          <Link to="/notifcations">
-            <button>
-              <Bell /> <span> Notifcations </span>
-            </button>
-          </Link>
-        </li>
-        <li>
-          <Link to="/profile">
-            <button>
-              <User /> <span> rofile </span>
-            </button>
-          </Link>
-        </li>
+        {navItems.map(({ path, label, icon: Icon }) => {
+          const isActive = location.pathname === path;
+          return (
+            <li key={path}>
+              <StyledLink to={path} $isActive={isActive}>
+                <Icon size={24} />
+                <span>{label}</span>
+              </StyledLink>
+            </li>
+          );
+        })}
       </List>
     </Container>
   );
 }
 
 const Container = styled.nav`
-  display: flex;
-  align-items: center;
   position: fixed;
-  z-index: 1000;
   bottom: 0;
   left: 0;
-  width: 100%;
-  height: 50px;
+  right: 0;
   background-color: white;
+  z-index: 1000;
+  border-top: 1px solid #eee;
+
   @media (min-width: 768px) {
-    position: static;
-    flex-direction: column;
-    background-color: white;
+    top: 0;
+    right: auto;
+    width: 240px;
     height: 100vh;
-    width: 100%;
+    border-top: none;
+    border-right: 1px solid #eee;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 `;
+
 const CheckVibe = styled.div`
   display: none;
+
   @media (min-width: 768px) {
     display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      color: var(--primary);
+    }
+    p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: gray;
+    }
   }
 `;
+
 const List = styled.ul`
-  width: 100%;
   display: flex;
-  justify-content: space-between;
-  padding: 0 1rem;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+  padding: 0.5rem 0;
+  list-style: none;
+
+  li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0;
+
+    li {
+      justify-content: flex-start;
+    }
+  }
+`;
+
+const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  text-decoration: none;
+  border-radius: 8px;
+  color: ${(props) =>
+    props.$isActive ? `var(--primary)` : "var(--inverse-surface, #333)"};
+  transition: background-color 0.2s ease;
+
   span {
     display: none;
   }
-  button {
-    background: none;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+
   svg {
-    color: var(--inverse-surface);
+    stroke: currentColor;
   }
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
   @media (min-width: 768px) {
-    flex-direction: column;
-    background-color: white;
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 100%;
 
     span {
-      display: block;
-    }
-    .active {
-      color: red;
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: ${(props) => (props.$isActive ? "600" : "normal")};
     }
   }
 `;

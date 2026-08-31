@@ -16,51 +16,63 @@ export default function MainLayout() {
       <SiderNav className="sider">
         <Nav />
       </SiderNav>
-      <Fllowing className="fllow">
+      <Following className="follow">
         <NewFllowing />
-      </Fllowing>
+      </Following>
     </Conntianer>
   );
 }
 
 const Conntianer = styled.div`
-  padding: 4rem 0;
   @media (min-width: 768px) {
     display: grid;
-    grid-template-columns: 20% 45% 35%;
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
-    grid-template-areas: "sider outlet fllow";
-    gap: 1rem;
-    background-color: var(--tertiary-fixed);
-    padding: 0;
+    grid-template-areas: "sider outlet follow";
   }
 `;
 const UpperNav = styled.div`
-  grid-area: uppderNav;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1000;
+  height: 60px;
+  display: flex;
+  align-items: center;
   @media (min-width: 768px) {
     display: none;
   }
 `;
 const SiderNav = styled.div`
-  grid-area: sider;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1000;
+  height: 60px;
+  display: flex;
+  align-items: center;
   @media (min-width: 768px) {
-    position: fixed;
-    background-color: white;
+    position: static;
+    grid-area: sider;
+    justify-content: center;
   }
 `;
 const OutletContainer = styled.div`
-  grid-area: outlet;
+  padding: 4rem 0;
+  @media (min-width: 768px) {
+    padding: 0;
+    grid-area: outlet;
+  }
 `;
-const Fllowing = styled.div`
-  grid-area: fllow;
+const Following = styled.div`
   display: none;
   @media (min-width: 768px) {
-    position: fixed;
-    top: 0;
-    right: 0;
-    display: block;
-    background-color: white;
-    width: 32%;
-    height: 100vh;
+    grid-area: follow;
+    display: flex;
+    flex-direction: column;
   }
 `;
