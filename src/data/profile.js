@@ -3,20 +3,23 @@ export const profile = {
   tag: "Digital creator. Finding vibes & good times. ✨",
   username: "@arivera_vibes",
   avatarURL: "./profile/avatarURL.jpg",
-  connectingInfo: {
-    id_1: {
+  connectingInfo: [
+    {
+      id: "1",
       text: "POST",
-      postsCount: 342,
+      count: 342,
     },
-    id_2: {
+    {
+      id: "2",
       text: "FOLLOWERS",
-      followersCount: 12500,
+      count: 12500,
     },
-    id_3: {
+    {
+      id: "3",
       text: "FOLLOWING",
-      following: 489,
+      count: 489,
     },
-  },
+  ],
   images: [
     "./profile/breakfast.jpg",
     "./profile/sunset.jpg",
