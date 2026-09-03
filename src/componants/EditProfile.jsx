@@ -1,8 +1,19 @@
 import styled from "styled-components";
 import { X, Camera } from "lucide-react";
 import { profile } from "../data/profile";
+import { useState } from "react";
 
 export default function EditProfile({ handelClick }) {
+  const [formValues, setFormValues] = useState(profile);
+  function formStateHandler(e) {
+    const { id, value } = e;
+    setFormValues((prev) => {
+      return { ...prev, [id]: value };
+    });
+  }
+  function onSubmitHandelClick(e) {
+    e.preventDefault();
+  }
   return (
     <Container>
       <Content>
@@ -23,6 +34,39 @@ export default function EditProfile({ handelClick }) {
               <HiddenInput type="file" id="upload" />
             </AvatarSection>
           </Avatar>
+          <Form onSubmit={onSubmitHandelClick}>
+            <InputLabels htmlFor="fullName"> FULL NAME</InputLabels>
+            <FullName
+              type="text"
+              id="fullName"
+              placeholder={formValues.name}
+              value={formValues.name}
+              onChange={(e) =>
+                formStateHandler({ id: "name", value: e.target.value })
+              }
+            />
+            <InputLabels htmlFor="username">USERNAME HANDLE</InputLabels>
+            <Username
+              type="text"
+              id="username"
+              placeholder={profile.formValues}
+              value={formValues.username}
+              onChange={(e) =>
+                formStateHandler({ id: "username", value: e.target.value })
+              }
+            />
+            <InputLabels htmlFor="bio"> BIO </InputLabels>
+            <Bio
+              value={formValues.bio}
+              onChange={(e) =>
+                formStateHandler({ id: "bio", value: e.target.value })
+              }
+            ></Bio>
+            <ButtonsContainer>
+              <Button type="button"> Cancel</Button>
+              <Button type="submit">Save</Button>
+            </ButtonsContainer>
+          </Form>
         </Main>
       </Content>
     </Container>
@@ -110,3 +154,10 @@ const Label = styled.label`
 const HiddenInput = styled.input`
   display: none;
 `;
+const Form = styled.form``;
+const FullName = styled.input``;
+const Username = styled.input``;
+const InputLabels = styled.label``;
+const Bio = styled.textarea``;
+const ButtonsContainer = styled.div``;
+const Button = styled.button``;
