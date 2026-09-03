@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { X, Camera } from "lucide-react";
-import Avatar from "../componants/Avatar";
+import { profile } from "../data/profile";
 
 export default function EditProfile({ handelClick }) {
   return (
@@ -14,7 +14,15 @@ export default function EditProfile({ handelClick }) {
         </Header>
         <div className="line"></div>
         <Main>
-          <Avatar Icon={Camera} />
+          <Avatar>
+            <AvatarSection>
+              <Image src={profile.avatarURL} alt="avatar" />
+              <Label htmlFor="upload">
+                <Camera size={30} />
+              </Label>
+              <HiddenInput type="file" id="upload" />
+            </AvatarSection>
+          </Avatar>
         </Main>
       </Content>
     </Container>
@@ -64,3 +72,41 @@ const Content = styled.div`
   padding: 1rem;
 `;
 const Main = styled.div``;
+const Avatar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+const AvatarSection = styled.div`
+  background-color: var(--primary);
+  width: fit-content;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 3px;
+`;
+const Image = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+const Label = styled.label`
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  height: 50%;
+  width: 100%;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.4);
+  svg {
+    color: white;
+  }
+`;
+const HiddenInput = styled.input`
+  display: none;
+`;

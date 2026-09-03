@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { profile, Icons } from "../data/profile";
-import { Share, Pen } from "lucide-react";
+import { Share, Pen, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import Avatar from "../componants/Avatar";
 import EditProfile from "../componants/EditProfile";
@@ -22,7 +22,11 @@ export default function Profile() {
 
   return (
     <Container>
-      <Avatar />
+      <Avatar>
+        <button>
+          <Plus />
+        </button>
+      </Avatar>
       <UserInfo>
         <p> {profile.name} </p>
         <p> {profile.tag} </p>
