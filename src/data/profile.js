@@ -29,3 +29,11 @@ export const profile = {
     "./profile/chart.jpg",
   ],
 };
+
+import { Grid3X3, Film, Bookmark } from "lucide-react";
+
+export const Icons = [
+  { id: "grid", icon: Grid3X3 },
+  { id: "film", icon: Film },
+  { id: "bookmark", icon: Bookmark },
+];

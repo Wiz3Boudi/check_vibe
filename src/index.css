@@ -127,6 +127,7 @@
 }
 body {
   font-family: "Roboto";
+  object-fit: calc(1.4);
 }
 button {
   border: none;

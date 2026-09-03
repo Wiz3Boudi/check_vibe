@@ -1,26 +1,21 @@
 import styled from "styled-components";
-import { profile } from "../data/profile";
-import { Share, Pen, Plus, Grid3X3, Film, Bookmark } from "lucide-react";
+import { profile, Icons } from "../data/profile";
+import { Share, Pen } from "lucide-react";
 import { useState } from "react";
+import Avatar from "../componants/Avatar";
+import EditProfile from "../componants/EditProfile";
 
 export default function Profile() {
-  const Icons = [
-    { id: "grid", icon: Grid3X3 },
-    { id: "film", icon: Film },
-    { id: "bookmark", icon: Bookmark },
-  ];
   const [category, setCategory] = useState("grid");
+  const [openProfileEdit, setOpenProfileEdit] = useState(false);
+
+  function editProfileToggle() {
+    setOpenProfileEdit((prev) => !prev);
+  }
 
   return (
     <Container>
-      <Avatar>
-        <div>
-          <img src={profile?.avatarURL} alt="avatar" />
-        </div>
-        <button>
-          <Plus size={25} />
-        </button>
-      </Avatar>
+      <Avatar />
       <UserInfo>
         <p> {profile.name} </p>
         <p> {profile.tag} </p>
@@ -35,7 +30,7 @@ export default function Profile() {
         ))}
       </Conntention>
       <ProfileOptions>
-        <button>
+        <button onClick={editProfileToggle}>
           <Pen size={20} /> <span>Edit Profile</span>
         </button>
         <button>
@@ -85,6 +80,7 @@ export default function Profile() {
             })}
         </div>
       </Posts>
+      {openProfileEdit && <EditProfile handelClick={editProfileToggle} />}
     </Container>
   );
 }
@@ -93,37 +89,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-`;
-const Avatar = styled.div`
-  position: relative;
-  align-self: stretch;
-  justify-items: center;
-  width: 100%;
-  padding-top: 10px;
-  div {
-    width: fit-content;
-    background-color: var(--primary);
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    img {
-      padding: 3px;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-  }
-  svg {
-    position: absolute;
-    bottom: 26px;
-    right: 35%;
-    background-color: var(--primary);
-    color: white;
-    border: 2px solid white;
-    border-radius: 50%;
-    cursor: pointer;
+  gap: 1rem;
+  @media (min-width: 768px) {
+    background-color: white;
+    padding-top: 1rem;
   }
 `;
 const UserInfo = styled.div`
@@ -183,7 +152,7 @@ const ProfileOptions = styled.div`
     border: 1px solid var(--primary-fixed-dim);
     background-color: white;
     color: var(--primary);
-    curosr: pointer;
+    cursor: pointer;
     font-weight: 600;
     font-size: 1rem;
   }
@@ -213,12 +182,22 @@ const Posts = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
-    column-gap: 3px;
+    row-gap: 2px;
+    column-gap: 5px;
+    position: relative;
   }
 `;
 const Post = styled.div`
+  cursor: pointer;
+  overflow: hidden;
+  height: 150px;
   img {
     width: 100%;
     height: 150px;
+    object-fit: cover;
+    transition: transform 0.25s ease-in-out;
+    &:hover {
+      transform: scale(1.08);
+    }
   }
 `;

@@ -242,6 +242,7 @@ const Post = styled.div`
       height: 40px;
       border-radius: 50%;
       cursor: pointer;
+      object-fit: cover;
     }
 
     div h4,
