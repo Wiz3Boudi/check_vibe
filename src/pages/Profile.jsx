@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { profile, Icons } from "../data/profile";
 import { Share, Pen } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "../componants/Avatar";
 import EditProfile from "../componants/EditProfile";
 
@@ -12,6 +12,13 @@ export default function Profile() {
   function editProfileToggle() {
     setOpenProfileEdit((prev) => !prev);
   }
+
+  useEffect(() => {
+    if (openProfileEdit) {
+      document.body.style.overflow = "hidden";
+    }
+    return () => (document.body.style.overflow = "unset");
+  }, [openProfileEdit]);
 
   return (
     <Container>

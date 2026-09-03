@@ -2,16 +2,14 @@ import styled from "styled-components";
 import { profile } from "../data/profile";
 import { Plus } from "lucide-react";
 
-export default function Avatar() {
+export default function Avatar({ Icon }) {
   return (
     <AvatarCustom>
       <div>
         <div>
           <img src={profile?.avatarURL} alt="avatar" />
         </div>
-        <button>
-          <Plus size={25} />
-        </button>
+        <button>{Icon ? <Icon /> : <Plus size={25} />}</button>
       </div>
     </AvatarCustom>
   );
