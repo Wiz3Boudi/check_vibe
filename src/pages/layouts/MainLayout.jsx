@@ -30,7 +30,7 @@ const Conntianer = styled.div`
     grid-template-rows: auto;
     grid-template-areas: "sider outlet follow";
     gap: 1rem;
-    background-color: var(--secondary);
+    background-color: rgba(0, 0, 0, 0.4);
   }
 `;
 const UpperNav = styled.div`
