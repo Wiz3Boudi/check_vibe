@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function EditProfile({ handelClick }) {
   const [formValues, setFormValues] = useState(profile);
+
   function formStateHandler(e) {
     const { id, value } = e;
     setFormValues((prev) => {
@@ -33,10 +34,11 @@ export default function EditProfile({ handelClick }) {
               </Label>
               <HiddenInput type="file" id="upload" />
             </AvatarSection>
+            <p> {`${profile.name} profile`} </p>
           </Avatar>
           <Form onSubmit={onSubmitHandelClick}>
             <InputLabels htmlFor="fullName"> FULL NAME</InputLabels>
-            <FullName
+            <Input
               type="text"
               id="fullName"
               placeholder={formValues.name}
@@ -46,7 +48,7 @@ export default function EditProfile({ handelClick }) {
               }
             />
             <InputLabels htmlFor="username">USERNAME HANDLE</InputLabels>
-            <Username
+            <Input
               type="text"
               id="username"
               placeholder={profile.formValues}
@@ -63,7 +65,9 @@ export default function EditProfile({ handelClick }) {
               }
             ></Bio>
             <ButtonsContainer>
-              <Button type="button"> Cancel</Button>
+              <Button type="button" onClick={handelClick}>
+                Cancel
+              </Button>
               <Button type="submit">Save</Button>
             </ButtonsContainer>
           </Form>
@@ -115,7 +119,11 @@ const Content = styled.div`
   margin: 1rem;
   padding: 1rem;
 `;
-const Main = styled.div``;
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
 const Avatar = styled.div`
   display: flex;
   flex-direction: column;
@@ -154,10 +162,54 @@ const Label = styled.label`
 const HiddenInput = styled.input`
   display: none;
 `;
-const Form = styled.form``;
-const FullName = styled.input``;
-const Username = styled.input``;
-const InputLabels = styled.label``;
-const Bio = styled.textarea``;
-const ButtonsContainer = styled.div``;
-const Button = styled.button``;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+const Input = styled.input`
+  border: 2px solid var(--inverse-primary);
+  outline: none;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  padding-left: 20px;
+  &:focus {
+    border-color: var(--primary);
+  }
+`;
+const InputLabels = styled.label`
+  margin-bottom: -10px;
+  color: var(--text-secondary-color);
+`;
+const Bio = styled.textarea`
+  height: 60px;
+  border-sizing: border-box;
+  padding: 1rem;
+  border: 2px solid var(--inverse-primary);
+  outline: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  &:focus {
+    border-color: var(--primary);
+  }
+`;
+const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 1rem;
+`;
+const Button = styled.button`
+  border-radius: 10px;
+  width: 40%;
+  padding: 10px 0;
+  font-size: 1.2rem;
+  border: 1px solid var(--inverse-primary);
+  background: none;
+  cursor: pointer;
+  &:nth-of-type(2) {
+    background-color: var(--primary);
+    color: white;
+  }
+`;
