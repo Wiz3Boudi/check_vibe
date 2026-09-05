@@ -3,23 +3,39 @@ import Header from "../../componants/Header";
 import styled from "styled-components";
 import Nav from "../../componants/Nav";
 import NewFllowing from "../../componants/NewFllowing";
+import { profile } from "../../data/profile";
+import { useState } from "react";
+import { ProfileContext } from "../../Contexts/profileContext";
 
 export default function MainLayout() {
+  const [profileInfo, setProfile] = useState(profile);
+
+  function profileIngoHandler(e) {
+    console.log(e);
+  }
+
   return (
-    <Conntianer>
-      <UpperNav className="uppderNav">
-        <Header />
-      </UpperNav>
-      <OutletContainer className="outlet">
-        <Outlet />
-      </OutletContainer>
-      <SiderNav className="sider">
-        <Nav />
-      </SiderNav>
-      <Following className="follow">
-        <NewFllowing />
-      </Following>
-    </Conntianer>
+    <ProfileContext
+      value={{
+        info: profileInfo,
+        handleClick: profileIngoHandler,
+      }}
+    >
+      <Conntianer>
+        <UpperNav className="uppderNav">
+          <Header />
+        </UpperNav>
+        <OutletContainer className="outlet">
+          <Outlet />
+        </OutletContainer>
+        <SiderNav className="sider">
+          <Nav />
+        </SiderNav>
+        <Following className="follow">
+          <NewFllowing />
+        </Following>
+      </Conntianer>
+    </ProfileContext>
   );
 }
 
