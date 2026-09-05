@@ -1,13 +1,16 @@
 import styled from "styled-components";
-import { profile, Icons } from "../data/profile";
+import { Icons } from "../data/profile";
 import { Share, Pen, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Avatar from "../componants/Avatar";
 import EditProfile from "../componants/EditProfile";
+import { ProfileContext } from "../Contexts/profileContext";
 
 export default function Profile() {
   const [category, setCategory] = useState("grid");
   const [openProfileEdit, setOpenProfileEdit] = useState(false);
+  const { info, saveHandler } = useContext(ProfileContext);
+  console.log(info);
 
   function editProfileToggle() {
     setOpenProfileEdit((prev) => !prev);
@@ -28,12 +31,12 @@ export default function Profile() {
         </button>
       </Avatar>
       <UserInfo>
-        <p> {profile.name} </p>
-        <p> {profile.tag} </p>
-        <button> {profile.username} </button>
+        <p> {info.name} </p>
+        <p> {info.tag} </p>
+        <button> {info.username} </button>
       </UserInfo>
       <Conntention>
-        {profile.connectingInfo.map((item) => (
+        {info.connectingInfo.map((item) => (
           <div key={item.id}>
             <p> {item.count.toLocaleString()} </p>
             <p> {item.text} </p>
@@ -64,7 +67,7 @@ export default function Profile() {
         </div>
         <div className="images">
           {category === "grid" &&
-            profile.images.map((img, index) => {
+            info.images.map((img, index) => {
               return (
                 <Post key={index}>
                   <img src={img} alt={img} />
@@ -72,17 +75,15 @@ export default function Profile() {
               );
             })}
           {category === "film" &&
-            profile.images
-              .slice(4, profile.images.length - 1)
-              .map((img, index) => {
-                return (
-                  <Post key={index}>
-                    <img src={img} alt={img} />
-                  </Post>
-                );
-              })}
+            info.images.slice(4, info.images.length - 1).map((img, index) => {
+              return (
+                <Post key={index}>
+                  <img src={img} alt={img} />
+                </Post>
+              );
+            })}
           {category === "bookmark" &&
-            profile.images.slice(1, 3).map((img, index) => {
+            info.images.slice(1, 3).map((img, index) => {
               return (
                 <Post key={index}>
                   <img src={img} alt={img} />
@@ -91,7 +92,12 @@ export default function Profile() {
             })}
         </div>
       </Posts>
-      {openProfileEdit && <EditProfile handelClick={editProfileToggle} />}
+      {openProfileEdit && (
+        <EditProfile
+          handelClick={editProfileToggle}
+          saveHandler={saveHandler}
+        />
+      )}
     </Container>
   );
 }

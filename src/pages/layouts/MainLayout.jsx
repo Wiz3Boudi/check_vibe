@@ -8,17 +8,23 @@ import { useState } from "react";
 import { ProfileContext } from "../../Contexts/profileContext";
 
 export default function MainLayout() {
-  const [profileInfo, setProfile] = useState(profile);
+  const [profileInfo, setProfileInfo] = useState(profile);
 
-  function profileIngoHandler(e) {
-    console.log(e);
+  let newState;
+  const profileIngoHandler = (e) => {
+    const { id, value } = e;
+    newState = { ...profileInfo, [id]: value };
+  };
+  function updateState() {
+    if (newState) setProfileInfo(newState);
   }
 
   return (
     <ProfileContext
       value={{
         info: profileInfo,
-        handleClick: profileIngoHandler,
+        handleClickInfo: profileIngoHandler,
+        saveHandler: updateState,
       }}
     >
       <Conntianer>

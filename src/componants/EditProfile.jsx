@@ -1,17 +1,11 @@
 import styled from "styled-components";
 import { X, Camera } from "lucide-react";
-import { profile } from "../data/profile";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ProfileContext } from "../Contexts/profileContext";
 
-export default function EditProfile({ handelClick }) {
-  const [formValues, setFormValues] = useState(profile);
+export default function EditProfile({ handelClick, saveHandler }) {
+  const { info, handleClickInfo } = useContext(ProfileContext);
 
-  function formStateHandler(e) {
-    const { id, value } = e;
-    setFormValues((prev) => {
-      return { ...prev, [id]: value };
-    });
-  }
   function onSubmitHandelClick(e) {
     e.preventDefault();
   }
@@ -28,47 +22,49 @@ export default function EditProfile({ handelClick }) {
         <Main>
           <Avatar>
             <AvatarSection>
-              <Image src={profile.avatarURL} alt="avatar" />
+              <Image src={info.avatarURL} alt="avatar" />
               <Label htmlFor="upload">
                 <Camera size={30} />
               </Label>
               <HiddenInput type="file" id="upload" />
             </AvatarSection>
-            <p> {`${profile.name} profile`} </p>
+            <p> {`${info.name} profile`} </p>
           </Avatar>
           <Form onSubmit={onSubmitHandelClick}>
             <InputLabels htmlFor="fullName"> FULL NAME</InputLabels>
             <Input
               type="text"
               id="fullName"
-              placeholder={formValues.name}
-              value={formValues.name}
+              placeholder={info.name}
+              value={info.name}
               onChange={(e) =>
-                formStateHandler({ id: "name", value: e.target.value })
+                handleClickInfo({ id: "name", value: e.target.value })
               }
             />
             <InputLabels htmlFor="username">USERNAME HANDLE</InputLabels>
             <Input
               type="text"
               id="username"
-              placeholder={profile.formValues}
-              value={formValues.username}
+              placeholder={info.username}
+              value={info.username}
               onChange={(e) =>
-                formStateHandler({ id: "username", value: e.target.value })
+                handleClickInfo({ id: "username", value: e.target.value })
               }
             />
             <InputLabels htmlFor="bio"> BIO </InputLabels>
             <Bio
-              value={formValues.bio}
+              value={info.bio}
               onChange={(e) =>
-                formStateHandler({ id: "bio", value: e.target.value })
+                handleClickInfo({ id: "bio", value: e.target.value })
               }
             ></Bio>
             <ButtonsContainer>
               <Button type="button" onClick={handelClick}>
                 Cancel
               </Button>
-              <Button type="submit">Save</Button>
+              <Button type="submit" onClick={saveHandler}>
+                Save
+              </Button>
             </ButtonsContainer>
           </Form>
         </Main>
