@@ -91,8 +91,6 @@ export default function EditProfile({ handleClose, info, userHandleClick }) {
   );
 }
 
-/* Styled Components */
-
 const Container = styled.div`
   position: fixed;
   inset: 0;
