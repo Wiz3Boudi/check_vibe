@@ -1,6 +1,6 @@
 export const profile = {
   name: "Alex Rivera",
-  bio: "Wearing many hats, but mainly content creator, I like traviling, visting places help people, I have my own busnius and I keep adding more",
+  bio: "Wearing many hats, but mainly content creator, I like traviling, visting places, helping people, I have my own busnius and I'm adding more",
   username: "@arivera_vibes",
   avatarURL: "./profile/avatarURL.jpg",
   connectingInfo: [
