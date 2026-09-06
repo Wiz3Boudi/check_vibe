@@ -53,8 +53,6 @@ export default function NewFollowing() {
   );
 }
 
-/* Styled Components */
-
 const Container = styled.section`
   padding: 1.5rem;
   display: flex;
@@ -88,7 +86,7 @@ const CardList = styled.div`
 `;
 
 const Card = styled.article`
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
