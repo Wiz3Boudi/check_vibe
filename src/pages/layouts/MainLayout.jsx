@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Nav from "../../componants/Nav";
 import NewFllowing from "../../componants/NewFllowing";
 import { profile } from "../../data/profile";
-import { use, useState } from "react";
+import { useState } from "react";
 import { ProfileContext } from "../../Contexts/profileContext";
 
 export default function MainLayout() {

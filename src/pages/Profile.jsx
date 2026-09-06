@@ -27,8 +27,8 @@ export default function Profile() {
       </Avatar>
       <UserInfo>
         <p> {info.name} </p>
-        <p> {info.tag} </p>
         <button> {info.username} </button>
+        <Bio> {info.bio} </Bio>
       </UserInfo>
       <Conntention>
         {info.connectingInfo.map((item) => (
@@ -89,7 +89,7 @@ export default function Profile() {
       </Posts>
       {isOpen && (
         <EditProfile
-          handelClick={handleClose}
+          handleClose={handleClose}
           userHandleClick={userHandleClick}
           info={info}
         />
@@ -112,6 +112,7 @@ const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   p {
     color: var(--text-muted);
@@ -126,6 +127,9 @@ const UserInfo = styled.div`
     padding: 5px;
     border-radius: 20px;
   }
+`;
+const Bio = styled.p`
+  width: 90%;
 `;
 const Conntention = styled.div`
   align-self: center;

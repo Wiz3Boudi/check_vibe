@@ -2,8 +2,13 @@ import styled from "styled-components";
 import { X, Camera } from "lucide-react";
 import { useState } from "react";
 
-export default function EditProfile({ handelClick, info, userHandleClick }) {
+export default function EditProfile({ handleClose, info, userHandleClick }) {
   const [userData, setUserData] = useState(info);
+  const [error, setError] = useState({
+    name: "",
+    usename: "",
+    bio: "",
+  });
 
   function updateLocalEditingHandler(e) {
     const { id, value } = e;
@@ -14,13 +19,24 @@ export default function EditProfile({ handelClick, info, userHandleClick }) {
   }
   function onSubmitHandelClick(e) {
     e.preventDefault();
+    if (!userData.name.trim())
+      return setError((prev) => ({ ...prev, name: "Name can't be empty" }));
+    if (!userData.username.trim())
+      return setError((prev) => ({
+        ...prev,
+        usename: "Username can't be empty",
+      }));
+    if (!userData.bio.trim())
+      return setError((prev) => ({ ...prev, bio: "Bio can't be emty" }));
+    updatGlobleUserInfo();
   }
+
   return (
     <Container>
       <Content>
         <Header>
           <h1>Edit Profile</h1>
-          <button onClick={handelClick}>
+          <button onClick={handleClose}>
             <X />
           </button>
         </Header>
@@ -34,7 +50,6 @@ export default function EditProfile({ handelClick, info, userHandleClick }) {
               </Label>
               <HiddenInput type="file" id="upload" />
             </AvatarSection>
-            <p> {`${userData.name} profile`} </p>
           </Avatar>
           <Form onSubmit={onSubmitHandelClick}>
             <InputLabels htmlFor="fullName"> FULL NAME</InputLabels>
@@ -47,6 +62,8 @@ export default function EditProfile({ handelClick, info, userHandleClick }) {
                 updateLocalEditingHandler({ id: "name", value: e.target.value })
               }
             />
+            <p>{error.name ? error.name : ""}</p>
+
             <InputLabels htmlFor="username">USERNAME HANDLE</InputLabels>
             <Input
               type="text"
@@ -60,6 +77,7 @@ export default function EditProfile({ handelClick, info, userHandleClick }) {
                 })
               }
             />
+            <p> {error.usename ? error.usename : ""} </p>
             <InputLabels htmlFor="bio"> BIO </InputLabels>
             <Bio
               value={userData.bio}
@@ -67,11 +85,12 @@ export default function EditProfile({ handelClick, info, userHandleClick }) {
                 updateLocalEditingHandler({ id: "bio", value: e.target.value })
               }
             ></Bio>
+            <p> {error.bio ? error.bio : ""} </p>
             <ButtonsContainer>
-              <Button type="button" onClick={handelClick}>
+              <Button type="button" onClick={handleClose}>
                 Cancel
               </Button>
-              <Button type="submit" onClick={updatGlobleUserInfo}>
+              <Button type="submit" onClick={onSubmitHandelClick}>
                 Save
               </Button>
             </ButtonsContainer>
@@ -123,6 +142,7 @@ const Content = styled.div`
   width: 100%;
   margin: 1rem;
   padding: 1rem;
+  overflow: auto;
 `;
 const Main = styled.div`
   display: flex;
@@ -171,6 +191,12 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  p {
+    color: #a76500;
+    font-size: 0.9rem;
+    padding: 0;
+    margin-top: -10px;
+  }
 `;
 const Input = styled.input`
   border: 2px solid var(--inverse-primary);
@@ -188,7 +214,7 @@ const InputLabels = styled.label`
   color: var(--text-secondary-color);
 `;
 const Bio = styled.textarea`
-  height: 60px;
+  height: 50px;
   border-sizing: border-box;
   padding: 1rem;
   border: 2px solid var(--inverse-primary);
