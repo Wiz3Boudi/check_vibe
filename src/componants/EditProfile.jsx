@@ -1,11 +1,17 @@
 import styled from "styled-components";
 import { X, Camera } from "lucide-react";
-import { useState, useContext } from "react";
-import { ProfileContext } from "../Contexts/profileContext";
+import { useState } from "react";
 
-export default function EditProfile({ handelClick, saveHandler }) {
-  const { info, handleClickInfo } = useContext(ProfileContext);
+export default function EditProfile({ handelClick, info, userHandleClick }) {
+  const [userData, setUserData] = useState(info);
 
+  function updateLocalEditingHandler(e) {
+    const { id, value } = e;
+    setUserData((prev) => ({ ...prev, [id]: value }));
+  }
+  function updatGlobleUserInfo() {
+    userHandleClick(userData);
+  }
   function onSubmitHandelClick(e) {
     e.preventDefault();
   }
@@ -22,47 +28,50 @@ export default function EditProfile({ handelClick, saveHandler }) {
         <Main>
           <Avatar>
             <AvatarSection>
-              <Image src={info.avatarURL} alt="avatar" />
+              <Image src={userData.avatarURL} alt="avatar" />
               <Label htmlFor="upload">
                 <Camera size={30} />
               </Label>
               <HiddenInput type="file" id="upload" />
             </AvatarSection>
-            <p> {`${info.name} profile`} </p>
+            <p> {`${userData.name} profile`} </p>
           </Avatar>
           <Form onSubmit={onSubmitHandelClick}>
             <InputLabels htmlFor="fullName"> FULL NAME</InputLabels>
             <Input
               type="text"
               id="fullName"
-              placeholder={info.name}
-              value={info.name}
+              placeholder={userData.name}
+              value={userData.name}
               onChange={(e) =>
-                handleClickInfo({ id: "name", value: e.target.value })
+                updateLocalEditingHandler({ id: "name", value: e.target.value })
               }
             />
             <InputLabels htmlFor="username">USERNAME HANDLE</InputLabels>
             <Input
               type="text"
               id="username"
-              placeholder={info.username}
-              value={info.username}
+              placeholder={userData.username}
+              value={userData.username}
               onChange={(e) =>
-                handleClickInfo({ id: "username", value: e.target.value })
+                updateLocalEditingHandler({
+                  id: "username",
+                  value: e.target.value,
+                })
               }
             />
             <InputLabels htmlFor="bio"> BIO </InputLabels>
             <Bio
-              value={info.bio}
+              value={userData.bio}
               onChange={(e) =>
-                handleClickInfo({ id: "bio", value: e.target.value })
+                updateLocalEditingHandler({ id: "bio", value: e.target.value })
               }
             ></Bio>
             <ButtonsContainer>
               <Button type="button" onClick={handelClick}>
                 Cancel
               </Button>
-              <Button type="submit" onClick={saveHandler}>
+              <Button type="submit" onClick={updatGlobleUserInfo}>
                 Save
               </Button>
             </ButtonsContainer>

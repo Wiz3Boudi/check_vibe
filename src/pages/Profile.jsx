@@ -8,20 +8,15 @@ import { ProfileContext } from "../Contexts/profileContext";
 
 export default function Profile() {
   const [category, setCategory] = useState("grid");
-  const [openProfileEdit, setOpenProfileEdit] = useState(false);
-  const { info, saveHandler } = useContext(ProfileContext);
-  console.log(info);
-
-  function editProfileToggle() {
-    setOpenProfileEdit((prev) => !prev);
-  }
+  const { info, userHandleClick, isOpen, handleClose } =
+    useContext(ProfileContext);
 
   useEffect(() => {
-    if (openProfileEdit) {
+    if (isOpen) {
       document.body.style.overflow = "hidden";
     }
     return () => (document.body.style.overflow = "unset");
-  }, [openProfileEdit]);
+  }, [isOpen]);
 
   return (
     <Container>
@@ -44,7 +39,7 @@ export default function Profile() {
         ))}
       </Conntention>
       <ProfileOptions>
-        <button onClick={editProfileToggle}>
+        <button onClick={handleClose}>
           <Pen size={20} /> <span>Edit Profile</span>
         </button>
         <button>
@@ -92,10 +87,11 @@ export default function Profile() {
             })}
         </div>
       </Posts>
-      {openProfileEdit && (
+      {isOpen && (
         <EditProfile
-          handelClick={editProfileToggle}
-          saveHandler={saveHandler}
+          handelClick={handleClose}
+          userHandleClick={userHandleClick}
+          info={info}
         />
       )}
     </Container>

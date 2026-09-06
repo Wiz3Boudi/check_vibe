@@ -4,27 +4,27 @@ import styled from "styled-components";
 import Nav from "../../componants/Nav";
 import NewFllowing from "../../componants/NewFllowing";
 import { profile } from "../../data/profile";
-import { useState } from "react";
+import { use, useState } from "react";
 import { ProfileContext } from "../../Contexts/profileContext";
 
 export default function MainLayout() {
   const [profileInfo, setProfileInfo] = useState(profile);
+  const [isOpen, setIsOpen] = useState(false);
 
-  let newState;
-  const profileIngoHandler = (e) => {
-    const { id, value } = e;
-    newState = { ...profileInfo, [id]: value };
-  };
-  function updateState() {
-    if (newState) setProfileInfo(newState);
+  function updateUserInfoState(user) {
+    setProfileInfo(user);
+    onClose();
   }
-
+  function onClose() {
+    setIsOpen((boolean) => !boolean);
+  }
   return (
     <ProfileContext
       value={{
         info: profileInfo,
-        handleClickInfo: profileIngoHandler,
-        saveHandler: updateState,
+        userHandleClick: updateUserInfoState,
+        isOpen: isOpen,
+        handleClose: onClose,
       }}
     >
       <Conntianer>
