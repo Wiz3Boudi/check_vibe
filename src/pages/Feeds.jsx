@@ -21,7 +21,7 @@ export default function Feeds() {
   const handleStoryClick = (id) => {
     setStories((prev) =>
       prev.map((story) =>
-        story.id === id ? { ...story, hasUnseenStory: false } : story,
+        story.id === id ? { ...story, hasUnseenStory: true } : story,
       ),
     );
   };
@@ -31,7 +31,7 @@ export default function Feeds() {
     return [...stories].sort((a, b) => {
       if (a.id === "story-alex") return -1;
       if (b.id === "story-alex") return 1;
-      return Number(b.hasUnseenStory) - Number(a.hasUnseenStory);
+      return b.hasUnseenStory - a.hasUnseenStory;
     });
   }, [stories]);
 
@@ -214,7 +214,7 @@ const StoryItem = styled.div`
 const AvatarRing = styled.div`
   padding: 2px;
   border: 2px solid
-    ${(props) => (props.$hasUnseen ? "var(--primary, #e1306c)" : "#c7c7c7")};
+    ${(props) => (props.$hasUnseen ? "#c7c7c7" : "var(--primary, #e1306c)")};
   border-radius: 50%;
   display: flex;
   align-items: center;
