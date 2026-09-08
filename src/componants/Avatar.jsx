@@ -7,7 +7,7 @@ export default function Avatar() {
     <AvatarCustom>
       <div>
         <div>
-          <img src={profile?.avatarURL} alt="avatar" />
+          <Image src={profile?.avatarURL} alt={profile.avatarURL} />
         </div>
         <button>
           <Plus />
@@ -17,12 +17,6 @@ export default function Avatar() {
   );
 }
 const AvatarCustom = styled.div`
-  img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
   div {
     display: flex;
     align-items: center;
@@ -53,4 +47,10 @@ const AvatarCustom = styled.div`
       cursor: pointer;
     }
   }
+`;
+const Image = styled.img`
+  width: 100px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
 `;

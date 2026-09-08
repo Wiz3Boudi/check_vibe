@@ -10,9 +10,11 @@ import {
   Bookmark,
   ChevronLeft,
   ChevronRight,
+  Plus,
 } from "lucide-react";
 import { useReducer, useState, useMemo } from "react";
 import { updatePostsReducer } from "../reducer/feeds";
+import { profile } from "../data/profile";
 
 export default function Feeds() {
   const [posts, dispatch] = useReducer(updatePostsReducer, postsData);
@@ -38,6 +40,16 @@ export default function Feeds() {
   return (
     <Container>
       <StoriesBar>
+        <Avatar>
+          <div>
+            <div>
+              <img src={profile?.avatarURL} alt={profile.avatarURL} />
+            </div>
+            <button>
+              <Plus />
+            </button>
+          </div>
+        </Avatar>
         {sortedStories.map((story) => (
           <StoryItem key={story.id} onClick={() => handleStoryClick(story.id)}>
             <AvatarRing $hasUnseen={story.hasUnseenStory}>
@@ -191,6 +203,7 @@ const Container = styled.div`
 const StoriesBar = styled.div`
   display: flex;
   align-items: center;
+  align-content: center;
   gap: 12px;
   padding: 12px;
   background-color: #ffffff;
@@ -201,7 +214,44 @@ const StoriesBar = styled.div`
     display: none;
   }
 `;
-
+const Avatar = styled.div`
+div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    border-radius: 50%;
+  }
+  & > div {
+    position: relative;
+  }
+  & > div div {
+    background-color: var(--primary);
+    padding: 2px;
+  }
+  button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display:flex
+    justify-content: center;
+    align-items: center;
+    background: none;
+    svg {
+      background-color: var(--primary);
+      color: white;
+      border: 2px solid white;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+  img{
+    width: 80px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+`;
 const StoryItem = styled.div`
   flex: 0 0 auto;
   display: flex;
@@ -221,8 +271,8 @@ const AvatarRing = styled.div`
   justify-content: center;
 
   img {
-    width: 56px;
-    height: 56px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     object-fit: cover;
   }
