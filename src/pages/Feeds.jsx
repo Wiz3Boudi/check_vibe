@@ -11,10 +11,11 @@ import {
   ChevronLeft,
   ChevronRight,
   Plus,
+  MoreHorizontal,
 } from "lucide-react";
 import { useReducer, useState, useMemo } from "react";
 import { updatePostsReducer } from "../reducer/feeds";
-import { profile } from "../data/profile";
+import MoreHorizontalOptions from "../componants/MoreHorizontalOptions";
 
 export default function Feeds() {
   const [posts, dispatch] = useReducer(updatePostsReducer, postsData);
@@ -40,23 +41,26 @@ export default function Feeds() {
   return (
     <Container>
       <StoriesBar>
-        <Avatar>
-          <div>
-            <div>
-              <img src={profile?.avatarURL} alt={profile.avatarURL} />
-            </div>
-            <button>
-              <Plus />
-            </button>
-          </div>
-        </Avatar>
         {sortedStories.map((story) => (
           <StoryItem key={story.id} onClick={() => handleStoryClick(story.id)}>
-            <AvatarRing $hasUnseen={story.hasUnseenStory}>
-              <img src={story.avatarUrl} alt={story.username || "User story"} />
+            <AvatarRing
+              $hasUnseen={story.hasUnseenStory}
+              className={story.id === "currentUser" ? "currentUser" : ""}
+            >
+              <div>
+                <img
+                  src={story.avatarUrl}
+                  alt={story.username || "User story"}
+                />
+              </div>
+              {story.id === "currentUser" && (
+                <button aria-label="add">
+                  <Plus size={20} />
+                </button>
+              )}
             </AvatarRing>
             <StoryUsername>
-              {story.id === "story-alex" ? "Your story" : story.username}
+              {story.id === "currentUser" ? "Add" : story.username}
             </StoryUsername>
           </StoryItem>
         ))}
@@ -74,6 +78,7 @@ export default function Feeds() {
 function PostCard({ post, dispatch }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const images = post?.images || [];
   const showPrev = currentIndex > 0;
@@ -93,11 +98,19 @@ function PostCard({ post, dispatch }) {
   return (
     <PostArticle>
       <PostHeader>
-        <AuthorAvatar src={post.avatarUrl} alt={post.username} />
-        <AuthorMeta>
-          <AuthorName>{post.username}</AuthorName>
-          {post.location && <Location>{post.location}</Location>}
-        </AuthorMeta>
+        <UserInfo>
+          <AuthorAvatar src={post.avatarUrl} alt={post.username} />
+          <AuthorMeta>
+            <AuthorName>{post.username}</AuthorName>
+            {post.location && <Location>{post.location}</Location>}
+          </AuthorMeta>
+        </UserInfo>
+        <MoreHorizontalContainer>
+          <button onClick={() => setIsOpen((prev) => !prev)}>
+            <MoreHorizontal />
+          </button>
+          {isOpen && <MoreHorizontalOptions />}
+        </MoreHorizontalContainer>
       </PostHeader>
 
       {images.length > 0 && (
@@ -213,43 +226,21 @@ const StoriesBar = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`;
-const Avatar = styled.div`
-div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    border-radius: 50%;
-  }
-  & > div {
+  .currentUser {
     position: relative;
-  }
-  & > div div {
-    background-color: var(--primary);
-    padding: 2px;
-  }
-  button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    display:flex
-    justify-content: center;
-    align-items: center;
-    background: none;
-    svg {
-      background-color: var(--primary);
-      color: white;
-      border: 2px solid white;
+    button {
+      display: flex;
+      algin-items: center;
+      position: absolute;
+      bottom: 0;
+      right: 0;
       border-radius: 50%;
+      background-color: var(--primary);
       cursor: pointer;
+      svg {
+        color: white;
+      }
     }
-  }
-  img{
-    width: 80px;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    object-fit: cover;
   }
 `;
 const StoryItem = styled.div`
@@ -269,10 +260,15 @@ const AvatarRing = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  div {
+    width: fit-content;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+  }
   img {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -304,11 +300,33 @@ const PostArticle = styled.article`
 
 const PostHeader = styled.header`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
 `;
-
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+const MoreHorizontalContainer = styled.div`
+  position: relative;
+  flex: 0.3;
+  display: flex;
+  justify-content: right;
+  button {
+    border-radius: 50%;
+    display: flex;
+    align-items: ceneter;
+    padding: 3px;
+    cursor: pointer;
+    background: none;
+    &:first-child:hover {
+      background: revert;
+    }
+  }
+`;
 const AuthorAvatar = styled.img`
   width: 36px;
   height: 36px;

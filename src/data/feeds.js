@@ -1,10 +1,9 @@
 export const initialStories = [
   {
-    id: "story-alex",
+    id: "currentUser",
     username: "alex_p",
-    avatarUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDP-dYsfyFGuescsIslrgm4scZk-ZVASZcelHaUIZnb2UuoZizJ321kqG_ErsmkCRd7jj8MNtJp0XEDA3paUZUyNGZPIwtiePdQ6Tg4S8fRHYW58dmQ-ayBLQXtYzsKpG1BD0i5qFrHMK-nNokGS5rB0FxOj4944JqT3ZGRrHFfu17qZew63Pg5oLMWapTxmur5aO0vsHZxmIMuZVVsCp_AQhUCHK7yiNoV3F7cDqjjc369IVva1pb24g",
-    hasUnseenStory: false,
+    avatarUrl: "./profile/avatarURL.jpg",
+    hasUnseenStory: true,
     storyImage:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDP-dYsfyFGuescsIslrgm4scZk-ZVASZcelHaUIZnb2UuoZizJ321kqG_ErsmkCRd7jj8MNtJp0XEDA3paUZUyNGZPIwtiePdQ6Tg4S8fRHYW58dmQ-ayBLQXtYzsKpG1BD0i5qFrHMK-nNokGS5rB0FxOj4944JqT3ZGRrHFfu17qZew63Pg5oLMWapTxmur5aO0vsHZxmIMuZVVsCp_AQhUCHK7yiNoV3F7cDqjjc369IVva1pb24g",
     timestamp: "2h ago",
