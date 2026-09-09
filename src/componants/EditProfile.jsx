@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function EditProfile({ handleClose, info, userHandleClick }) {
   const [userData, setUserData] = useState(info);
   const [error, setError] = useState({ name: "", username: "", bio: "" });
+  const [isLoading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -14,8 +15,8 @@ export default function EditProfile({ handleClose, info, userHandleClick }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newErrors = {};
 
+    const newErrors = {};
     if (!userData.name?.trim()) newErrors.name = "Name can't be empty";
     if (!userData.username?.trim())
       newErrors.username = "Username can't be empty";
@@ -26,7 +27,12 @@ export default function EditProfile({ handleClose, info, userHandleClick }) {
       return;
     }
 
-    userHandleClick(userData);
+    setLoading(true);
+
+    setTimeout(() => {
+      userHandleClick(userData);
+    }, 2000);
+    // setLoading(false);
   };
 
   return (
@@ -81,7 +87,7 @@ export default function EditProfile({ handleClose, info, userHandleClick }) {
                 Cancel
               </Button>
               <Button type="submit" $primary>
-                Save
+                {isLoading ? "Saving..." : "Save"}
               </Button>
             </ButtonsContainer>
           </Form>

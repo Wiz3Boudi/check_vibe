@@ -13,6 +13,7 @@ import {
   Plus,
   MoreHorizontal,
 } from "lucide-react";
+
 import { useReducer, useState, useMemo } from "react";
 import { updatePostsReducer } from "../reducer/feeds";
 import MoreHorizontalOptions from "../componants/MoreHorizontalOptions";
@@ -95,6 +96,10 @@ function PostCard({ post, dispatch }) {
     dispatch({ type: "save", id: post.id });
   };
 
+  function isOpenFunction() {
+    setIsOpen((prev) => !prev);
+  }
+
   return (
     <PostArticle>
       <PostHeader>
@@ -106,10 +111,10 @@ function PostCard({ post, dispatch }) {
           </AuthorMeta>
         </UserInfo>
         <MoreHorizontalContainer>
-          <button onClick={() => setIsOpen((prev) => !prev)}>
+          <button className="button" onClick={isOpenFunction}>
             <MoreHorizontal />
           </button>
-          {isOpen && <MoreHorizontalOptions />}
+          {isOpen && <MoreHorizontalOptions handleClick={isOpenFunction} />}
         </MoreHorizontalContainer>
       </PostHeader>
 
@@ -315,7 +320,7 @@ const MoreHorizontalContainer = styled.div`
   flex: 0.3;
   display: flex;
   justify-content: right;
-  button {
+  .button {
     border-radius: 50%;
     display: flex;
     align-items: ceneter;

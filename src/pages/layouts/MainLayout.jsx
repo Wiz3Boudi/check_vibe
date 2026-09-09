@@ -10,7 +10,11 @@ import { ProfileContext } from "../../Contexts/profileContext";
 export default function MainLayout() {
   const [profileInfo, setProfileInfo] = useState(profile);
   const [isOpen, setIsOpen] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
+  function showProfileHandle() {
+    setShowProfile((prev) => !prev);
+  }
   function updateUserInfoState(user) {
     setProfileInfo(user);
     onClose();
@@ -23,8 +27,10 @@ export default function MainLayout() {
       value={{
         info: profileInfo,
         userHandleClick: updateUserInfoState,
-        isOpen: isOpen,
+        isOpen,
         handleClose: onClose,
+        showProfileHandle,
+        showProfile,
       }}
     >
       <Conntianer>
