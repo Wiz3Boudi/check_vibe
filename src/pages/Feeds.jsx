@@ -17,10 +17,25 @@ import {
 import { useReducer, useState, useMemo } from "react";
 import { updatePostsReducer } from "../reducer/feeds";
 import MoreHorizontalOptions from "../componants/MoreHorizontalOptions";
+import ViewProfile from "../componants/ViewProfile";
 
 export default function Feeds() {
   const [posts, dispatch] = useReducer(updatePostsReducer, postsData);
   const [stories, setStories] = useState(StoriesData);
+  const [showProfile, setshowProfile] = useState(false);
+  const [activeProfileId, setActiveProfileId] = useState(null);
+
+  function viewProfileHandClick(id) {
+    setActiveProfileId(id);
+    showProfileToggle(true);
+  }
+  function showProfileToggle(value) {
+    setshowProfile(value);
+  }
+  const activeProfile = useMemo(() => {
+    const profile = posts.find((p) => p.id === activeProfileId);
+    return profile;
+  }, [activeProfileId]);
 
   const handleStoryClick = (id) => {
     setStories((prev) =>
@@ -29,7 +44,6 @@ export default function Feeds() {
       ),
     );
   };
-
   const sortedStories = useMemo(() => {
     if (!stories) return [];
     return [...stories].sort((a, b) => {
@@ -66,17 +80,29 @@ export default function Feeds() {
           </StoryItem>
         ))}
       </StoriesBar>
+      {showProfile && (
+        <ViewProfile
+          data={activeProfile}
+          showProfileToggle={showProfileToggle}
+        />
+      )}
 
       <FeedList>
         {posts?.map((post) => (
-          <PostCard key={post.id} post={post} dispatch={dispatch} />
+          <PostCard
+            key={post.id}
+            post={post}
+            dispatch={dispatch}
+            idHandClick={viewProfileHandClick}
+            showProfile={showProfile}
+          />
         ))}
       </FeedList>
     </Container>
   );
 }
 
-function PostCard({ post, dispatch }) {
+function PostCard({ post, dispatch, idHandClick }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -104,7 +130,11 @@ function PostCard({ post, dispatch }) {
     <PostArticle>
       <PostHeader>
         <UserInfo>
-          <AuthorAvatar src={post.avatarUrl} alt={post.username} />
+          <AuthorAvatar
+            src={post.avatarUrl}
+            alt={post.username}
+            onClick={() => idHandClick(post.id)}
+          />
           <AuthorMeta>
             <AuthorName>{post.username}</AuthorName>
             {post.location && <Location>{post.location}</Location>}
@@ -117,7 +147,6 @@ function PostCard({ post, dispatch }) {
           {isOpen && <MoreHorizontalOptions handleClick={isOpenFunction} />}
         </MoreHorizontalContainer>
       </PostHeader>
-
       {images.length > 0 && (
         <MediaContainer>
           <MediaImage

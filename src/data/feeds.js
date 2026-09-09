@@ -134,10 +134,29 @@ export const initialPosts = [
     likesCount: 1245,
     isLiked: true,
     isSaved: false,
+    isFollowing: true,
+    bio: "'Hey my name is Rata, I'm a model text me or comment on one of my posts",
     caption:
       "Finding peace in the middle of the bustling city. The cherry blossoms are finally blooming! 🌸✨",
     timestamp: "2 HOURS AGO",
     commentsCount: 48,
+    connectingInfo: [
+      {
+        id: "1wd",
+        text: "POST",
+        count: 342,
+      },
+      {
+        id: "2adf",
+        text: "FOLLOWERS",
+        count: 12500,
+      },
+      {
+        id: "3afsdf",
+        text: "FOLLOWING",
+        count: 489,
+      },
+    ],
     comments: [
       {
         id: "c1",
@@ -173,10 +192,29 @@ export const initialPosts = [
     likesCount: 892,
     isLiked: false,
     isSaved: true,
+    isFollowing: false,
+    bio: "'Hey my name is Rata, I'm a model text me or comment on one of my posts",
     caption:
       "Exploring new light mode paradigms. Loving the airy feel and crisp typography. What do you think of this direction? 🎨💻",
     timestamp: "5 HOURS AGO",
     commentsCount: 12,
+    connectingInfo: [
+      {
+        id: "1dfsd",
+        text: "POST",
+        count: 342,
+      },
+      {
+        id: "gsfsa2",
+        text: "FOLLOWERS",
+        count: 12500,
+      },
+      {
+        id: "3sfasg",
+        text: "FOLLOWING",
+        count: 489,
+      },
+    ],
     isMultiImage: true,
     comments: [
       {
@@ -200,8 +238,27 @@ export const initialPosts = [
       "https://lh3.googleusercontent.com/aida-public/AB6AXuBm15j-YY2tI2pTrT_-pgr5lCL_nukHyqzgD26JAERPOIiKXksnltJC-Q8YbENI575AfsGmKDqZ1Req3y9ktEfiyX-6Q0Z__h9YjUm3rRW9afGCAjeZzscZScHyyKLacp4Al66hIa0TbBW5wjbtPFtpd_1pZ4A3QBUSzIngsEIcxfLyC3KQK34MWnbUal7bh3aKAMVLgYZUMyo-_TeaNppORU_xN6ZkcuORNE659zDT9bK0p7H9DSXvbQ",
     ],
     likesCount: 2410,
+    connectingInfo: [
+      {
+        id: "1sadfdf",
+        text: "POST",
+        count: 342,
+      },
+      {
+        id: "2dsfasd",
+        text: "FOLLOWERS",
+        count: 12500,
+      },
+      {
+        id: "3sadfs",
+        text: "FOLLOWING",
+        count: 489,
+      },
+    ],
     isLiked: false,
     isSaved: false,
+    isFollowing: false,
+    bio: "'Hey my name is Rata, I'm a model text me or comment on one of my posts",
     caption:
       "Chasing sunset horizons where the sky glows in electric violet and soft peach. Golden hour perfection. 🌅💜",
     timestamp: "1 DAY AGO",
