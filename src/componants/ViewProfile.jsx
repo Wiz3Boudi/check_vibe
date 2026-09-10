@@ -121,7 +121,18 @@ const Info = styled.div`
   align-items: center;
   justify-content: space-around;
 `;
-const Section = styled.div``;
+const Section = styled.div`
+  width: 100%;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  jsutify-content: space-around;
+  align-content: space-around;
+  button {
+    display: block;
+  }
+`;
 const PostsContainer = styled.div``;
 const PostsBar = styled.div`
   display: flex;
