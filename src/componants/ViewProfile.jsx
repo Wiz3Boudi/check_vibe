@@ -75,6 +75,14 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
               );
             })}
           </PostsBar>
+          <hr />
+          <PostsBody>
+            {data.images.map((img) => (
+              <Post key={img}>
+                <PostImage src={img} alt={img} />
+              </Post>
+            ))}
+          </PostsBody>
         </PostsContainer>
       </Wrapper>
     </Container>
@@ -194,7 +202,7 @@ const PostsBar = styled.div`
   align-items: center;
   justify-content: space-between;
   .active {
-    border-bottom: 3px solid var(--primary);
+    border-bottom: 2px solid var(--primary);
     color: var(--primary);
   }
 `;
@@ -205,10 +213,24 @@ const Category = styled.button`
   align-items: center;
   background: none;
   padding: 5px 0;
-  border-bottom: 3px solid transparent;
+  border-bottom: 2px solid transparent;
   svg {
     cursor: pointer;
   }
 `;
-const Posts = styled.div``;
-const Post = styled.div``;
+const PostsBody = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+`;
+const Post = styled.div`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+`;
+const PostImage = styled.img`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+`;
