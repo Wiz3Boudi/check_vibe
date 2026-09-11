@@ -4,8 +4,17 @@ import { useEffect, useState } from "react";
 import { Icons } from "../data/profile";
 
 export default function ViewProfile({ data, showProfileToggle, showProfile }) {
-  const [activeCategroy, setActiveCategrory] = useState("gird");
+  const [activeCategroy, setActiveCategrory] = useState("grid");
+  const [isExpanded, setIsExpanded] = useState(true);
 
+  const converted = data.username
+    .split("")
+    .map((item, index) => {
+      return index === 0 ? item.toUpperCase() : item;
+    })
+    .join("");
+
+  console.log(data.images);
   useEffect(() => {
     document.body.style.overflow = showProfile ? "hidden" : "unset";
     return () => {
@@ -22,25 +31,33 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
           </Close>
           <Avatar>
             <AvatarImg src={data.avatarUrl} alt={data.avatarUrl} />
-            <Name>{data.username}</Name>
-            <Bio> {data.bio} </Bio>
+            <Name>{converted}</Name>
+            <Bio
+              onClick={() => setIsExpanded((prev) => !prev)}
+              $isExpanded={isExpanded}
+            >
+              {data.bio}
+            </Bio>
             <Username> {`@${data.username}`} </Username>
           </Avatar>
         </Header>
         <ProfileConnection>
-          {data.connectingInfo.map((p) => (
-            <Info key={p.id}>
-              <h4> {p.count} </h4>
-              <p> {p.text} </p>
-            </Info>
-          ))}
+          {data.connectingInfo.map((p) => {
+            const count = p.count.toLocaleString();
+            return (
+              <Info key={p.id}>
+                <h4> {count} </h4>
+                <p> {p.text} </p>
+              </Info>
+            );
+          })}
         </ProfileConnection>
         <Section>
           <button aria-label="follow">
             {data.isFollowing ? "Following" : "Follow"}
           </button>
           <button aria-label="share">
-            <Share /> Share
+            <Share size={18} /> Share
           </button>
         </Section>
         <PostsContainer>
@@ -99,38 +116,76 @@ const Avatar = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 10px;
 `;
 const AvatarImg = styled.img`
-  width: 150px;
+  width: 130px;
   aspect-ratio: 1/1;
   object-fit: cocer;
   border-radius: 50%;
-  curosr: pointer;
+  cursor: pointer;
+  border: 2px solid var(--primary);
 `;
 const Name = styled.h3``;
-const Bio = styled.p``;
-const Username = styled.h4``;
+const Bio = styled.p`
+  text-align: center;
+  ${(props) =>
+    props.$isExpanded &&
+    `
+    transition: all 1m ease-in-out;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    `}
+`;
+const Username = styled.button`
+  padding: 7px;
+  border-radius: 20px;
+  color: var(--primary);
+`;
 const ProfileConnection = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
 `;
 const Info = styled.div`
-  diplay: flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  p {
+    font-size: 0.9rem;
+    color: var(--text-secondary-color);
+  }
 `;
 const Section = styled.div`
-  width: 100%;
-  background-color: red;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  jsutify-content: space-around;
-  align-content: space-around;
+  justify-content: space-around;
   button {
-    display: block;
+    flex: 0.45;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    gap: 5px;
+    font-size: 1.1rem;
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+    color: var(--primary);
+    background-color: transparent;
+    cursor: pointer;
+  }
+  button:first-child {
+    transition:
+      background-color 1s ease-in-out,
+      color 1s ease-in-out;
+    &:hover {
+      background-color: var(--primary);
+      color: white;
+    }
   }
 `;
 const PostsContainer = styled.div``;
@@ -140,6 +195,7 @@ const PostsBar = styled.div`
   justify-content: space-between;
   .active {
     border-bottom: 3px solid var(--primary);
+    color: var(--primary);
   }
 `;
 const Category = styled.button`

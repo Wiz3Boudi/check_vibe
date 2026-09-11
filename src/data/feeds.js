@@ -135,7 +135,7 @@ export const initialPosts = [
     isLiked: true,
     isSaved: false,
     isFollowing: true,
-    bio: "'Hey my name is Rata, I'm a model text me or comment on one of my posts",
+    bio: "Hey my name is Rata, I'm a model text me or comment on one of my posts",
     caption:
       "Finding peace in the middle of the bustling city. The cherry blossoms are finally blooming! 🌸✨",
     timestamp: "2 HOURS AGO",
@@ -193,7 +193,7 @@ export const initialPosts = [
     isLiked: false,
     isSaved: true,
     isFollowing: false,
-    bio: "'Hey my name is Rata, I'm a model text me or comment on one of my posts",
+    bio: "Hey my name is Rata, I'm a model text me or comment on one of my posts",
     caption:
       "Exploring new light mode paradigms. Loving the airy feel and crisp typography. What do you think of this direction? 🎨💻",
     timestamp: "5 HOURS AGO",
@@ -258,7 +258,7 @@ export const initialPosts = [
     isLiked: false,
     isSaved: false,
     isFollowing: false,
-    bio: "'Hey my name is Rata, I'm a model text me or comment on one of my posts",
+    bio: "Hey my name is Rata, I'm a model text me or comment on one of my posts",
     caption:
       "Chasing sunset horizons where the sky glows in electric violet and soft peach. Golden hour perfection. 🌅💜",
     timestamp: "1 DAY AGO",
