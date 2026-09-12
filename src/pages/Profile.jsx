@@ -254,7 +254,6 @@ const PostCard = styled.div`
   aspect-ratio: 1 / 1;
   overflow: hidden;
   cursor: pointer;
-
   img {
     width: 100%;
     height: 100%;

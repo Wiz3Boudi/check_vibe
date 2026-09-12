@@ -32,7 +32,6 @@ export default function EditProfile({ handleClose, info, userHandleClick }) {
     setTimeout(() => {
       userHandleClick(userData);
     }, 2000);
-    // setLoading(false);
   };
 
   return (

@@ -14,7 +14,6 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
     })
     .join("");
 
-  console.log(data.images);
   useEffect(() => {
     document.body.style.overflow = showProfile ? "hidden" : "unset";
     return () => {
@@ -22,6 +21,15 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
     };
   }, [showProfile]);
 
+  const elment = document.getElementsByClassName("post");
+  const hover = document.getElementsByClassName("hover");
+
+  console.log(elment);
+  // elment.map((e) => {
+  //   e.addEventListener("hover", () => {
+  //     console.log("hi");
+  //   });
+  // });
   return (
     <Container>
       <Wrapper>
@@ -78,7 +86,10 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
           <hr />
           <PostsBody>
             {data.images.map((img) => (
-              <Post key={img}>
+              <Post key={img} className="post">
+                <HoverlyConcainer className="hover">
+                  <button>{data.likesCount}</button>
+                </HoverlyConcainer>
                 <PostImage src={img} alt={img} />
               </Post>
             ))}
@@ -138,6 +149,7 @@ const AvatarImg = styled.img`
 const Name = styled.h3``;
 const Bio = styled.p`
   text-align: center;
+  margin: 0 1rem;
   ${(props) =>
     props.$isExpanded &&
     `
@@ -225,12 +237,36 @@ const PostsBody = styled.div`
   gap: 5px;
   margin-top: 10px;
 `;
-const Post = styled.div`
-  width: 100%;
+const HoverlyConcainer = styled.div`
+  position: absolute;
+  z-index: 1;
   aspect-ratio: 1 / 1;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 `;
+
+const Post = styled.div`
+  max-width: 300px;
+  max-height: 300px; /* Added missing colon */
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  &:hover ${HoverlyConcainer} {
+    opacity: 1;
+  }
+`;
+
 const PostImage = styled.img`
   width: 100%;
   aspect-ratio: 1 / 1;
-  cursor: pointer;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+  ${Post}:hover & {
+    transform: scale(1.08);
+  }
 `;
