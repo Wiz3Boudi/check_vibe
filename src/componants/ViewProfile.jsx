@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Share, X } from "lucide-react";
+import { Share, X, Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Icons } from "../data/profile";
 
@@ -21,15 +21,6 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
     };
   }, [showProfile]);
 
-  const elment = document.getElementsByClassName("post");
-  const hover = document.getElementsByClassName("hover");
-
-  console.log(elment);
-  // elment.map((e) => {
-  //   e.addEventListener("hover", () => {
-  //     console.log("hi");
-  //   });
-  // });
   return (
     <Container>
       <Wrapper>
@@ -85,14 +76,25 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
           </PostsBar>
           <hr />
           <PostsBody>
-            {data.images.map((img) => (
-              <Post key={img} className="post">
-                <HoverlyConcainer className="hover">
-                  <button>{data.likesCount}</button>
-                </HoverlyConcainer>
-                <PostImage src={img} alt={img} />
-              </Post>
-            ))}
+            {data.images.map((img) => {
+              const likesCount = new Intl.NumberFormat("en", {
+                notation: "compact",
+                compactDisplay: "short",
+                maximumFractionDigits: 1,
+              })
+                .format(data.likesCount)
+                .toLocaleLowerCase();
+              return (
+                <Post key={img} className="post">
+                  <HoverlyConcainer className="hover">
+                    <button>
+                      <Heart size={16} fill="white" /> {likesCount}
+                    </button>
+                  </HoverlyConcainer>
+                  <PostImage src={img} alt={img} />
+                </Post>
+              );
+            })}
           </PostsBody>
         </PostsContainer>
       </Wrapper>
@@ -101,10 +103,18 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
 }
 const Container = styled.div`
   position: fixed;
-  inset: 0;
+  top: 0;
+  bottom: 0;
   z-index: 2000;
   background-color: rgba(0, 0, 0, 0.4);
   padding: 5px;
+  max-height: 100vh;
+  overflow: auto;
+  padding-bottom: 2rem;
+  @media (min-width: 768px) {
+    width: 300px;
+    right: 0;
+  }
 `;
 const Wrapper = styled.div`
   background-color: white;
@@ -242,9 +252,20 @@ const HoverlyConcainer = styled.div`
   z-index: 1;
   aspect-ratio: 1 / 1;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.4);
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: white;
+    background: none;
+    font-size: 0.9rem;
+  }
 `;
 
 const Post = styled.div`
