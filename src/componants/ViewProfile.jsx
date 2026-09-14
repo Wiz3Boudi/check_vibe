@@ -76,7 +76,7 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
           </PostsBar>
           <hr />
           <PostsBody>
-            {data.images.map((img) => {
+            {data.images.map((img, index) => {
               const likesCount = new Intl.NumberFormat("en", {
                 notation: "compact",
                 compactDisplay: "short",
@@ -85,8 +85,8 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
                 .format(data.likesCount)
                 .toLocaleLowerCase();
               return (
-                <Post key={img} className="post">
-                  <HoverlyConcainer className="hover">
+                <Post key={img + index}>
+                  <HoverlyConcainer>
                     <button>
                       <Heart size={16} fill="white" /> {likesCount}
                     </button>
@@ -105,11 +105,9 @@ const Container = styled.div`
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 2000;
-  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1001;
+  background-color: rgb(0, 0, 0, 0.4);
   padding: 5px;
-  max-height: 100vh;
-  overflow: auto;
   padding-bottom: 2rem;
   @media (min-width: 768px) {
     width: 300px;
@@ -124,6 +122,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-height: 100vh;
+  overflow: auto;
+  scrollbar-width: none;
 `;
 const Header = styled.div`
   display: flex;
@@ -236,9 +237,7 @@ const Category = styled.button`
   background: none;
   padding: 5px 0;
   border-bottom: 2px solid transparent;
-  svg {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 const PostsBody = styled.div`
   display: grid;

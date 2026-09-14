@@ -84,6 +84,7 @@ export default function Feeds() {
         <ViewProfile
           data={activeProfile}
           showProfileToggle={showProfileToggle}
+          showProfile={showProfile}
         />
       )}
 
