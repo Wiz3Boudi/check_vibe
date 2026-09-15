@@ -8,6 +8,7 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
   const [activeCategroy, setActiveCategrory] = useState("grid");
   const [isExpanded, setIsExpanded] = useState(true);
   const [displayImage, setDisplayImage] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const converted = data.username
     .split("")
@@ -19,7 +20,12 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
     console.log("hello");
     setDisplayImage((prev) => !prev);
   }
-
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLoading(false);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
   useEffect(() => {
     document.body.style.overflow = showProfile ? "hidden" : "unset";
     return () => {
@@ -28,93 +34,104 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
   }, [showProfile]);
 
   return (
-    <Container>
-      <Wrapper>
-        <Header>
-          <Close onClick={() => showProfileToggle(false)} aria-label="close">
-            <X />
-          </Close>
-          <Avatar>
-            <AvatarImg
-              src={data.avatarUrl}
-              alt={data.avatarUrl}
-              onClick={displayImageHandleClick}
-            />
-            {displayImage && (
-              <DisplayImage
-                src={data.avatarUrl}
-                displayImageHandleClick={displayImageHandleClick}
-              />
-            )}
-            <Name>{converted}</Name>
-            <Bio
-              onClick={() => setIsExpanded((prev) => !prev)}
-              $isExpanded={isExpanded}
-            >
-              {data.bio}
-            </Bio>
-            <Username> {`@${data.username}`} </Username>
-          </Avatar>
-        </Header>
-        <ProfileConnection>
-          {data.connectingInfo.map((p) => {
-            const count = p.count.toLocaleString();
-            return (
-              <Info key={p.id}>
-                <h4> {count} </h4>
-                <p> {p.text} </p>
-              </Info>
-            );
-          })}
-        </ProfileConnection>
-        <Section>
-          <button aria-label="follow">
-            {data.isFollowing ? "Following" : "Follow"}
-          </button>
-          <button aria-label="share">
-            <Share size={18} /> Share
-          </button>
-        </Section>
-        <PostsContainer>
-          <PostsBar>
-            {Icons.map(({ id, icon }) => {
-              const Icon = icon;
-              return (
-                <Category
-                  key={id}
-                  onClick={() => setActiveCategrory(id)}
-                  className={id === activeCategroy ? "active" : ""}
+    <>
+      {isLoading ? (
+        <Loading>
+          <h3>Loading...</h3>
+        </Loading>
+      ) : (
+        <Container>
+          <Wrapper>
+            <Header>
+              <Close
+                onClick={() => showProfileToggle(false)}
+                aria-label="close"
+              >
+                <X />
+              </Close>
+              <Avatar>
+                <AvatarImg
+                  src={data.avatarUrl}
+                  alt={data.avatarUrl}
+                  onClick={displayImageHandleClick}
+                />
+                {displayImage && (
+                  <DisplayImage
+                    src={data.avatarUrl}
+                    displayImageHandleClick={displayImageHandleClick}
+                  />
+                )}
+                <Name>{converted}</Name>
+                <Bio
+                  onClick={() => setIsExpanded((prev) => !prev)}
+                  $isExpanded={isExpanded}
                 >
-                  <Icon />
-                </Category>
-              );
-            })}
-          </PostsBar>
-          <hr />
-          <PostsBody>
-            {data.images.map((img, index) => {
-              const likesCount = new Intl.NumberFormat("en", {
-                notation: "compact",
-                compactDisplay: "short",
-                maximumFractionDigits: 1,
-              })
-                .format(data.likesCount)
-                .toLocaleLowerCase();
-              return (
-                <Post key={img + index}>
-                  <HoverlyConcainer>
-                    <button>
-                      <Heart size={16} fill="white" /> {likesCount}
-                    </button>
-                  </HoverlyConcainer>
-                  <PostImage src={img} alt={img} />
-                </Post>
-              );
-            })}
-          </PostsBody>
-        </PostsContainer>
-      </Wrapper>
-    </Container>
+                  {data.bio}
+                </Bio>
+                <Username> {`@${data.username}`} </Username>
+              </Avatar>
+            </Header>
+            <ProfileConnection>
+              {data.connectingInfo.map((p) => {
+                const count = p.count.toLocaleString();
+                return (
+                  <Info key={p.id}>
+                    <h4> {count} </h4>
+                    <p> {p.text} </p>
+                  </Info>
+                );
+              })}
+            </ProfileConnection>
+            <Section>
+              <button aria-label="follow">
+                {data.isFollowing ? "Following" : "Follow"}
+              </button>
+              <button aria-label="share">
+                <Share size={18} /> Share
+              </button>
+            </Section>
+            <PostsContainer>
+              <PostsBar>
+                {Icons.map(({ id, icon }) => {
+                  const Icon = icon;
+                  return (
+                    <Category
+                      key={id}
+                      onClick={() => setActiveCategrory(id)}
+                      className={id === activeCategroy ? "active" : ""}
+                    >
+                      <Icon />
+                    </Category>
+                  );
+                })}
+              </PostsBar>
+              <hr />
+              <PostsBody>
+                {data.images.map((img, index) => {
+                  const likesCount = new Intl.NumberFormat("en", {
+                    notation: "compact",
+                    compactDisplay: "short",
+                    maximumFractionDigits: 1,
+                  })
+                    .format(data.likesCount)
+                    .toLocaleLowerCase();
+                  return (
+                    <Post key={img + index}>
+                      <HoverlyConcainer>
+                        <button>
+                          <Heart size={16} fill="white" /> {likesCount}
+                        </button>
+                      </HoverlyConcainer>
+                      <PostImage src={img} alt={img} />
+                    </Post>
+                  );
+                })}
+              </PostsBody>
+            </PostsContainer>
+          </Wrapper>
+        </Container>
+      )}
+    </>
   );
 }
 const Container = styled.div`
@@ -126,8 +143,25 @@ const Container = styled.div`
   padding: 5px;
   padding-bottom: 2rem;
   @media (min-width: 768px) {
-    width: 300px;
+    max-width: 450px;
     right: 0;
+    background-color: white;
+  }
+`;
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1003;
+  @media (min-width: 768px) {
+    max-width: 450px;
+    right: 0;
+    background-color: white;
   }
 `;
 const Wrapper = styled.div`
