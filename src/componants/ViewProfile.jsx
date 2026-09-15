@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { Share, X, Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Icons } from "../data/profile";
+import DisplayImage from "./DisplayImage";
 
 export default function ViewProfile({ data, showProfileToggle, showProfile }) {
   const [activeCategroy, setActiveCategrory] = useState("grid");
   const [isExpanded, setIsExpanded] = useState(true);
+  const [displayImage, setDisplayImage] = useState(false);
 
   const converted = data.username
     .split("")
@@ -13,6 +15,10 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
       return index === 0 ? item.toUpperCase() : item;
     })
     .join("");
+  function displayImageHandleClick() {
+    console.log("hello");
+    setDisplayImage((prev) => !prev);
+  }
 
   useEffect(() => {
     document.body.style.overflow = showProfile ? "hidden" : "unset";
@@ -29,7 +35,17 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
             <X />
           </Close>
           <Avatar>
-            <AvatarImg src={data.avatarUrl} alt={data.avatarUrl} />
+            <AvatarImg
+              src={data.avatarUrl}
+              alt={data.avatarUrl}
+              onClick={displayImageHandleClick}
+            />
+            {displayImage && (
+              <DisplayImage
+                src={data.avatarUrl}
+                displayImageHandleClick={displayImageHandleClick}
+              />
+            )}
             <Name>{converted}</Name>
             <Bio
               onClick={() => setIsExpanded((prev) => !prev)}
