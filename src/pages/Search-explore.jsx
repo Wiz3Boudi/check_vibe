@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { vibeTags, profileGridPhotos } from "../data/Search";
-import { Heart } from "lucide-react";
+import { Heart, Search } from "lucide-react";
 
 export default function Explore() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,6 +20,11 @@ export default function Explore() {
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Explore vibes Creativity, Sports..."
         />
+        {!searchTerm.trim() && (
+          <button>
+            <Search color="#8f8d92" />
+          </button>
+        )}
       </Form>
       <HashtagesContainer>
         {vibeTags.map((item, index) => {
@@ -62,15 +67,26 @@ const Container = styled.div`
 `;
 const Form = styled.form`
   margin-top: 1rem;
+  position: relative;
+  widht: fit-content;
+  button {
+    position: absolute;
+    inset: 0;
+    left: 5px;
+    width: fit-content;
+    background: none;
+  }
 `;
 const Input = styled.input`
   width: 100%;
   height: 40px;
   border-radius: 10px;
   padding: 0 10px;
+  padding-left: 30px;
   font-size: 1.02rem;
   outline: none;
   border: 1px solid var(--outline-variant);
+  color: var(--text-secondary-color);
   &:focus {
     border-color: var(--primary);
   }
