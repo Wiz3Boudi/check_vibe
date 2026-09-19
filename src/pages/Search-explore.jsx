@@ -5,6 +5,7 @@ import { Heart } from "lucide-react";
 
 export default function Explore() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeTag, setActiveTag] = useState(0);
 
   function onSubmitHandler(e) {
     e.preventDefault();
@@ -21,9 +22,17 @@ export default function Explore() {
         />
       </Form>
       <HashtagesContainer>
-        {vibeTags.map((item) => (
-          <Button key={item}> {item} </Button>
-        ))}
+        {vibeTags.map((item, index) => {
+          return (
+            <Button
+              key={item}
+              className={index === activeTag ? "activeTag" : ""}
+              onClick={() => setActiveTag(index)}
+            >
+              {item}
+            </Button>
+          );
+        })}
       </HashtagesContainer>
       <Content>
         {profileGridPhotos.map((item, index) => {
@@ -72,6 +81,9 @@ const HashtagesContainer = styled.div`
   overflow-x: auto;
   scrollbar-width: none;
   margin: 10px 0;
+  .activeTag {
+    color: var(--primary);
+  }
 `;
 const Button = styled.button`
   border: 1px solid var(--outline-variant);
@@ -79,12 +91,15 @@ const Button = styled.button`
   border-radius: 20px;
   background-color: white;
   cursor: pointer;
+  &:hover {
+    background-color: #f8f1f1e3;
+  }
 `;
 const Content = styled.section`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 100px;
-  gap: 3px;
+  gap: 5px;
   @media (min-width: 768px) {
     grid-auto-rows: 100px;
   }
