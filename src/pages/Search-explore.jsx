@@ -2,14 +2,25 @@ import { useState } from "react";
 import styled from "styled-components";
 import { vibeTags, profileGridPhotos } from "../data/Search";
 import { Heart, Search } from "lucide-react";
+import ExploreAccount from "../componants/ExploreAccount";
+import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
 
 export default function Explore() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTag, setActiveTag] = useState(0);
+  const [isOpen, setOpen] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  function viewAccountToggle(id) {
+    setUserId(id);
+    setOpen((prev) => !prev);
+  }
 
   function onSubmitHandler(e) {
     e.preventDefault();
   }
+  const userData = profileGridPhotos.find((x) => x.id === userId);
+  useLockBodyScroll(isOpen);
 
   return (
     <Container>
@@ -43,7 +54,11 @@ export default function Explore() {
         {profileGridPhotos.map((item, index) => {
           const isLarge = index === 1 || index === 7;
           return (
-            <Card key={item.id} className={isLarge ? "large" : ""}>
+            <Card
+              key={item.id}
+              className={isLarge ? "large" : ""}
+              onClick={() => viewAccountToggle(item.id)}
+            >
               <OverlayWrapper>
                 <button aria-label="likes count">
                   <Heart size={16} fill="white" /> <span>{item.likes}</span>
@@ -54,6 +69,7 @@ export default function Explore() {
           );
         })}
       </Content>
+      {isOpen && <ExploreAccount onClick={viewAccountToggle} user={userData} />}
     </Container>
   );
 }
@@ -66,9 +82,9 @@ const Container = styled.div`
   gap: 10px;
 `;
 const Form = styled.form`
-  margin-top: 1rem;
+  margin-top: 10px;
   position: relative;
-  widht: fit-content;
+  width: 100%;
   button {
     position: absolute;
     inset: 0;
@@ -87,8 +103,10 @@ const Input = styled.input`
   outline: none;
   border: 1px solid var(--outline-variant);
   color: var(--text-secondary-color);
+  background-color: #fffbff;
   &:focus {
     border-color: var(--primary);
+    background-color: white;
   }
 `;
 const HashtagesContainer = styled.div`
@@ -139,7 +157,7 @@ const OverlayWrapper = styled.div`
     color: white;
     display: flex;
     align-items: center;
-    justify-content: cneter;
+    justify-content: center;
     gap: 3px;
     span {
       font-weight: 600;

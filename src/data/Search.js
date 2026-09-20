@@ -21,6 +21,7 @@ export const profileGridPhotos = [
     isMulti: false,
     isVideo: false,
     caption: "Aesthetic morning routine with iced latte & journal ☕📖",
+    name: "It's Me",
   },
   {
     id: "grid-2",
@@ -31,6 +32,7 @@ export const profileGridPhotos = [
     isMulti: false,
     isVideo: false,
     caption: "Vibrant violet twilight over the ocean waves 🌅",
+    name: "It's Me",
   },
   {
     id: "grid-3",
@@ -42,6 +44,7 @@ export const profileGridPhotos = [
     isVideo: false,
     caption:
       "OOTD: Minimalist crisp white shirt with electric purple accent bag 💜",
+    name: "It's Me",
   },
   {
     id: "grid-4",
@@ -52,6 +55,7 @@ export const profileGridPhotos = [
     isMulti: false,
     isVideo: false,
     caption: "Clean geometry and daylight in the city center 🏢",
+    name: "It's Me",
   },
   {
     id: "grid-5",
@@ -62,6 +66,7 @@ export const profileGridPhotos = [
     isMulti: false,
     isVideo: true,
     caption: "Midday plaza kickflips in the sun 🛹",
+    name: "It's Me",
   },
   {
     id: "grid-6",
@@ -72,6 +77,7 @@ export const profileGridPhotos = [
     isMulti: false,
     isVideo: false,
     caption: "Crisp work setup with natural daylight 💻🌿",
+    name: "It's Me",
   },
   {
     id: "exp-1",
@@ -82,6 +88,7 @@ export const profileGridPhotos = [
     isMulti: false,
     isVideo: false,
     caption: "Spring cherry blossoms blooming in Kyoto 🌸",
+    name: "It's Me",
   },
   {
     id: "exp-2",
@@ -92,6 +99,7 @@ export const profileGridPhotos = [
     isMulti: true,
     isVideo: false,
     caption: "Modern UI/UX design studio aesthetics 💻",
+    name: "It's Me",
   },
   {
     id: "exp-3",
@@ -102,5 +110,6 @@ export const profileGridPhotos = [
     isMulti: false,
     isVideo: true,
     caption: "Morning matcha latte perfection in the city 🍵",
+    name: "It's Me",
   },
 ];
