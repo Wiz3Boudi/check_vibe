@@ -69,7 +69,9 @@ export default function Explore() {
           );
         })}
       </Content>
-      {isOpen && <ExploreAccount onClick={viewAccountToggle} user={userData} />}
+      {isOpen && (
+        <ExploreAccount onClick={viewAccountToggle} userData={userData} />
+      )}
     </Container>
   );
 }
