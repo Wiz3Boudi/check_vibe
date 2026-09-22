@@ -70,7 +70,7 @@ export default function Explore() {
         })}
       </Content>
       {isOpen && (
-        <ExploreAccount onClick={viewAccountToggle} userData={userData} />
+        <ExploreAccount onClose={viewAccountToggle} userData={userData} />
       )}
     </Container>
   );

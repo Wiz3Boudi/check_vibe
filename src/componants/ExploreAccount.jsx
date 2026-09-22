@@ -54,13 +54,14 @@ export default function ExploreAccount({ userData, onClose }) {
                 </IconButton>
               </LeftSideIconsWrapper>
 
-              <RightSideIconsWrapper>
+              <RightSideIconsWrapper className="bookmark">
                 <IconButton onClick={handleToggleSave} aria-label="Save post">
                   <Bookmark
                     fill={post.isSaved ? "#000000" : "none"}
                     color={post.isSaved ? "#000000" : "#000000"}
                   />
                 </IconButton>
+                <p> {post.isSaved ? "Saved" : "Save"}</p>
               </RightSideIconsWrapper>
             </ReactionIcons>
 
@@ -180,6 +181,11 @@ const ReactionIcons = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
+  .bookmark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const LeftSideIconsWrapper = styled.div`
