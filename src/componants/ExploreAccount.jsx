@@ -91,6 +91,12 @@ const Container = styled.div`
   height: 100vh;
   overflow-y: auto;
   scrollbar-width: none;
+  @media (min-width: 768px) {
+    width: 425px;
+    inset: auto;
+    right: 10px;
+    top: 0;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -185,6 +191,12 @@ const ReactionIcons = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    p {
+      min-width: 45px;
+      text-align: center;
+      margin: 0;
+      font-size: 0.8rem;
+    }
   }
 `;
 
@@ -202,7 +214,7 @@ const RightSideIconsWrapper = styled.div`
 const LikesCountWrapper = styled.div`
   display: flex;
   gap: 6px;
-
+  margin-top: -10px;
   span:first-child {
     font-weight: 600;
     font-size: 1.1rem;
