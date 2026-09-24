@@ -11,9 +11,9 @@ export default function Explore() {
   const [isOpen, setOpen] = useState(false);
   const [userId, setUserId] = useState(null);
 
-  function viewAccountToggle(id) {
+  function viewAccountToggle({ id, value }) {
     setUserId(id);
-    setOpen((prev) => !prev);
+    setOpen(value);
   }
 
   function onSubmitHandler(e) {
@@ -57,7 +57,7 @@ export default function Explore() {
             <Card
               key={item.id}
               className={isLarge ? "large" : ""}
-              onClick={() => viewAccountToggle(item.id)}
+              onClick={() => viewAccountToggle({ id: item.id, value: true })}
             >
               <OverlayWrapper>
                 <button aria-label="likes count">

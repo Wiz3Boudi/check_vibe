@@ -27,7 +27,10 @@ export default function ExploreAccount({ userData, onClose }) {
             </AvatarRing>
             <Name>{post.name}</Name>
           </Info>
-          <CloseButton onClick={onClose} aria-label="Close modal">
+          <CloseButton
+            onClick={() => onClose({ id: null, value: false })}
+            aria-label="Close modal"
+          >
             <X color="#626567" size={24} />
           </CloseButton>
         </Header>

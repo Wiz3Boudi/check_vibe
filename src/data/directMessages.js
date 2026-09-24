@@ -1,0 +1,109 @@
+export const initialConversations = [
+  {
+    id: "conv-sarah",
+    name: "Sarah Jenkins",
+    handle: "@sarah_j",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuB_HOhrz7WyC73s6_CR2dmFFi631oFNl3d6IDT38FwyTnJccfKh1w1e_fukEqZIXdr77TQ7ENlAW6_fRIgAQlylBjgGaD2vl3GHfYjAgfhNeMOot-jkWGtP9WBMdtrl3JwdiCzlr-ZNxCOY4RyubbeJ7Jq4kLotFEN-JxFUVuEcjSt_JijqrL7VeAMpn0B7zSmp3NZve5YEZOZO_Z-ITD2m5LbuF7OYKKfv8u9qo7qP34ulKGthbNO3GQ",
+    lastMessage: "Are we still on for coffee later? I found a new place.",
+    timeString: "10:42 AM",
+    isUnread: true,
+    isOnline: true,
+    messages: [
+      {
+        id: "m1",
+        sender: "Sarah Jenkins",
+        text: "Hey Alex! Did you see the new bakery that opened on 4th street?",
+        timestamp: "10:30 AM",
+        isMe: false,
+      },
+      {
+        id: "m2",
+        sender: "Alex Rivera",
+        text: "Yes! The matcha croissant place, right?",
+        timestamp: "10:35 AM",
+        isMe: true,
+      },
+      {
+        id: "m3",
+        sender: "Sarah Jenkins",
+        text: "Are we still on for coffee later? I found a new place.",
+        timestamp: "10:42 AM",
+        isMe: false,
+      },
+    ],
+  },
+  {
+    id: "conv-alex-chen",
+    name: "Alex Chen",
+    handle: "@alex_chen",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDeaSUwaltpzLPuGQ1Sw_Fd9q2YAIDeRlqlF76iNpvJVIsPi-90dVwY2JDPaBe5gIlxvPcPgnPm1CZTV-0GRX4owH_6dypJU2FxVmSoxNkgQc7HkiCKqSRn4Nn7UlaX1oJ0J4n0h--30-2keJBrhRbVWejTCddSi8eoEPy9aGYvp7SA1AIEjheIXwrsBOQgKl4iF3pze_pmyGVVMIjqtTgiaBfm94_6w9373-13fvSZph_VGmNtjBdFpA",
+    lastMessage: "Yeah, that sounds like a plan. See you then.",
+    timeString: "Yesterday",
+    isUnread: false,
+    isOnline: false,
+    messages: [
+      {
+        id: "m4",
+        sender: "Alex Rivera",
+        text: "Do you want to review the slide deck around 3 PM?",
+        timestamp: "Yesterday 2:15 PM",
+        isMe: true,
+      },
+      {
+        id: "m5",
+        sender: "Alex Chen",
+        text: "Yeah, that sounds like a plan. See you then.",
+        timestamp: "Yesterday 2:30 PM",
+        isMe: false,
+      },
+    ],
+  },
+  {
+    id: "conv-mia",
+    name: "Mia Wallace",
+    handle: "@mia_wallace",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuAFAsBJC5cVEsChuR-RsHOiUnhQhKiFpVxPwXZycIUJeH0ECzhw1VpqXWgYFod4BTd0HdwYBqbXaiIo9PZfVyWr23VlcIS8k4Ra4JHHpWXKXeZDeacnQ2H3C6w6JDeadFNq72uBHkxyH2zSNLweBalWK3JNqEJ-K-DfsPHiWE0VHY1dglE7_Vl38YGhLm9BlPjhyIfFynM_4rfQfSaC0S8uUV4QNWrkxo7THJSVrGq47fbGzl60JCNE3w",
+    lastMessage: "Shared an image",
+    timeString: "Mon",
+    isUnread: false,
+    isOnline: true,
+    messages: [
+      {
+        id: "m6",
+        sender: "Mia Wallace",
+        text: "Check out this aesthetic reference for the photoshoot!",
+        timestamp: "Mon 11:20 AM",
+        isMe: false,
+      },
+      {
+        id: "m7",
+        sender: "Mia Wallace",
+        text: "Shared an image",
+        timestamp: "Mon 11:21 AM",
+        isMe: false,
+      },
+    ],
+  },
+  {
+    id: "conv-david",
+    name: "David Jones",
+    handle: "@david_j",
+    initials: "DJ",
+    lastMessage: "Can you send over the files when you have a sec?",
+    timeString: "Sun",
+    isUnread: false,
+    isOnline: false,
+    messages: [
+      {
+        id: "m8",
+        sender: "David Jones",
+        text: "Can you send over the files when you have a sec?",
+        timestamp: "Sun 4:05 PM",
+        isMe: false,
+      },
+    ],
+  },
+];

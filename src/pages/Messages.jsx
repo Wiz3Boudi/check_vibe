@@ -1,52 +1,75 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-   
-export default function ExpandableText({ text }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+import React, { useState } from "react";
+import styled from "styled-components";
+import { initialConversations } from "../data/directMessages";
 
+export default function ExpandableText() {
+  const [value, setValue] = useState("");
   return (
-    <TextWrapper>
-      <Paragraph $isExpanded={isExpanded}>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil dolore reiciendis, dolorem nisi deleniti natus possimus laboriosam, quos saepe enim deserunt optio distinctio neque beatae magni nemo, temporibus obcaecati perferendis!
-      </Paragraph>
-      <ToggleButton onClick={() => setIsExpanded((prev) => !prev)}>
-        {isExpanded ? 'Show Less' : 'Show More'}
-      </ToggleButton>
-    </TextWrapper>
+    <Container>
+      <SearchInputContaier>
+        <SearchInput
+          type="search"
+          placeholder="search messages..."
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+      </SearchInputContaier>
+      <MessagesWrapper>
+        {initialConversations.map((chat) => {
+          const fullName = !chat.avatarUrl && chat.name.split(" ");
+          return (
+            <Message key={chat.id}>
+              <ProfileImage>
+                {chat.avatarUrl ? (
+                  <Image src={chat.avatarUrl} alt={chat.lastMessage} />
+                ) : (
+                  <div></div>
+                )}
+              </ProfileImage>
+              <Convo>
+                <NameAndTimeWrapper>
+                  <Name>{chat.name}</Name>
+                  <Time>{chat.timeString}</Time>
+                </NameAndTimeWrapper>
+                <Text> {chat.lastMessage} </Text>
+              </Convo>
+            </Message>
+          );
+        })}
+      </MessagesWrapper>
+    </Container>
   );
 }
 
-const TextWrapper = styled.div`
-  padding:5rem;
-  max-width: 300px;
+const Container = styled.div``;
+const SearchInputContaier = styled.div``;
+const SearchInput = styled.input``;
+const MessagesWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
-
-const Paragraph = styled.p`
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.5;
-  
-  /* Standard multi-line truncation when collapsed */
-  ${(props) =>
-    !props.$isExpanded &&
-    `
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Number of lines to show before ... */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  `}
+const Message = styled.div`
+  display: flex;
 `;
-
-const ToggleButton = styled.button`
-  background: none;
-  border: none;
-  color: #6d3bd7;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 4px 0;
-  margin-top: 4px;
-  
-  &:hover {
-    text-decoration: underline;
-  }
+const ProfileImage = styled.div``;
+const Image = styled.img`
+  width: 50px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
 `;
+const IconButton = styled.button``;
+const Convo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+const NameAndTimeWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+const Name = styled.p``;
+const Time = styled.p``;
+const Text = styled.p``;
