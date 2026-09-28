@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { initialConversations } from "../data/directMessages";
 import { Circle, Search } from "lucide-react";
+import { getInitialNames } from "../uitilies/getInitialNmaes";
 
 export default function ExpandableText() {
   const [value, setValue] = useState("");
@@ -22,13 +23,13 @@ export default function ExpandableText() {
       </SearchInputContaier>
       <MessagesWrapper>
         {initialConversations.map((chat, index) => {
-          const fullName = !chat.avatarUrl && chat.name.split(" ");
+          const letterProfile = !chat.avatarUrl && getInitialNames(chat.name);
           return (
             <div key={chat.id}>
               <Message>
                 {chat.isUnread && (
                   <UnReadStatusButton>
-                    <Circle color="#6d3bd7" fill="#6d3bd7" size={15} />
+                    <Circle color="#6d3bd7" fill="#6d3bd7" size={12} />
                   </UnReadStatusButton>
                 )}
                 <ProfileImage>
@@ -40,7 +41,7 @@ export default function ExpandableText() {
                   {chat.avatarUrl ? (
                     <Image src={chat.avatarUrl} alt={chat.lastMessage} />
                   ) : (
-                    <div></div>
+                    <NameAsProfilePic>{letterProfile}</NameAsProfilePic>
                   )}
                 </ProfileImage>
                 <Convo>
@@ -137,6 +138,17 @@ const Image = styled.img`
   border-radius: 50%;
   object-fit: cover;
 `;
+const NameAsProfilePic = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 1px solid #c4c7c9;
+  font-size: 1.1rem;
+  font-weight: 600;
+`;
 const OnlineStatusButton = styled.button`
   position: absolute;
   bottom: 0;
@@ -160,6 +172,10 @@ const NameAndTimeWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   align-items: center;
+  p:last-child {
+    margin-left: auto;
+    justify-self: self-end;
+  }
 `;
 const Name = styled.p`
   font-weight: bold;
