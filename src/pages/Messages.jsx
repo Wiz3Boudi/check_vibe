@@ -1,32 +1,54 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { initialConversations } from "../data/directMessages";
+import { initialConversations, suggestionsText } from "../data/directMessages";
 import { Circle, Search } from "lucide-react";
 import { getInitialNames } from "../uitilies/getInitialNmaes";
+import Chat from "../componants/Chat";
+import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
 
 export default function ExpandableText() {
   const [value, setValue] = useState("");
+  const [openChat, setOpenChat] = useState(false);
+  const [chatId, setChatId] = useState(null);
+
+  function onClose(id) {
+    setOpenChat((prev) => !prev);
+    setChatId(id);
+  }
+
+  const selectedChat = initialConversations.find((chat) => chat.id === chatId);
+  useLockBodyScroll(openChat);
+
   return (
     <Container>
-      <SearchInputContaier>
-        <SearchInput
-          type="search"
-          placeholder="search messages..."
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+      {openChat && (
+        <Chat
+          onClose={onClose}
+          data={selectedChat}
+          suggestionsText={suggestionsText}
         />
-        {!value.trim() && (
-          <SearchIcon>
-            <Search color="#494454" size={22} />
-          </SearchIcon>
-        )}
+      )}
+      <SearchInputContaier>
+        <div>
+          <SearchInput
+            type="search"
+            placeholder="search messages..."
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          {!value.trim() && (
+            <SearchIcon>
+              <Search color="#494454" size={22} />
+            </SearchIcon>
+          )}
+        </div>
       </SearchInputContaier>
       <MessagesWrapper>
         {initialConversations.map((chat, index) => {
           const letterProfile = !chat.avatarUrl && getInitialNames(chat.name);
           return (
             <div key={chat.id}>
-              <Message>
+              <Message onClick={() => onClose(chat.id)}>
                 {chat.isUnread && (
                   <UnReadStatusButton>
                     <Circle color="#6d3bd7" fill="#6d3bd7" size={12} />
@@ -74,13 +96,17 @@ const Container = styled.div`
 const SearchInputContaier = styled.div`
   width: 100%;
   height: fit-content;
-  position: relative;
   display: flex;
   justify-content: center;
   padding-top: 1rem;
+  div {
+    width: 90%;
+    position: relative;
+    border-radius: 10px;
+  }
 `;
 const SearchInput = styled.input`
-  width: 90%;
+  width: 100%;
   height: 40px;
   border-radius: 10px;
   padding: 0 10px;
@@ -102,8 +128,9 @@ const SearchIcon = styled.button`
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 25px;
-  bottom: 9px;
+  left: 7px;
+  top: 10px;
+  z-index: 1;
 `;
 const MessagesWrapper = styled.div`
   display: flex;
@@ -148,6 +175,8 @@ const NameAsProfilePic = styled.div`
   border: 1px solid #c4c7c9;
   font-size: 1.1rem;
   font-weight: 600;
+  background-color: gray;
+  color: white;
 `;
 const OnlineStatusButton = styled.button`
   position: absolute;
@@ -163,6 +192,7 @@ const Convo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  width: 100%;
   .active {
     color: var(--on-primary-fixed-variant);
   }

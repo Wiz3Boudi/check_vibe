@@ -31,6 +31,27 @@ export const initialConversations = [
         timestamp: "10:42 AM",
         isMe: false,
       },
+      {
+        id: "maf1",
+        sender: "Sarah Jenkins",
+        text: "Hey Alex! Did you see the new bakery that opened on 4th street?",
+        timestamp: "10:30 AM",
+        isMe: false,
+      },
+      {
+        id: "masdf2",
+        sender: "Alex Rivera",
+        text: "Yes! The matcha croissant place, right?",
+        timestamp: "10:35 AM",
+        isMe: true,
+      },
+      {
+        id: "msd3",
+        sender: "Sarah Jenkins",
+        text: "Are we still on for coffee later? I found a new place.",
+        timestamp: "10:42 AM",
+        isMe: false,
+      },
     ],
   },
   {
@@ -282,4 +303,11 @@ export const initialConversations = [
       },
     ],
   },
+];
+
+export const suggestionsText = [
+  "Coffee later? ☕",
+  "Looks amazing! ✨",
+  "On my way! 🚀",
+  "Love this vibe 💜",
 ];
