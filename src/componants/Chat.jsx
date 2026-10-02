@@ -5,7 +5,6 @@ import { Send } from "lucide-react";
 
 export default function Chat({ onClose, data, suggestionsText }) {
   const [value, setValue] = useState("");
-
   return (
     <ChatWrapper>
       <ChatHeader onClose={onClose} data={data} />

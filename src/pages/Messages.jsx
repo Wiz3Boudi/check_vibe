@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { initialConversations, suggestionsText } from "../data/directMessages";
-import { Circle, Search } from "lucide-react";
+import { CalendarHeart, Circle, Search } from "lucide-react";
 import { getInitialNames } from "../uitilies/getInitialNmaes";
 import Chat from "../componants/Chat";
 import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
@@ -10,13 +10,13 @@ export default function ExpandableText() {
   const [value, setValue] = useState("");
   const [openChat, setOpenChat] = useState(false);
   const [chatId, setChatId] = useState(null);
+  const [chatMessages, setChatMessages] = useState(initialConversations);
 
   function onClose(id) {
     setOpenChat((prev) => !prev);
     setChatId(id);
   }
-
-  const selectedChat = initialConversations.find((chat) => chat.id === chatId);
+  const selectedChat = chatMessages.find((chat) => chat.id === chatId);
   useLockBodyScroll(openChat);
 
   return (
@@ -44,7 +44,7 @@ export default function ExpandableText() {
         </div>
       </SearchInputContaier>
       <MessagesWrapper>
-        {initialConversations.map((chat, index) => {
+        {chatMessages.map((chat, index) => {
           const letterProfile = !chat.avatarUrl && getInitialNames(chat.name);
           return (
             <div key={chat.id}>
@@ -78,7 +78,7 @@ export default function ExpandableText() {
                   </Text>
                 </Convo>
               </Message>
-              {index < initialConversations.length - 1 && <hr key={chat.id} />}
+              {index < chatMessages.length - 1 && <hr key={chat.id} />}
             </div>
           );
         })}
