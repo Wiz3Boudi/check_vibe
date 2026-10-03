@@ -3,8 +3,22 @@ import ChatHeader from "./ChatHeader";
 import { useState } from "react";
 import { Send } from "lucide-react";
 
-export default function Chat({ onClose, data, suggestionsText }) {
+export default function Chat({ onClose, data, suggestionsText, dispatch }) {
   const [value, setValue] = useState("");
+
+  function addNewMessage() {
+    dispatch({
+      type: "add",
+      payload: {
+        text: value,
+        id: crypto.randomUUID(),
+        sender: data.sender,
+        timestamp: Date.now(),
+        isMe: true,
+        chatId: data.id,
+      },
+    });
+  }
   return (
     <ChatWrapper>
       <ChatHeader onClose={onClose} data={data} />
@@ -37,7 +51,7 @@ export default function Chat({ onClose, data, suggestionsText }) {
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <Submit>
+          <Submit onClick={() => addNewMessage()}>
             <Send />
           </Submit>
         </Form>

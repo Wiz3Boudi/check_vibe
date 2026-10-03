@@ -11,7 +11,7 @@ export default function ExpandableText() {
   const [value, setValue] = useState("");
   const [openChat, setOpenChat] = useState(false);
   const [chatId, setChatId] = useState(null);
-  const [chatMessages, dispach] = useReducer(reducer, initialConversations);
+  const [chatMessages, dispatch] = useReducer(reducer, initialConversations);
 
   function onClose(id) {
     setOpenChat((prev) => !prev);
@@ -27,6 +27,7 @@ export default function ExpandableText() {
           onClose={onClose}
           data={selectedChat}
           suggestionsText={suggestionsText}
+          dispatch={dispatch}
         />
       )}
       <SearchInputContaier>
@@ -52,8 +53,8 @@ export default function ExpandableText() {
               <Message
                 onClick={() => {
                   onClose(chat.id);
-                  dispach({
-                    type: "see",
+                  dispatch({
+                    type: "seen",
                     newValue: false,
                     id: chat.id,
                   });
