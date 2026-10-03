@@ -19,7 +19,7 @@ export default function ChatHeader({ onClose, data }) {
             <Name> {data.name}</Name>
             {data.isOnline && <Status> Online </Status>}
           </NameWrapper>
-          <UserName> {`@${data.name.trim()}`} </UserName>
+          <UserName> {data.handle} </UserName>
         </HeaderSection>
       </UserInfo>
       <ContantWrapper>

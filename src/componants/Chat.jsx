@@ -77,9 +77,9 @@ const SentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  max-width: 90%;
 `;
 const SentText = styled.p`
-  max-width: 70%;
   background-color: var(--primary);
   color: white;
   padding: 10px;
@@ -90,9 +90,9 @@ const SentText = styled.p`
 `;
 const RecivedWrapper = styled.div`
   margin-right: auto;
+  max-width: 90%;
 `;
 const RecivedText = styled.p`
-  max-width: 70%;
   background-color: white;
   padding: 10px;
   border-radius: 20px;
@@ -126,19 +126,21 @@ const Button = styled.button`
   padding: 5px;
   white-space: nowrap;
 `;
-const Form = styled.form`
+const Form = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
 `;
 const Input = styled.input`
-  width: 78%;
+  width: 75%;
   height: 40px;
   border-radius: 20px;
   border: 1px solid #cbc3d7;
   padding-left: 10px;
   outline: none;
+  color: var(--text-secondary-color);
+  font-size: 1.09rem;
   &:focus {
     border: 2px solid var(--primary);
   }

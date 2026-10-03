@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import styled from "styled-components";
 import { initialConversations, suggestionsText } from "../data/directMessages";
-import { CalendarHeart, Circle, Search } from "lucide-react";
+import { Circle, Search } from "lucide-react";
 import { getInitialNames } from "../uitilies/getInitialNmaes";
 import Chat from "../componants/Chat";
 import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
+import { reducer } from "../reducer/messgesReducer";
 
 export default function ExpandableText() {
   const [value, setValue] = useState("");
   const [openChat, setOpenChat] = useState(false);
   const [chatId, setChatId] = useState(null);
-  const [chatMessages, setChatMessages] = useState(initialConversations);
+  const [chatMessages, dispach] = useReducer(reducer, initialConversations);
 
   function onClose(id) {
     setOpenChat((prev) => !prev);
@@ -48,7 +49,16 @@ export default function ExpandableText() {
           const letterProfile = !chat.avatarUrl && getInitialNames(chat.name);
           return (
             <div key={chat.id}>
-              <Message onClick={() => onClose(chat.id)}>
+              <Message
+                onClick={() => {
+                  onClose(chat.id);
+                  dispach({
+                    type: "see",
+                    newValue: false,
+                    id: chat.id,
+                  });
+                }}
+              >
                 {chat.isUnread && (
                   <UnReadStatusButton>
                     <Circle color="#6d3bd7" fill="#6d3bd7" size={12} />
