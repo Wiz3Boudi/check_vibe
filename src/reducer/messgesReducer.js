@@ -8,9 +8,8 @@ export const reducer = function (state, actions) {
       });
     case "add":
       return state.map((chat) => {
-        console.log(actions.payload);
-        return chat.id === actions.payload.chatId
-          ? { ...chat, messages: [...chat.messages, actions.payload] }
+        return chat.id === actions.chatId
+          ? { ...chat, messages: [...chat.messages, { ...actions.payload }] }
           : chat;
       });
     default:

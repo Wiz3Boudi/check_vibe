@@ -9,13 +9,13 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
   function addNewMessage() {
     dispatch({
       type: "add",
+      chatId: data.id,
       payload: {
-        text: value,
         id: crypto.randomUUID(),
-        sender: data.sender,
-        timestamp: Date.now(),
         isMe: true,
-        chatId: data.id,
+        sender: data.sender,
+        text: value,
+        timestamp: Date.now(),
       },
     });
   }
@@ -151,7 +151,7 @@ const Input = styled.input`
   height: 40px;
   border-radius: 20px;
   border: 1px solid #cbc3d7;
-  padding-left: 10px;
+  padding: 0 10px;
   outline: none;
   color: var(--text-secondary-color);
   font-size: 1.09rem;
