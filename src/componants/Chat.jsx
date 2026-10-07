@@ -13,7 +13,7 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
       payload: {
         id: crypto.randomUUID(),
         isMe: true,
-        sender: data.sender,
+        sender: data.messages[0].sender,
         text: value,
         timestamp: Date.now(),
       },
@@ -25,15 +25,19 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
       <Body>
         <Encrypted> Direct Vibe Sync • Encrypted</Encrypted>
         {data.messages.map((text) => {
+          const time = new Date(text.timestamp).toLocaleString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
           return text.isMe ? (
             <SentWrapper key={text.id}>
               <SentText>{text.text}</SentText>
-              <Timestap>{text.timestamp}</Timestap>
+              <Timestap>{time}</Timestap>
             </SentWrapper>
           ) : (
             <RecivedWrapper key={text.id}>
               <RecivedText>{text.text}</RecivedText>
-              <Timestap>{text.timestamp}</Timestap>
+              <Timestap>{time}</Timestap>
             </RecivedWrapper>
           );
         })}
@@ -50,8 +54,25 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
             placeholder="Type a message"
             value={value}
             onChange={(e) => setValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                if (value.trim()) {
+                  console;
+                  addNewMessage();
+                  setValue("");
+                }
+              }
+            }}
           />
-          <Submit onClick={() => addNewMessage()}>
+          <Submit
+            onClick={() => {
+              if (value.trim()) {
+                addNewMessage();
+                setValue("");
+              }
+            }}
+            disabled={!value.trim()}
+          >
             <Send />
           </Submit>
         </Form>
@@ -67,6 +88,13 @@ const ChatWrapper = styled.div`
   background-color: #e6eaee;
   display: flex;
   flex-direction: column;
+  @media (min-width: 768px) {
+    inset: auto;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    max-width: 455px;
+  }
 `;
 const Body = styled.div`
   display: flex;
@@ -150,7 +178,7 @@ const Input = styled.input`
   width: 75%;
   height: 40px;
   border-radius: 20px;
-  border: 1px solid #cbc3d7;
+  border: 2px solid #cbc3d7;
   padding: 0 10px;
   outline: none;
   color: var(--text-secondary-color);

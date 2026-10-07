@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useMemo, useReducer, useState } from "react";
 import styled from "styled-components";
 import { initialConversations, suggestionsText } from "../data/directMessages";
 import { Circle, Search } from "lucide-react";
@@ -8,7 +8,7 @@ import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
 import { reducer } from "../reducer/messgesReducer";
 
 export default function ExpandableText() {
-  const [value, setValue] = useState("");
+  const [searchTearm, setSearchTeam] = useState("");
   const [openChat, setOpenChat] = useState(false);
   const [chatId, setChatId] = useState(null);
   const [chatMessages, dispatch] = useReducer(reducer, initialConversations);
@@ -35,10 +35,10 @@ export default function ExpandableText() {
           <SearchInput
             type="search"
             placeholder="search messages..."
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            value={searchTearm}
+            onChange={(e) => setSearchTeam(e.target.value)}
           />
-          {!value.trim() && (
+          {!searchTearm.trim() && (
             <SearchIcon>
               <Search color="#494454" size={22} />
             </SearchIcon>
@@ -52,12 +52,16 @@ export default function ExpandableText() {
             <div key={chat.id}>
               <Message
                 onClick={() => {
+                  if (openChat) {
+                    setChatId(chat.id);
+                    return dispatch({
+                      type: "seen",
+                      newValue: false,
+                      id: chat.id,
+                    });
+                  }
+
                   onClose(chat.id);
-                  dispatch({
-                    type: "seen",
-                    newValue: false,
-                    id: chat.id,
-                  });
                 }}
               >
                 {chat.isUnread && (

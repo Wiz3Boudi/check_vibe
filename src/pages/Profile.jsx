@@ -5,18 +5,14 @@ import { useEffect, useState, useContext, useMemo } from "react";
 import Avatar from "../componants/Avatar";
 import EditProfile from "../componants/EditProfile";
 import { ProfileContext } from "../Contexts/profileContext";
+import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
 
 export default function Profile() {
   const [category, setCategory] = useState("grid");
   const { info, userHandleClick, isOpen, handleClose } =
     useContext(ProfileContext);
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen]);
+  useLockBodyScroll(isOpen);
 
   const displayedImages = useMemo(() => {
     if (!info?.images) return [];
