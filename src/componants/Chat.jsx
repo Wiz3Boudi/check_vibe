@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ChatHeader from "./ChatHeader";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Send } from "lucide-react";
 
 export default function Chat({ onClose, data, suggestionsText, dispatch }) {
@@ -19,6 +19,25 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
       },
     });
   }
+
+  useEffect(() => {
+    const sendRes = setInterval(() => {
+      dispatch({
+        type: "add",
+        chatId: data.id,
+        payload: {
+          id: crypto.randomUUID(),
+          isMe: false,
+          sender: data.messages[0].sender,
+          text: "Thank you for reaching out we appriciate that",
+          timestamp: Date.now(),
+        },
+      });
+    }, 2000);
+
+    return () => clearInterval(sendRes);
+  }, [data.messages]);
+
   return (
     <ChatWrapper>
       <ChatHeader onClose={onClose} data={data} />
