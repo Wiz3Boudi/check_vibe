@@ -1,3 +1,13 @@
+import {
+  VolumeX,
+  Heart,
+  MessageCircle,
+  Share2,
+  Volume2,
+  Music,
+  ChevronUp,
+  ChevronDown,
+} from "lucide-react";
 export const initialReels = [
   {
     id: "reel-1",
@@ -50,4 +60,13 @@ export const initialReels = [
     audioTrack: "Lo-Fi Aesthetic - Rain & Piano",
     tags: ["#setup", "#workspace", "#productivity"],
   },
+];
+
+export const icons = [
+  { text: "volume", Icon: VolumeX },
+  { text: "chevronUp", Icon: ChevronUp },
+  { text: "chevronDown", Icon: ChevronDown },
+  { text: "heart", Icon: Heart },
+  { text: "comment", Icon: MessageCircle },
+  { text: "share", Icon: Share2 },
 ];

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { initialReels } from "../data/reels";
+import { initialReels, icons } from "../data/reels";
 import {
   VolumeX,
   Heart,
@@ -7,13 +7,21 @@ import {
   Share2,
   Volume2,
   Music,
+  ChevronUp,
+  ChevronDown,
+  Check,
 } from "lucide-react";
 import { useReducer, useState } from "react";
 import { reels } from "../reducer/reels";
+import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
 
 export default function Reels() {
   const [state, dispatch] = useReducer(reels, initialReels);
   const [isMute, setMute] = useState(false);
+  const [isExpanded, setExpand] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useLockBodyScroll(true);
 
   return (
     <Container>
@@ -25,37 +33,52 @@ export default function Reels() {
               <Button onClick={() => setMute((prev) => !prev)}>
                 {isMute ? <Volume2 /> : <VolumeX />}
               </Button>
-              <ButtonContainer>
-                <ButtonWrapper>
-                  <Button>
-                    <Heart />
-                  </Button>
-                  <Span> {item.likesCount} </Span>
-                </ButtonWrapper>
-                <ButtonWrapper>
-                  <Button>
-                    <MessageCircle />
-                  </Button>
-                  <Span> {item.commentsCount} </Span>
-                </ButtonWrapper>
-                <ButtonWrapper>
-                  <Button>
-                    <Share2 />
-                  </Button>
-                  <Span> {item.sharesCount} </Span>
-                </ButtonWrapper>
-              </ButtonContainer>
+              <ButtonWrapper>
+                <Button>
+                  <ChevronUp />
+                </Button>
+              </ButtonWrapper>
+              <ButtonWrapper>
+                <Button>
+                  <ChevronDown />
+                </Button>
+              </ButtonWrapper>
+              <ButtonWrapper>
+                <Button>
+                  <Heart />
+                </Button>
+                <Span> {item.likesCount} </Span>
+              </ButtonWrapper>
+              <ButtonWrapper>
+                <Button>
+                  <MessageCircle />
+                </Button>
+                <Span> {item.commentsCount} </Span>
+              </ButtonWrapper>
+              <ButtonWrapper>
+                <Button>
+                  <Share2 />
+                </Button>
+                <Span> {item.sharesCount} </Span>
+              </ButtonWrapper>
             </ReactionWrapper>
             <Section>
               <Header>
                 <Username> {`@${item.username}`} </Username>
                 <Button $color=""> Follow </Button>
               </Header>
-              <Caption>{item.caption}</Caption>
-              <Audio>
-                <Music />
-                <span> {item.audioTrack} </span>
-              </Audio>
+              <Body>
+                <RightSide>
+                  <Caption>{item.caption}</Caption>
+                  <Audio>
+                    <Music />
+                    <span> {item.audioTrack} </span>
+                  </Audio>
+                </RightSide>
+                <Avatar>
+                  <AvatarImg src={item.avatarUrl} alt={item.caption} />
+                </Avatar>
+              </Body>
             </Section>
           </ReelWrapper>
         );
@@ -76,23 +99,19 @@ const Image = styled.img`
   width: 100%;
   height: 80vh;
   object-fit: cover;
+  @media (min-width: 768px) {
+    height: 100vh;
+  }
 `;
 const ReactionWrapper = styled.div`
   position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  right: 10px;
+  top: 10px;
+  bottom: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  gap: 6px;
   align-items: center;
-  padding: 5px;
-`;
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
 `;
 const ButtonWrapper = styled.div`
   display: flex;
@@ -119,20 +138,35 @@ const Span = styled.span`
 `;
 const Section = styled.section`
   position: absolute;
-  bottom: 10px;
+  bottom: 0;
   left: 0;
-  right: 52px;
+  right: 0;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
-  padding-left: 10px;
-  background-color: rgb(0, 0, 0, 0.2);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
 `;
 const Header = styled.div`
   display: flex;
   jsutify-content: center;
   align-items: center;
+`;
+const Body = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+const RightSide = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
 `;
 const Username = styled.h4`
   color: #ffffff;
@@ -149,4 +183,19 @@ const Audio = styled.div`
   svg {
     color: brown;
   }
+`;
+const Avatar = styled.div`
+  width: 100px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const AvatarImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
 `;
