@@ -59,7 +59,7 @@ const CloseButton = styled.button`
 `;
 const UserInfo = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 10px;p
 `;
 const Image = styled.img`
   width: 40px;
@@ -89,9 +89,9 @@ const NameWrapper = styled.div`
 `;
 const Status = styled.button`
   border-radius: 20px;
-  padding: 3px 7px;
-  color: green;
-  font-weight: 1.1rem;
+  padding: 2px 6px;
+  color: oklch(0.77 0.25 157.59);
+  font-size: 0.7rem;
 `;
 const Name = styled.h4`
   curosr: pointer;

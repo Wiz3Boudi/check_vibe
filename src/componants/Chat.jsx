@@ -4,9 +4,25 @@ import { useEffect, useRef, useState } from "react";
 import { Send } from "lucide-react";
 
 export default function Chat({ onClose, data, suggestionsText, dispatch }) {
+  const scrollContainerRef = useRef(null);
+  const prevMessageLenghtRef = useRef(data.messages.length);
   const [value, setValue] = useState("");
+  const [isScrolledUp, setScrolledUp] = useState(false);
+  const [unreadMessageCount, setUnreadMessageCount] = useState(0);
   const timerRef = useRef(null);
-  const messageEndRef = useRef(null);
+
+  console.log(prevMessageLenghtRef.current);
+  console.log(unreadMessageCount);
+
+  useEffect(() => {
+    setUnreadMessageCount(data.messages.length - prevMessageLenghtRef.current);
+  }, [data.messages]);
+
+  useEffect(() => {
+    if (!timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+  }, []);
 
   function addNewMessage(text) {
     dispatch({
@@ -62,8 +78,7 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
       <Footer>
         <Suggestions>
           <Button style={{ background: "none", cursor: "auto" }}>
-            {" "}
-            Quick Vibes :{" "}
+            Quick Vibes :
           </Button>
           {suggestionsText.map((word) => (
             <Button key={word} onClick={() => addNewMessage(word)}>
