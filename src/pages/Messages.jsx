@@ -1,4 +1,4 @@
-import { useMemo, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import styled from "styled-components";
 import { initialConversations, suggestionsText } from "../data/directMessages";
 import { Circle, Search } from "lucide-react";
@@ -54,14 +54,19 @@ export default function ExpandableText() {
                 onClick={() => {
                   if (openChat) {
                     setChatId(chat.id);
-                    return dispatch({
+                    dispatch({
                       type: "seen",
                       newValue: false,
                       id: chat.id,
                     });
+                    return;
                   }
-
                   onClose(chat.id);
+                  dispatch({
+                    type: "seen",
+                    newValue: false,
+                    id: chat.id,
+                  });
                 }}
               >
                 {chat.isUnread && (

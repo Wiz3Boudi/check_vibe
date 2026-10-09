@@ -5,8 +5,10 @@ import { Send } from "lucide-react";
 
 export default function Chat({ onClose, data, suggestionsText, dispatch }) {
   const [value, setValue] = useState("");
+  const timerRef = useRef(null);
+  const messageEndRef = useRef(null);
 
-  function addNewMessage() {
+  function addNewMessage(text) {
     dispatch({
       type: "add",
       chatId: data.id,
@@ -14,11 +16,12 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
         id: crypto.randomUUID(),
         isMe: true,
         sender: data.messages[0].sender,
-        text: value,
+        text: value.trim() || text,
         timestamp: Date.now(),
       },
     });
-    setTimeout(() => {
+
+    timerRef.current = setTimeout(() => {
       dispatch({
         type: "add",
         chatId: data.id,
@@ -32,6 +35,7 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
       });
     }, 2000);
   }
+
   return (
     <ChatWrapper>
       <ChatHeader onClose={onClose} data={data} />
@@ -57,8 +61,14 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
       </Body>
       <Footer>
         <Suggestions>
+          <Button style={{ background: "none", cursor: "auto" }}>
+            {" "}
+            Quick Vibes :{" "}
+          </Button>
           {suggestionsText.map((word) => (
-            <Button key={word}> {word} </Button>
+            <Button key={word} onClick={() => addNewMessage(word)}>
+              {word}
+            </Button>
           ))}
         </Suggestions>
         <Form>
@@ -180,6 +190,7 @@ const Button = styled.button`
   border-radius: 20px;
   padding: 5px;
   white-space: nowrap;
+  cursor: pointer;
 `;
 const Form = styled.div`
   display: flex;
