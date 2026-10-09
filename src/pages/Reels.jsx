@@ -21,68 +21,73 @@ export default function Reels() {
   const [isExpanded, setExpand] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const handleCurrentIndex = () => {
+    return setCurrentIndex((prev) =>
+      prev < state.length - 1 ? prev + 1 : prev - 1,
+    );
+  };
+
   useLockBodyScroll(true);
 
   return (
     <Container>
-      {state.map((item) => {
-        return (
-          <ReelWrapper key={item.id}>
-            <Image src={item.videoBgUrl} />
-            <ReactionWrapper>
-              <Button onClick={() => setMute((prev) => !prev)}>
-                {isMute ? <Volume2 /> : <VolumeX />}
-              </Button>
-              <ButtonWrapper>
-                <Button>
-                  <ChevronUp />
-                </Button>
-              </ButtonWrapper>
-              <ButtonWrapper>
-                <Button>
-                  <ChevronDown />
-                </Button>
-              </ButtonWrapper>
-              <ButtonWrapper>
-                <Button>
-                  <Heart />
-                </Button>
-                <Span> {item.likesCount} </Span>
-              </ButtonWrapper>
-              <ButtonWrapper>
-                <Button>
-                  <MessageCircle />
-                </Button>
-                <Span> {item.commentsCount} </Span>
-              </ButtonWrapper>
-              <ButtonWrapper>
-                <Button>
-                  <Share2 />
-                </Button>
-                <Span> {item.sharesCount} </Span>
-              </ButtonWrapper>
-            </ReactionWrapper>
-            <Section>
-              <Header>
-                <Username> {`@${item.username}`} </Username>
-                <Button $color=""> Follow </Button>
-              </Header>
-              <Body>
-                <RightSide>
-                  <Caption>{item.caption}</Caption>
-                  <Audio>
-                    <Music />
-                    <span> {item.audioTrack} </span>
-                  </Audio>
-                </RightSide>
-                <Avatar>
-                  <AvatarImg src={item.avatarUrl} alt={item.caption} />
-                </Avatar>
-              </Body>
-            </Section>
-          </ReelWrapper>
-        );
-      })}
+      <ReelWrapper>
+        <Image src={state[currentIndex].videoBgUrl} />
+        <ReactionWrapper>
+          <Button onClick={() => setMute((prev) => !prev)}>
+            {isMute ? <Volume2 /> : <VolumeX />}
+          </Button>
+          <ButtonWrapper>
+            <Button onClick={() => handleCurrentIndex("scrollUp")}>
+              <ChevronUp />
+            </Button>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button onClick={() => handleCurrentIndex("scrollDown")}>
+              <ChevronDown />
+            </Button>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button>
+              <Heart />
+            </Button>
+            <Span> {state[currentIndex].likesCount} </Span>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button>
+              <MessageCircle />
+            </Button>
+            <Span> {state[currentIndex].commentsCount} </Span>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button>
+              <Share2 />
+            </Button>
+            <Span> {state[currentIndex].sharesCount} </Span>
+          </ButtonWrapper>
+        </ReactionWrapper>
+        <Section>
+          <Header>
+            <Username> {`@${state[currentIndex].username}`} </Username>
+            <Button $color=""> Follow </Button>
+          </Header>
+          <Body>
+            <RightSide>
+              <Caption>{state[currentIndex].caption}</Caption>
+              <Audio>
+                <Music />
+                <span> {state[currentIndex].audioTrack} </span>
+              </Audio>
+            </RightSide>
+            <Avatar>
+              <AvatarImg
+                src={state[currentIndex].avatarUrl}
+                alt={state[currentIndex].caption}
+              />
+            </Avatar>
+          </Body>
+        </Section>
+      </ReelWrapper>
     </Container>
   );
 }
@@ -97,7 +102,7 @@ const ReelWrapper = styled.div`
 `;
 const Image = styled.img`
   width: 100%;
-  height: 80vh;
+  height: 79vh;
   object-fit: cover;
   @media (min-width: 768px) {
     height: 100vh;
