@@ -10,9 +10,9 @@ import {
 export const navItems = [
   { path: "/feeds", label: "Home Feeds", icon: Home },
   { path: "/search-explore", label: "Explore & Search", icon: Search },
-  { path: "/reels", label: "Vibe Reels", icon: PlusSquare },
+  { path: "/reels", label: "Vibe Reels", icon: PlayCircle },
   { path: "/messages", label: "Direct Messages", icon: MessageCircle },
-  { path: "/post", label: "post", icon: PlayCircle },
+  { path: "/post", label: "post", icon: PlusSquare },
   { path: "/notifications", label: "Notifications", icon: Bell },
   { path: "/profile", label: "Profile", icon: User },
 ];
