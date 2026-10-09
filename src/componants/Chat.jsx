@@ -18,10 +18,7 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
         timestamp: Date.now(),
       },
     });
-  }
-
-  useEffect(() => {
-    const sendRes = setInterval(() => {
+    setTimeout(() => {
       dispatch({
         type: "add",
         chatId: data.id,
@@ -34,10 +31,7 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
         },
       });
     }, 2000);
-
-    return () => clearInterval(sendRes);
-  }, [data.messages]);
-
+  }
   return (
     <ChatWrapper>
       <ChatHeader onClose={onClose} data={data} />
@@ -216,5 +210,12 @@ const Submit = styled.button`
   cursor: pointer;
   svg {
     color: var(--primary);
+  }
+  &:disabled {
+    cursor: not-allowed;
+
+    svg {
+      opacity: 0.5;
+    }
   }
 `;
