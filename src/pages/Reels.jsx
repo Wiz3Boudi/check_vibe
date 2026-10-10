@@ -21,10 +21,22 @@ export default function Reels() {
   const [isExpanded, setExpand] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleCurrentIndex = () => {
-    return setCurrentIndex((prev) =>
-      prev < state.length - 1 ? prev + 1 : prev - 1,
-    );
+  const reelsSize = state.length - 1;
+  const likes = state[currentIndex].likesCount / 1000;
+  const xx = likes.toFixed(3);
+  console.log(xx);
+
+  const handleCurrentIndex = (type) => {
+    if (type.trim() === "scrollDown") {
+      return setCurrentIndex((prev) => {
+        return prev >= reelsSize ? (prev = 0) : prev + 1;
+      });
+    }
+    if (type.trim() === "scrollUp") {
+      return setCurrentIndex((prev) => {
+        return prev > reelsSize ? (prev = reelsSize) : prev - 1;
+      });
+    }
   };
 
   useLockBodyScroll(true);
@@ -38,12 +50,18 @@ export default function Reels() {
             {isMute ? <Volume2 /> : <VolumeX />}
           </Button>
           <ButtonWrapper>
-            <Button onClick={() => handleCurrentIndex("scrollUp")}>
+            <Button
+              onClick={() => handleCurrentIndex("scrollUp")}
+              disabled={currentIndex <= 0}
+            >
               <ChevronUp />
             </Button>
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button onClick={() => handleCurrentIndex("scrollDown")}>
+            <Button
+              onClick={() => handleCurrentIndex("scrollDown")}
+              disabled={currentIndex >= reelsSize}
+            >
               <ChevronDown />
             </Button>
           </ButtonWrapper>
@@ -135,6 +153,12 @@ const Button = styled.button`
   background-color: rgb(0, 0, 0, 0.3);
   svg {
     color: #ffffff;
+  }
+  &:disabled {
+    cursor: auto;
+    svg {
+      opacity: 0.2;
+    }
   }
 `;
 const Span = styled.span`
