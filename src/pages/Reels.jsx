@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { initialReels, icons } from "../data/reels";
+import { initialReels } from "../data/reels";
 import {
   VolumeX,
   Heart,
@@ -14,6 +14,7 @@ import {
 import { useReducer, useState } from "react";
 import { reels } from "../reducer/reels";
 import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
+import { postDigitsFormater } from "../uitilies/postDigitsFormater";
 
 export default function Reels() {
   const [state, dispatch] = useReducer(reels, initialReels);
@@ -22,10 +23,11 @@ export default function Reels() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const reelsSize = state.length - 1;
-  const likes = state[currentIndex].likesCount / 1000;
-  const xx = likes.toFixed(3);
-  console.log(xx);
-
+  const { likes, comments, shares } = postDigitsFormater(
+    state[currentIndex].likesCount,
+    state[currentIndex].commentsCount,
+    state[currentIndex].sharesCount,
+  );
   const handleCurrentIndex = (type) => {
     if (type.trim() === "scrollDown") {
       return setCurrentIndex((prev) => {
@@ -66,22 +68,32 @@ export default function Reels() {
             </Button>
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button>
+            <Button
+              onClick={() =>
+                dispatch({
+                  type: "like",
+                  payload: {
+                    id: state[currentIndex].id,
+                  },
+                })
+              }
+              $color={state[currentIndex].isLiked}
+            >
               <Heart />
             </Button>
-            <Span> {state[currentIndex].likesCount} </Span>
+            <Span> {likes} </Span>
           </ButtonWrapper>
           <ButtonWrapper>
             <Button>
               <MessageCircle />
             </Button>
-            <Span> {state[currentIndex].commentsCount} </Span>
+            <Span> {comments} </Span>
           </ButtonWrapper>
           <ButtonWrapper>
             <Button>
               <Share2 />
             </Button>
-            <Span> {state[currentIndex].sharesCount} </Span>
+            <Span> {shares} </Span>
           </ButtonWrapper>
         </ReactionWrapper>
         <Section>
@@ -152,7 +164,8 @@ const Button = styled.button`
   cursor: pointer;
   background-color: rgb(0, 0, 0, 0.3);
   svg {
-    color: #ffffff;
+    color: ${(props) => (props?.$color ? "var(--primary)" : "white")};
+    fill: ${(props) => (props?.$color ? "var(--primary)" : "")};
   }
   &:disabled {
     cursor: auto;
