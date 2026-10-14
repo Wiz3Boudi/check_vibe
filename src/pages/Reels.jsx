@@ -99,7 +99,26 @@ export default function Reels() {
         <Section>
           <Header>
             <Username> {`@${state[currentIndex].username}`} </Username>
-            <Button $color=""> Follow </Button>
+            <Button
+              $color="white"
+              $backgroundColor={
+                state[currentIndex].isFollowing
+                  ? "#8455ef"
+                  : "rgb(0, 0, 0, 0.7)"
+              }
+              $borderRadius={20}
+              $paddingTop={5}
+              $paddingBottom={8}
+              $isFollowing={state[currentIndex].isFollowing}
+              $flexDirection={"row"}
+              padding={{ X: 5, Y: 8 }}
+              $gap={20}
+            >
+              {state[currentIndex].isFollowing && (
+                <Check color="white" size={30} />
+              )}
+              {state[currentIndex].isFollowing ? "Following" : "Follow"}
+            </Button>
           </Header>
           <Body>
             <RightSide>
@@ -156,13 +175,20 @@ const ButtonWrapper = styled.div`
 `;
 const Button = styled.button`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props) =>
+    props.$flexDirection ? props.$flexDirection : "column"};
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  padding: 10px;
   cursor: pointer;
-  background-color: rgb(0, 0, 0, 0.3);
+  padding: ${({ padding }) =>
+    `${padding?.Y + "px" || "10px"} ${padding?.X + "px" || "10px"}`};
+  gap: ${(props) => (props.$gap ? props.$pap + "px" : "")};
+  border-radius: ${(props) =>
+    props.$borderRadius ? props.$borderRadius + "px" : "50px"};
+  background-color: ${(props) =>
+    props.$backgroundColor ? props.$backgroundColor : "rgb(0, 0, 0, 0.3)"};
+  color: ${(props) => (props ? props.$color : "")};
+  font-weight: 700;
   svg {
     color: ${(props) => (props?.$color ? "var(--primary)" : "white")};
     fill: ${(props) => (props?.$color ? "var(--primary)" : "")};
@@ -198,6 +224,7 @@ const Header = styled.div`
   display: flex;
   jsutify-content: center;
   align-items: center;
+  gap: 10px;
 `;
 const Body = styled.div`
   display: flex;
