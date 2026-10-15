@@ -15,12 +15,17 @@ import { useReducer, useState } from "react";
 import { reels } from "../reducer/reels";
 import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
 import { postDigitsFormater } from "../uitilies/postDigitsFormater";
+import CaptionModal from "../componants/CaptionModal";
 
 export default function Reels() {
   const [state, dispatch] = useReducer(reels, initialReels);
   const [isMute, setMute] = useState(false);
   const [isExpanded, setExpand] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleClose = () => {
+    setExpand((prev) => !prev);
+  };
 
   const reelsSize = state.length - 1;
   const { likes, comments, shares } = postDigitsFormater(
@@ -29,6 +34,9 @@ export default function Reels() {
     state[currentIndex].sharesCount,
   );
   const handleCurrentIndex = (type) => {
+    if (isExpanded) {
+      setExpand(false);
+    }
     if (type.trim() === "scrollDown") {
       return setCurrentIndex((prev) => {
         return prev >= reelsSize ? (prev = 0) : prev + 1;
@@ -45,6 +53,11 @@ export default function Reels() {
 
   return (
     <Container>
+      <CaptionModal
+        isExpanded={isExpanded}
+        handleClose={handleClose}
+        text={state[currentIndex].caption}
+      />
       <ReelWrapper>
         <Image src={state[currentIndex].videoBgUrl} />
         <ReactionWrapper>
@@ -79,7 +92,9 @@ export default function Reels() {
               }
               $color={state[currentIndex].isLiked}
             >
-              <Heart />
+              <Heart
+                fill={state[currentIndex].isLiked ? "#6b38d4" : "transparent"}
+              />
             </Button>
             <Span> {likes} </Span>
           </ButtonWrapper>
@@ -107,22 +122,24 @@ export default function Reels() {
                   : "rgb(0, 0, 0, 0.7)"
               }
               $borderRadius={20}
-              $paddingTop={5}
-              $paddingBottom={8}
+              $paddingY={10}
+              $paddingX={20}
               $isFollowing={state[currentIndex].isFollowing}
               $flexDirection={"row"}
-              padding={{ X: 5, Y: 8 }}
+              $paddingTop={5}
               $gap={20}
             >
               {state[currentIndex].isFollowing && (
-                <Check color="white" size={30} />
+                <Check color="white" size={20} />
               )}
               {state[currentIndex].isFollowing ? "Following" : "Follow"}
             </Button>
           </Header>
           <Body>
             <RightSide>
-              <Caption>{state[currentIndex].caption}</Caption>
+              <Caption onClick={handleClose}>
+                {state[currentIndex].caption}
+              </Caption>
               <Audio>
                 <Music />
                 <span> {state[currentIndex].audioTrack} </span>
@@ -180,9 +197,12 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: ${({ padding }) =>
-    `${padding?.Y + "px" || "10px"} ${padding?.X + "px" || "10px"}`};
-  gap: ${(props) => (props.$gap ? props.$pap + "px" : "")};
+  padding-top: ${({ paddingY }) => (paddingY ? paddingY : "10px")};
+  padding-bottom: ${({ paddingY }) => (paddingY ? paddingY : "10px")};
+  padding-left: ${({ paddingX }) => (paddingX ? paddingX : "10px")};
+  padding-right: ${({ paddingX }) => (paddingX ? paddingX : "10px")};
+
+  gap: ${(props) => (props.$gap ? props.$pap + "px" : "0px")};
   border-radius: ${(props) =>
     props.$borderRadius ? props.$borderRadius + "px" : "50px"};
   background-color: ${(props) =>
@@ -191,7 +211,6 @@ const Button = styled.button`
   font-weight: 700;
   svg {
     color: ${(props) => (props?.$color ? "var(--primary)" : "white")};
-    fill: ${(props) => (props?.$color ? "var(--primary)" : "")};
   }
   &:disabled {
     cursor: auto;
@@ -230,6 +249,7 @@ const Body = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
 `;
 const RightSide = styled.div`
   display: flex;
@@ -242,6 +262,11 @@ const Username = styled.h4`
 `;
 const Caption = styled.p`
   color: #ffffff;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: pointer;
 `;
 const Audio = styled.div`
   color: #ffffff;
