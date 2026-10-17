@@ -67,6 +67,8 @@ export default function Reels() {
         isOpen={isCommentModalOpen}
         onClose={handleCommentsModal}
         caption={state[currentIndex].caption}
+        avatarUrl={state[currentIndex].avatarUrl}
+        username={state[currentIndex].username}
       />
       <ReelWrapper>
         <Image src={state[currentIndex].videoBgUrl} />
