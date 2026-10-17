@@ -12,7 +12,7 @@ export const navItems = [
   { path: "/search-explore", label: "Explore & Search", icon: Search },
   { path: "/reels", label: "Vibe Reels", icon: PlayCircle },
   { path: "/messages", label: "Direct Messages", icon: MessageCircle },
-  { path: "/post", label: "post", icon: PlusSquare },
+  { path: "/post/story", label: "post", icon: PlusSquare },
   { path: "/notifications", label: "Notifications", icon: Bell },
   { path: "/profile", label: "Profile", icon: User },
 ];

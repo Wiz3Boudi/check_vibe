@@ -111,6 +111,6 @@ const AvatarImage = styled.img`
   border-radius: 50%;
   cursor: pointer;
 `;
-const Caption = styled.p``;
+const Caption = styled.div``;
 const Body = styled.div``;
 const Input = styled.input``;

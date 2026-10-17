@@ -140,6 +140,14 @@ export default function Reels() {
               $flexDirection={"row"}
               $paddingTop={5}
               $gap={20}
+              onClick={() =>
+                dispatch({
+                  type: "follow",
+                  payload: {
+                    id: state[currentIndex].id,
+                  },
+                })
+              }
             >
               {state[currentIndex].isFollowing && (
                 <Check color="white" size={20} />

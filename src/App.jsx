@@ -11,6 +11,7 @@ import Notifactions from "./pages/Notifactions";
 import SearchExplore from "./pages/Search-explore";
 import Setting from "./pages/Setting";
 import Reels from "./pages/Reels";
+import CreateStory from "./pages/CreateStory";
 
 function App(style) {
   return (
@@ -26,7 +27,7 @@ function App(style) {
           <Route path="/messages" element={<Messages />} />
           <Route path="/notifications" element={<Notifactions />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/settings" element={<Setting />} />
+          <Route path="/post/story" element={<CreateStory />} />
         </Route>
       </Routes>
     </div>

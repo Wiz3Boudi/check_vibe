@@ -12,6 +12,12 @@ export const reels = (state, actions) => {
             }
           : post,
       );
+    case "follow":
+      return state.map((reel) =>
+        reel.id === actions.payload.id
+          ? { ...reel, isFollowing: !reel.isFollowing }
+          : reel,
+      );
     default:
       return state;
   }
