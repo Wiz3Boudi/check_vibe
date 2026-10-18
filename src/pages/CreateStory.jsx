@@ -11,11 +11,9 @@ export default function CreateStory() {
     location: "",
     caption: "",
   });
-  const locationId = useId();
-  const textareaId = useId();
 
   function handleInputGroup({ id, value }) {
-    console.log(id, value);
+    // console.log(id, value);
     setInputValues((prev) => {
       return { ...prev, [id]: value };
     });
@@ -26,7 +24,8 @@ export default function CreateStory() {
       <Content>
         <Header>
           <Head>
-            Create New {category === "feed" ? "Feed Post" : "Vibe Story"}
+            {`Create New `}
+            <span>{category === "feed" ? "Feed Post" : "Vibe Story"}</span>
           </Head>
           <Close>
             <X />
@@ -62,6 +61,7 @@ export default function CreateStory() {
             type="text"
             placeholder="Or past any custom URL here..."
             value={inputValues.Url}
+            id="Url"
             onChange={(e) =>
               handleInputGroup({
                 id: e.currentTarget.id,
@@ -77,12 +77,12 @@ export default function CreateStory() {
             />
             <OverlayText> Live Visual</OverlayText>
           </LiveImageWrapper>
-          <Label htmlFor={locationId}> Location </Label>
+          <Label htmlFor="location"> Location </Label>
           <Input
-            id={locationId}
+            id="location"
             type="text"
             placeholder="Tokyo, Japan"
-            value={inputValues.Url}
+            value={inputValues.location}
             onChange={(e) =>
               handleInputGroup({
                 id: e.currentTarget.id,
@@ -90,9 +90,9 @@ export default function CreateStory() {
               })
             }
           />
-          <Label htmlFor={textareaId}> CAPTION </Label>
+          <Label htmlFor="caption"> CAPTION </Label>
           <Caption
-            id={textareaId}
+            id="caption"
             type="text"
             placeholder="What is your vibe today? Express your mood..."
             value={inputValues.caption}
@@ -111,7 +111,7 @@ export default function CreateStory() {
 
 const SoryWrapper = styled.div`
   background-color: rgb(0, 0, 0, 0.7);
-  padding: 3rem 1.3rem;
+  padding: 2rem 1.3rem;
   position: fixed;
   z-index: 1004;
   inset: 0;
@@ -127,7 +127,11 @@ const Header = styled.div`
   justify-content: space-between;
   padding: 13px 20px;
 `;
-const Head = styled.h3``;
+const Head = styled.h3`
+  span {
+    color: var(--primary);
+  }
+`;
 const Close = styled.button`
   display: flex;
   justify-content: center;
@@ -168,8 +172,14 @@ const Body = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 10px;
+  height: 64vh;
+  overflow-y: auto;
+  scrollbar-width: none;
 `;
-const Pragraph = styled.p``;
+const Pragraph = styled.p`
+  text-transform: uppercase;
+  color: var(--text-secondary-color);
+`;
 const ImageGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -182,15 +192,46 @@ const Image = styled.img`
   border-radius: 10px;
   cursor: pointer;
 `;
-const Label = styled.label``;
-const Input = styled.input``;
+const Label = styled.label`
+  text-transform: uppercase;
+`;
+const Input = styled.input`
+  outline: none;
+  min-height: 35px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  color: var(--text-secondary-color);
+  padding: 0 10px;
+  font-size: 16px;
+  &:focus {
+    border: 2px solid var(--primary);
+  }
+`;
 const LiveImageWrapper = styled.div`
   position: relative;
 `;
 const OverlayText = styled.p`
   position: absolute;
-  inset: 0;
+  top: 10px;
+  left: 10px;
+  background-color: black;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
 `;
-const Caption = styled.textarea``;
+const Caption = styled.textarea`
+  outline: none;
+  min-height: 60px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  color: var(--text-secondary-color);
+  padding: 0 10px;
+  font-size: 16px;
+  &:focus {
+    border: 2px solid var(--primary);
+  }
+`;
 const TagsWrapper = styled.div``;
 const Publish = styled.button``;
