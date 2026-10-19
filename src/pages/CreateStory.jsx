@@ -1,5 +1,5 @@
 import { X, ImageIcon } from "lucide-react";
-import { useId, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { images } from "../data/createNewPost_story";
 
@@ -13,7 +13,6 @@ export default function CreateStory() {
   });
 
   function handleInputGroup({ id, value }) {
-    // console.log(id, value);
     setInputValues((prev) => {
       return { ...prev, [id]: value };
     });
@@ -27,7 +26,7 @@ export default function CreateStory() {
             {`Create New `}
             <span>{category === "feed" ? "Feed Post" : "Vibe Story"}</span>
           </Head>
-          <Close>
+          <Close onClick={() => navigation.back()}>
             <X />
           </Close>
         </Header>
