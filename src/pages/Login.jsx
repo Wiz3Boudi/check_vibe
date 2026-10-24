@@ -99,7 +99,7 @@ export default function Login() {
             Forget Password
           </Link>
           <button type="submit" className="submit">
-            <Link style={{ color: "red" }} to="/feeds">
+            <Link style={{ color: "green" }} to="/feeds">
               Login
             </Link>
           </button>
