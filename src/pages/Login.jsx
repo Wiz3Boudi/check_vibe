@@ -98,11 +98,9 @@ export default function Login() {
           <Link to="/forget-password" className="gorgetPassword">
             Forget Password
           </Link>
-          <button type="submit" className="submit">
-            <Link style={{ color: "green" }} to="/feeds">
-              Login
-            </Link>
-          </button>
+          <Link to="/feeds" className="submit">
+            <button type="submit">Login</button>
+          </Link>
           <p>
             Do not have an Account?{" "}
             <Link to="/create-account"> Register </Link>{" "}
@@ -244,15 +242,23 @@ const Form = styled.form`
     width: fit-content;
   }
   .submit {
-    position: static;
     height: 50px;
-    font-size: 1.1rem;
-    font-weight: 700;
     border-radius: 20px;
-    background-color: #6d3bd7;
-    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    cursor: pointer;
+    background-color: #6d3bd7;
+    button {
+      position: static;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      cursor: pointer;
+    }
   }
   .gorgetPassword {
     display: flex;
