@@ -249,6 +249,11 @@ const Form = styled.form`
     align-items: center;
     width: 100%;
     background-color: #6d3bd7;
+    transition: background-color 1s ease;
+    &:hover {
+      text-decoration: none;
+      background-color: #9468f3;
+    }
     button {
       position: static;
       color: white;

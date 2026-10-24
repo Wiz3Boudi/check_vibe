@@ -1,22 +1,36 @@
-import { X, ImageIcon } from "lucide-react";
-import { useState } from "react";
+import { X, ImageIcon, Send, Files } from "lucide-react";
+import { use, useRef, useState } from "react";
 import styled from "styled-components";
 import { images } from "../data/createNewPost_story";
 
 export default function CreateStory() {
   const [category, setCategory] = useState("feed");
   const [URL, setURL] = useState(null);
+  const [isFromDevice, setFromDevice] = useState(true);
   const [inputValues, setInputValues] = useState({
     Url: "",
     location: "",
     caption: "",
   });
+  const hiddenInputRef = useRef(null);
+
+  function handleInputRef(e) {
+    if (hiddenInputRef.current) {
+      hiddenInputRef.current.click();
+    }
+  }
 
   function handleInputGroup({ id, value }) {
     setInputValues((prev) => {
       return { ...prev, [id]: value };
     });
   }
+
+  const CCC = (
+    <button>
+      <X />
+    </button>
+  );
 
   return (
     <SoryWrapper>
@@ -45,6 +59,30 @@ export default function CreateStory() {
           </Button>
         </Categories>
         <Body>
+          <FileWrapper>
+            <FileHeader>
+              <FileTitle>Select Photo or Upload</FileTitle>
+              <FileStatusSelection>Device photo loaded</FileStatusSelection>
+            </FileHeader>
+            <FileBody onClick={handleInputRef}>
+              <input ref={hiddenInputRef} type="file" className="hidden" />
+              <RightSide>
+                <Button>
+                  <Send />
+                </Button>
+                <Text>
+                  <div>
+                    <h3>Choose from device </h3>
+                    <Button> Phone/PC </Button>
+                  </div>
+                  <p> Click to browse files or drag && drop photo here </p>
+                </Text>
+              </RightSide>
+              <Button>
+                <Files /> Browse files
+              </Button>
+            </FileBody>
+          </FileWrapper>
           <Pragraph> Choose Photo Preset or URL</Pragraph>
           <ImageGrid>
             {images.map((img) => (
@@ -175,6 +213,31 @@ const Body = styled.div`
   overflow-y: auto;
   scrollbar-width: none;
 `;
+const FileWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+const FileHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const FileTitle = styled.p``;
+const FileStatusSelection = styled.p``;
+const FileBody = styled.div`
+  border: 2px solid var(--primary);
+  border-style: dashed;
+  width: 100%;
+  height: 100px;
+  border-radius: 20px;
+  cursor: pointer;
+  .hidden {
+    display: none;
+  }
+`;
+const RightSide = styled.div``;
+const Text = styled.div``;
+
 const Pragraph = styled.p`
   text-transform: uppercase;
   color: var(--text-secondary-color);
