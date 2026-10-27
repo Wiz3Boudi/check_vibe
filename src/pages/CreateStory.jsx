@@ -1,18 +1,33 @@
-import { X, ImageIcon, Send, Files } from "lucide-react";
-import { use, useRef, useState } from "react";
+import { X, Files, Upload, Smartphone, Trash, RefreshCw } from "lucide-react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { images } from "../data/createNewPost_story";
 
 export default function CreateStory() {
   const [category, setCategory] = useState("feed");
-  const [URL, setURL] = useState(null);
-  const [isFromDevice, setFromDevice] = useState(true);
+  const [isUloaded, setUploaded] = useState(false);
+  const [file, setFile] = useState(null);
+  const [onFileError, setFileError] = useState("");
   const [inputValues, setInputValues] = useState({
     Url: "",
     location: "",
     caption: "",
   });
   const hiddenInputRef = useRef(null);
+  const handleFile = (e) => {
+    const isImage = e.type.split("/")[0];
+    if (isImage != "image") {
+      return setFileError("place provide an iamge");
+    }
+    setFile(e);
+    setUploaded(true);
+  };
+
+  function handleRemoveFile(e) {
+    e.stopPropagation();
+    setFile(null);
+    setUploaded(false);
+  }
 
   function handleInputRef(e) {
     if (hiddenInputRef.current) {
@@ -25,12 +40,6 @@ export default function CreateStory() {
       return { ...prev, [id]: value };
     });
   }
-
-  const CCC = (
-    <button>
-      <X />
-    </button>
-  );
 
   return (
     <SoryWrapper>
@@ -61,26 +70,48 @@ export default function CreateStory() {
         <Body>
           <FileWrapper>
             <FileHeader>
-              <FileTitle>Select Photo or Upload</FileTitle>
-              <FileStatusSelection>Device photo loaded</FileStatusSelection>
+              {isUloaded && onFileError.length > 0 ? (
+                <FileStatusSelection>
+                  <Smartphone size={12} /> <span>Device photo loaded</span>
+                </FileStatusSelection>
+              ) : !Upload && onFileError.length > 0 ? (
+                <FileStatusSelection style={{ color: "red" }}>
+                  {onFileError}
+                </FileStatusSelection>
+              ) : (
+                <FileTitle>Select Photo or Upload</FileTitle>
+              )}
             </FileHeader>
             <FileBody onClick={handleInputRef}>
-              <input ref={hiddenInputRef} type="file" className="hidden" />
-              <RightSide>
-                <Button>
-                  <Send />
-                </Button>
+              {file && (
+                <RemoveFileButton onClick={handleRemoveFile}>
+                  <Trash />
+                </RemoveFileButton>
+              )}
+              <input
+                ref={hiddenInputRef}
+                type="file"
+                className="hidden"
+                onChange={(e) => handleFile(e.target.files[0])}
+              />
+              <Main>
+                <button>{file ? <Smartphone /> : <Upload />}</button>
                 <Text>
                   <div>
-                    <h3>Choose from device </h3>
-                    <Button> Phone/PC </Button>
+                    <p>Choose from device </p>
+                    <button>Phone/PC</button>
                   </div>
-                  <p> Click to browse files or drag && drop photo here </p>
+                  <p>
+                    {file
+                      ? file.name
+                      : "Click to browse files or drag && drop photo here"}
+                  </p>
                 </Text>
-              </RightSide>
-              <Button>
-                <Files /> Browse files
-              </Button>
+              </Main>
+              <BrowseFilesButton>
+                {isUloaded ? <RefreshCw size={15} /> : <Files size={15} />}
+                {isUloaded ? "Change" : "Browse files"}
+              </BrowseFilesButton>
             </FileBody>
           </FileWrapper>
           <Pragraph> Choose Photo Preset or URL</Pragraph>
@@ -220,24 +251,116 @@ const FileWrapper = styled.div`
 `;
 const FileHeader = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 `;
-const FileTitle = styled.p``;
-const FileStatusSelection = styled.p``;
+const FileTitle = styled.p`
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 5px;
+`;
+const FileStatusSelection = styled.div`
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+  background-color: #f1eef7;
+  padding: 5px;
+  border-radius: 10px;
+  span {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+`;
 const FileBody = styled.div`
-  border: 2px solid var(--primary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  border: 2px solid var(--text-secondary-color);
   border-style: dashed;
   width: 100%;
-  height: 100px;
+  height: fit-content;
   border-radius: 20px;
   cursor: pointer;
+  background-color: #f8fafc;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    gap: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
   .hidden {
     display: none;
   }
+  & > div > button {
+    background-color: white;
+    border: 1px solid #e2dfe7;
+    svg {
+      color: var(--primary);
+    }
+  }
+  &:hover {
+    border-color: var(--primary);
+    & > div > button {
+      background-color: var(--primary);
+      svg {
+        color: white;
+      }
+    }
+  }
 `;
-const RightSide = styled.div``;
-const Text = styled.div``;
-
+const RemoveFileButton = styled.button`
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  &:hover {
+    svg {
+      color: red;
+    }
+  }
+`;
+const Main = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
+`;
+const Text = styled.div`
+  display: flex;
+  flex-direction: column;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    line-break: anywhere;
+    p {
+      font-size: 1.2rem;
+      color: #000000;
+    }
+    button {
+      background-color: #e9e3f8;
+      font-weight: 600;
+      font-size: 0.7rem;
+      color: var(--primary);
+    }
+  }
+  & > p {
+    font-size: 0.9rem;
+    color: var(--text-secondary-color);
+    line-break: anywhere;
+  }
+`;
+const BrowseFilesButton = styled.button`
+  width: fit-content;
+  background-color: var(--primary);
+  color: white;
+  margin: auto;
+`;
 const Pragraph = styled.p`
   text-transform: uppercase;
   color: var(--text-secondary-color);
