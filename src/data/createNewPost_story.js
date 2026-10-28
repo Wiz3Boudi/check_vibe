@@ -44,3 +44,16 @@ export const images = [
     caption: "Monochrome structured fit.",
   },
 ];
+
+export const vibeTags = [
+  "#aesthetic",
+  "#tokyovibes",
+  "#designinspo",
+  "#cherryblossoms",
+  "#streetstyle",
+  "#coffeelover",
+  "#skatelife",
+  "#sunsetchaser",
+  "#creativelife",
+  "#minimalism",
+];

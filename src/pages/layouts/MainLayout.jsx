@@ -4,13 +4,16 @@ import styled from "styled-components";
 import Nav from "../../componants/Nav";
 import NewFllowing from "../../componants/NewFllowing";
 import { profile } from "../../data/profile";
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import { ProfileContext } from "../../Contexts/profileContext";
+import { initialPosts as postsData } from "../../data/feeds";
+import { updatePostsReducer } from "../../reducer/feeds";
 
 export default function MainLayout() {
   const [profileInfo, setProfileInfo] = useState(profile);
   const [isOpen, setIsOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [posts, dispatch] = useReducer(updatePostsReducer, postsData);
 
   function showProfileHandle() {
     setShowProfile((prev) => !prev);
@@ -31,6 +34,8 @@ export default function MainLayout() {
         handleClose: onClose,
         showProfileHandle,
         showProfile,
+        posts,
+        dispatch,
       }}
     >
       <Conntianer>

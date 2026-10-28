@@ -14,16 +14,15 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 
-import { useReducer, useState, useMemo } from "react";
-import { updatePostsReducer } from "../reducer/feeds";
+import { useContext, useState, useMemo } from "react";
 import MoreHorizontalOptions from "../componants/MoreHorizontalOptions";
 import ViewProfile from "../componants/ViewProfile";
-
+import { ProfileContext } from "../Contexts/profileContext";
 export default function Feeds() {
-  const [posts, dispatch] = useReducer(updatePostsReducer, postsData);
   const [stories, setStories] = useState(StoriesData);
   const [showProfile, setshowProfile] = useState(false);
   const [activeProfileId, setActiveProfileId] = useState(null);
+  const { posts, dispatch } = useContext(ProfileContext);
 
   function viewProfileHandClick(id) {
     setActiveProfileId(id);
@@ -240,14 +239,12 @@ function PostCard({ post, dispatch, idHandClick }) {
     </PostArticle>
   );
 }
-
 const Container = styled.div`
   background-color: var(--secondary, #fafafa);
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
 `;
-
 const StoriesBar = styled.div`
   display: flex;
   align-items: center;
@@ -286,7 +283,6 @@ const StoryItem = styled.div`
   gap: 4px;
   cursor: pointer;
 `;
-
 const AvatarRing = styled.div`
   padding: 2px;
   border: 2px solid
@@ -308,7 +304,6 @@ const AvatarRing = styled.div`
     object-fit: cover;
   }
 `;
-
 const StoryUsername = styled.span`
   max-width: 64px;
   font-size: 0.75rem;
@@ -316,14 +311,12 @@ const StoryUsername = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-
 const FeedList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   padding-top: 1rem;
 `;
-
 const PostArticle = styled.article`
   display: flex;
   flex-direction: column;
@@ -332,7 +325,6 @@ const PostArticle = styled.article`
   border-radius: 8px;
   overflow: hidden;
 `;
-
 const PostHeader = styled.header`
   display: flex;
   justify-content: space-between;
@@ -369,36 +361,30 @@ const AuthorAvatar = styled.img`
   object-fit: cover;
   cursor: pointer;
 `;
-
 const AuthorMeta = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
 const AuthorName = styled.span`
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
 `;
-
 const Location = styled.span`
   font-size: 0.75rem;
   color: #737373;
 `;
-
 const MediaContainer = styled.div`
   position: relative;
   width: 100%;
   background-color: #000000;
 `;
-
 const MediaImage = styled.img`
   width: 100%;
   max-height: 550px;
   object-fit: cover;
   display: block;
 `;
-
 const NavButton = styled.button`
   position: absolute;
   top: 50%;
@@ -415,7 +401,6 @@ const NavButton = styled.button`
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 `;
-
 const PaginationDots = styled.div`
   position: absolute;
   bottom: 12px;
@@ -424,7 +409,6 @@ const PaginationDots = styled.div`
   display: flex;
   gap: 6px;
 `;
-
 const Dot = styled.button`
   width: 6px;
   height: 6px;
@@ -435,26 +419,22 @@ const Dot = styled.button`
     props.$active ? "#0095f6" : "rgba(255, 255, 255, 0.6)"};
   cursor: pointer;
 `;
-
 const PostContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
   padding: 12px 16px;
 `;
-
 const ActionBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
-
 const LeftActions = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
 `;
-
 const IconButton = styled.button`
   background: none;
   border: none;
@@ -471,12 +451,10 @@ const IconButton = styled.button`
     transform: scale(1.2);
   }
 `;
-
 const LikesCount = styled.span`
   font-size: 0.875rem;
   font-weight: 600;
 `;
-
 const Caption = styled.div`
   font-size: 0.875rem;
   line-height: 1.4;
@@ -490,22 +468,18 @@ const Caption = styled.div`
     overflow: hidden;
   `}
 `;
-
 const Username = styled.span`
   font-weight: 600;
   margin-right: 6px;
 `;
-
 const CaptionText = styled.span`
   cursor: pointer;
 `;
-
 const CommentsLink = styled.span`
   font-size: 0.85rem;
   color: #737373;
   cursor: pointer;
 `;
-
 const Timestamp = styled.span`
   font-size: 0.7rem;
   color: #8e8e8e;

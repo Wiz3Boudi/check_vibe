@@ -9,11 +9,10 @@ import Messages from "./pages/Messages";
 import Profile from "./pages/Profile";
 import Notifactions from "./pages/Notifactions";
 import SearchExplore from "./pages/Search-explore";
-import Setting from "./pages/Setting";
 import Reels from "./pages/Reels";
 import CreateStory from "./pages/CreateStory";
 
-function App(style) {
+function App() {
   return (
     <div>
       <Routes>

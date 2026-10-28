@@ -1,6 +1,10 @@
 import { X, Files, Upload, Smartphone, Trash, RefreshCw } from "lucide-react";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import styled from "styled-components";
+import { vibeTags } from "../data/createNewPost_story";
+import { ProfileContext } from "../Contexts/profileContext";
+import { useNavigate } from "react-router-dom";
+import { postAPost } from "../uitilies/post.helper";
 
 export default function CreateStory() {
   const [category, setCategory] = useState("feed");
@@ -8,12 +12,24 @@ export default function CreateStory() {
   const [file, setFile] = useState(null);
   const [onFileError, setFileError] = useState(null);
   const [visualLiveUrl, setVisualLiveUrl] = useState(null);
+  const [buttonIndex, setButtonIndex] = useState([]);
   const [inputValues, setInputValues] = useState({
     location: "",
     caption: "",
   });
+  const { dispatch } = useContext(ProfileContext);
   const hiddenInputRef = useRef(null);
+  const navigate = useNavigate();
 
+  function handlePostToFeeds() {
+    if (!visualLiveUrl) return setFileError("Image cant not be impty");
+    if (!inputValues.caption) return setFileError("Caption cant not be impty");
+    const res = postAPost({ visualLiveUrl, inputValues });
+    dispatch(res);
+    setInputValues({ location: "", caption: "" });
+    setVisualLiveUrl(null);
+    navigate("/feeds");
+  }
   function handleImageUrl(e) {
     setVisualLiveUrl(URL.createObjectURL(e));
   }
@@ -149,6 +165,25 @@ export default function CreateStory() {
               })
             }
           />
+          <TagsWrapper>
+            <TagsTitle>Trending Vibe Tags</TagsTitle>
+            {vibeTags.map((item) => (
+              <Tag
+                key={item}
+                onClick={() => {
+                  buttonIndex.includes(item)
+                    ? setButtonIndex((prev) => prev.filter((x) => x != item))
+                    : setButtonIndex((prev) => [...prev, item]);
+                }}
+                className={buttonIndex.includes(item) ? "tagActive" : ""}
+              >
+                {`+ ${item}`}
+              </Tag>
+            ))}
+          </TagsWrapper>
+          <Publish onClick={() => handlePostToFeeds()}>
+            {category === "feed" ? "Publish" : "Post A Story"}
+          </Publish>
         </Body>
       </Content>
     </SoryWrapper>
@@ -156,17 +191,23 @@ export default function CreateStory() {
 }
 
 const SoryWrapper = styled.div`
-  background-color: rgb(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
   padding: 2rem 0;
   position: fixed;
   z-index: 1004;
   inset: 0;
+  display: flex;
+  justify-content: center;
 `;
 const Content = styled.div`
   background-color: white;
   border-radius: 20px;
+  width: 100%;
   padding: 10px 0;
-  height: 100%;
+  @media (min-width: 768px) {
+    width: 40%;
+  }
 `;
 const Header = styled.div`
   display: flex;
@@ -341,10 +382,6 @@ const BrowseFilesButton = styled.button`
   color: white;
   margin: auto;
 `;
-const Pragraph = styled.p`
-  text-transform: uppercase;
-  color: var(--text-secondary-color);
-`;
 const Image = styled.img`
   width: 100%;
   height: 100%;
@@ -354,6 +391,7 @@ const Image = styled.img`
 `;
 const Label = styled.label`
   text-transform: uppercase;
+  color: var(--text-muted);
 `;
 const Input = styled.input`
   outline: none;
@@ -376,10 +414,10 @@ const LiveImageWrapper = styled.div`
 `;
 const OverlayText = styled.p`
   position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: black;
-  color: white;
+  top: 20px;
+  left: 15px;
+  background-color: #d4c4f7;
+  color: var(--primary);
   padding: 5px;
   border-radius: 10px;
 `;
@@ -396,5 +434,45 @@ const Caption = styled.textarea`
     border: 2px solid var(--primary);
   }
 `;
-const TagsWrapper = styled.div``;
-const Publish = styled.button``;
+const TagsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 5px;
+  && > *:nth-child(even) {
+    margin-left: 10px;
+  }
+  padding: 10px;
+  .tagActive {
+    background-color: var(--primary);
+    color: white;
+  }
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, auto);
+  }
+`;
+const TagsTitle = styled.p`
+  grid-column: 2 span;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  @media (min-width: 768px) {
+    grid-column: 3 span;
+  }
+`;
+const Tag = styled.button`
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 14px;
+`;
+const Publish = styled.button`
+  padding: 10px 0;
+  height: 200px;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+`;
