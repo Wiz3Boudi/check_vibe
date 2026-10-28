@@ -24,6 +24,14 @@ const Wrapper = styled.div`
   z-index: 1002;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  padding-top: 30px;
+  @media (min-width: 768px) {
+    inset: 0;
+    border-radius: 0;
+    height: 100%;
+  }
 `;
 const InnerWrraper = styled.div`
   position: relative;
@@ -34,8 +42,12 @@ const InnerWrraper = styled.div`
   background-color: white;
   height: 100%;
   padding: 1rem;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  @media (min-width: 768px) {
+    width: 40%;
+    margin: auto;
+    height: fit-content;
+    border-radius: 20px;
+  }
 `;
 const Button = styled.button`
   position: absolute;

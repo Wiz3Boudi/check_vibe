@@ -1,14 +1,8 @@
 import { MessageCircle, X } from "lucide-react";
 import styled from "styled-components";
 
-export default function ReelsComments({
-  comments,
-  onClose,
-  isOpen,
-  caption,
-  avatarUrl,
-  username,
-}) {
+export default function ReelsComments(props) {
+  const { comments, onClose, isOpen, caption, avatarUrl, username } = props;
   return (
     <Container $isOpen={isOpen}>
       <Wrapper>
@@ -52,21 +46,37 @@ const Container = styled.div`
   display: ${(props) => (props?.$isOpen ? "flex" : "none")};
   position: fixed;
   inset: 0;
-  height: 100%;
-  padding: 100px 0;
-  background-color: rgb(0, 0, 0, 0.8);
+  top: unset;
+  height: fit-content;
+  padding-top: 35px;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
   z-index: 1003;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  @media (min-width: 768px) {
+    inset: 0;
+    height: 100%;
+    padding-top: 0;
+  }
 `;
 const Wrapper = styled.div`
   background-color: white;
   width: 100%;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  max-height: 500px;
+  overflow: auto;
+  @media (min-width: 768px) {
+    width: 40%;
+    max-height: 580px;
+    margin: auto;
+    border-radius: 20px;
+    scrollbar-width: none;
+  }
 `;
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 30px;
+  padding: 15px 30px;
 `;
 const CommentsCount = styled.h3``;
 const LeftSide = styled.div`
