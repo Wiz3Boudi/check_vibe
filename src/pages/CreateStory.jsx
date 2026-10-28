@@ -5,19 +5,22 @@ import { images } from "../data/createNewPost_story";
 
 export default function CreateStory() {
   const [category, setCategory] = useState("feed");
-  const [isUloaded, setUploaded] = useState(false);
+  const [isUploaded, setUploaded] = useState(false);
   const [file, setFile] = useState(null);
-  const [onFileError, setFileError] = useState("");
+  const [onFileError, setFileError] = useState(null);
   const [inputValues, setInputValues] = useState({
     Url: "",
     location: "",
     caption: "",
   });
   const hiddenInputRef = useRef(null);
+
   const handleFile = (e) => {
+    setFile(null);
     const isImage = e.type.split("/")[0];
     if (isImage != "image") {
-      return setFileError("place provide an iamge");
+      setUploaded(false);
+      return setFileError("*PDF is not allowed Please provide an iamge");
     }
     setFile(e);
     setUploaded(true);
@@ -30,6 +33,7 @@ export default function CreateStory() {
   }
 
   function handleInputRef(e) {
+    setFileError(null);
     if (hiddenInputRef.current) {
       hiddenInputRef.current.click();
     }
@@ -70,11 +74,11 @@ export default function CreateStory() {
         <Body>
           <FileWrapper>
             <FileHeader>
-              {isUloaded && onFileError.length > 0 ? (
+              {isUploaded && !onFileError ? (
                 <FileStatusSelection>
                   <Smartphone size={12} /> <span>Device photo loaded</span>
                 </FileStatusSelection>
-              ) : !Upload && onFileError.length > 0 ? (
+              ) : !isUploaded && onFileError ? (
                 <FileStatusSelection style={{ color: "red" }}>
                   {onFileError}
                 </FileStatusSelection>
@@ -109,8 +113,8 @@ export default function CreateStory() {
                 </Text>
               </Main>
               <BrowseFilesButton>
-                {isUloaded ? <RefreshCw size={15} /> : <Files size={15} />}
-                {isUloaded ? "Change" : "Browse files"}
+                {isUploaded ? <RefreshCw size={15} /> : <Files size={15} />}
+                {isUploaded ? "Change" : "Browse files"}
               </BrowseFilesButton>
             </FileBody>
           </FileWrapper>
