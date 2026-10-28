@@ -428,7 +428,7 @@ const Caption = styled.textarea`
   border: 1px solid #e2e8f0;
   background-color: #f8fafc;
   color: var(--text-secondary-color);
-  padding: 0 10px;
+  padding: 10px;
   font-size: 16px;
   &:focus {
     border: 2px solid var(--primary);

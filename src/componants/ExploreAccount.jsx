@@ -4,7 +4,10 @@ import { useState } from "react";
 
 export default function ExploreAccount({ userData, onClose }) {
   const [post, setPost] = useState(userData);
-
+  const likes = new Intl.NumberFormat("en-us", {
+    maximumFractionDigits: 2,
+    notation: "compact",
+  }).format(post.likes);
   const handleToggleLike = () => {
     setPost((prev) => ({
       ...prev,
@@ -12,7 +15,6 @@ export default function ExploreAccount({ userData, onClose }) {
       isLiked: !prev.isLiked,
     }));
   };
-
   const handleToggleSave = () => {
     setPost((prev) => ({ ...prev, isSaved: !prev.isSaved }));
   };
@@ -69,7 +71,7 @@ export default function ExploreAccount({ userData, onClose }) {
             </ReactionIcons>
 
             <LikesCountWrapper>
-              <span>{post.likes}</span>
+              <span>{likes}</span>
               <span>likes</span>
             </LikesCountWrapper>
           </PostDetails>
@@ -89,24 +91,18 @@ const Container = styled.div`
   position: fixed;
   inset: 0;
   z-index: 1003;
-  background-color: rgba(0, 0, 0, 0.89);
-  padding: 2.3rem 10px;
-  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
   overflow-y: auto;
   scrollbar-width: none;
-  @media (min-width: 768px) {
-    width: 425px;
-    inset: auto;
-    right: 10px;
-    top: 0;
-  }
+  display: flex;
 `;
 
 const Wrapper = styled.div`
   background-color: #ffffff;
   border-radius: 20px;
-  padding: 1rem 0;
-  margin-bottom: 4rem;
+  margin: auto;
+  padding: 10px;
 `;
 
 const Header = styled.div`
