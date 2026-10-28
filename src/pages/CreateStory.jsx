@@ -17,9 +17,37 @@ export default function CreateStory() {
     location: "",
     caption: "",
   });
+  console.log(file);
+  console.log(visualLiveUrl);
   const { dispatch } = useContext(ProfileContext);
   const hiddenInputRef = useRef(null);
   const navigate = useNavigate();
+  function handleDragOver(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    setUploaded(true);
+    console.log("handleDragOver");
+  }
+  function handleDragLeave(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    setUploaded(true);
+    console.log(".handleDragLeave");
+  }
+  function handleDrop(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    setUploaded(true);
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const files = Array.from(e.dataTransfer.files);
+      setFile(file);
+      setVisualLiveUrl(file);
+    }
+    e.dataTransfer.clearData();
+    console.log("handleDrop");
+    console.log(e);
+  }
 
   function handlePostToFeeds() {
     if (!visualLiveUrl) return setFileError("Image cant not be impty");
@@ -35,9 +63,12 @@ export default function CreateStory() {
   }
   const handleFile = (e) => {
     setFile(null);
-    if (e.type.split("/")[0] != "image") {
+    const exten = e.type.split("/");
+    if (exten[0] != "image") {
       setUploaded(false);
-      return setFileError("*PDF is not allowed Please provide an iamge");
+      return setFileError(
+        `*${exten[1]} is not allowed Please provide an iamge`,
+      );
     }
     handleImageUrl(e);
     setFile(e);
@@ -101,7 +132,13 @@ export default function CreateStory() {
                 <FileTitle>Select Photo or Upload</FileTitle>
               )}
             </FileHeader>
-            <FileBody onClick={handleInputRef} $isActive={file ? true : false}>
+            <FileBody
+              onClick={handleInputRef}
+              $isActive={file ? true : false}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
               {file && (
                 <RemoveFileButton onClick={handleRemoveFile}>
                   <Trash />
@@ -112,6 +149,8 @@ export default function CreateStory() {
                 type="file"
                 className="hidden"
                 onChange={(e) => handleFile(e.target.files[0])}
+                accept="image/*"
+                multiple
               />
               <Main>
                 <button>{file ? <Smartphone /> : <Upload />}</button>
