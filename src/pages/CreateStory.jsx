@@ -1,44 +1,43 @@
 import { X, Files, Upload, Smartphone, Trash, RefreshCw } from "lucide-react";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { images } from "../data/createNewPost_story";
 
 export default function CreateStory() {
   const [category, setCategory] = useState("feed");
   const [isUploaded, setUploaded] = useState(false);
   const [file, setFile] = useState(null);
   const [onFileError, setFileError] = useState(null);
+  const [visualLiveUrl, setVisualLiveUrl] = useState(null);
   const [inputValues, setInputValues] = useState({
-    Url: "",
     location: "",
     caption: "",
   });
   const hiddenInputRef = useRef(null);
 
+  function handleImageUrl(e) {
+    setVisualLiveUrl(URL.createObjectURL(e));
+  }
   const handleFile = (e) => {
     setFile(null);
-    const isImage = e.type.split("/")[0];
-    if (isImage != "image") {
+    if (e.type.split("/")[0] != "image") {
       setUploaded(false);
       return setFileError("*PDF is not allowed Please provide an iamge");
     }
+    handleImageUrl(e);
     setFile(e);
     setUploaded(true);
   };
-
   function handleRemoveFile(e) {
     e.stopPropagation();
     setFile(null);
     setUploaded(false);
   }
-
   function handleInputRef(e) {
     setFileError(null);
     if (hiddenInputRef.current) {
       hiddenInputRef.current.click();
     }
   }
-
   function handleInputGroup({ id, value }) {
     setInputValues((prev) => {
       return { ...prev, [id]: value };
@@ -78,7 +77,7 @@ export default function CreateStory() {
                 <FileStatusSelection>
                   <Smartphone size={12} /> <span>Device photo loaded</span>
                 </FileStatusSelection>
-              ) : !isUploaded && onFileError ? (
+              ) : onFileError ? (
                 <FileStatusSelection style={{ color: "red" }}>
                   {onFileError}
                 </FileStatusSelection>
@@ -86,7 +85,7 @@ export default function CreateStory() {
                 <FileTitle>Select Photo or Upload</FileTitle>
               )}
             </FileHeader>
-            <FileBody onClick={handleInputRef}>
+            <FileBody onClick={handleInputRef} $isActive={file ? true : false}>
               {file && (
                 <RemoveFileButton onClick={handleRemoveFile}>
                   <Trash />
@@ -118,37 +117,12 @@ export default function CreateStory() {
               </BrowseFilesButton>
             </FileBody>
           </FileWrapper>
-          <Pragraph> Choose Photo Preset or URL</Pragraph>
-          <ImageGrid>
-            {images.map((img) => (
-              <Image
-                src={img.avatarUrl}
-                key={img.id}
-                alt={img.avatarUrl}
-                loading="lazy"
-              />
-            ))}
-          </ImageGrid>
-          <Input
-            type="text"
-            placeholder="Or past any custom URL here..."
-            value={inputValues.Url}
-            id="Url"
-            onChange={(e) =>
-              handleInputGroup({
-                id: e.currentTarget.id,
-                value: e.target.value,
-              })
-            }
-          />
-          <LiveImageWrapper>
-            <Image
-              src={images[0].avatarUrl}
-              alt={images[0].avatarUrl}
-              loading="lazy"
-            />
-            <OverlayText> Live Visual</OverlayText>
-          </LiveImageWrapper>
+          {file && (
+            <LiveImageWrapper>
+              <Image src={visualLiveUrl} alt={file.name} loading="lazy" />
+              <OverlayText> Live Visual</OverlayText>
+            </LiveImageWrapper>
+          )}
           <Label htmlFor="location"> Location </Label>
           <Input
             id="location"
@@ -183,7 +157,7 @@ export default function CreateStory() {
 
 const SoryWrapper = styled.div`
   background-color: rgb(0, 0, 0, 0.7);
-  padding: 2rem 1.3rem;
+  padding: 2rem 0;
   position: fixed;
   z-index: 1004;
   inset: 0;
@@ -280,7 +254,8 @@ const FileBody = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px 0;
-  border: 2px solid var(--text-secondary-color);
+  border: 2px solid
+    ${(props) => (props.$isActive ? "var(--primary)" : "var(--text-muted)")};
   border-style: dashed;
   width: 100%;
   height: fit-content;
@@ -301,10 +276,11 @@ const FileBody = styled.div`
     display: none;
   }
   & > div > button {
-    background-color: white;
+    background-color: ${(props) =>
+      props.$isActive ? "var(--primary)" : "white"};
     border: 1px solid #e2dfe7;
     svg {
-      color: var(--primary);
+      color: ${(props) => (props.$isActive ? "white" : "var(--primary)")};
     }
   }
   &:hover {
@@ -369,14 +345,9 @@ const Pragraph = styled.p`
   text-transform: uppercase;
   color: var(--text-secondary-color);
 `;
-const ImageGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-`;
 const Image = styled.img`
   width: 100%;
-  height: 80px;
+  height: 100%;
   object-fit: cover;
   border-radius: 10px;
   cursor: pointer;
@@ -399,6 +370,9 @@ const Input = styled.input`
 `;
 const LiveImageWrapper = styled.div`
   position: relative;
+  height: 400px;
+  width: 100%;
+  border-radius: 10px;
 `;
 const OverlayText = styled.p`
   position: absolute;
