@@ -16,7 +16,7 @@ export const postAPost = ({ visualLiveUrl, inputValues, tags }) => {
         inputValues.caption ||
         "This is test so I want to write as many as I can to test many different things and I'm very positive about it , yeah let us go",
       timestamp: "JUST NOW",
-      commentsCount: 0,
+      commentsCount: 4532,
       connectingInfo: [
         {
           id: crypto.randomUUID(),

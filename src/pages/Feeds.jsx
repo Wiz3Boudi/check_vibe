@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import {
-  initialStories as StoriesData,
-  initialPosts as postsData,
-} from "../data/feeds";
+import { initialStories as StoriesData } from "../data/feeds";
 import {
   Heart,
   MessageCircle,
@@ -18,12 +15,20 @@ import { useContext, useState, useMemo } from "react";
 import MoreHorizontalOptions from "../componants/MoreHorizontalOptions";
 import ViewProfile from "../componants/ViewProfile";
 import { ProfileContext } from "../Contexts/profileContext";
+import CommentsModal from "../componants/CommentsModal";
+import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
+
 export default function Feeds() {
   const [stories, setStories] = useState(StoriesData);
   const [showProfile, setshowProfile] = useState(false);
   const [activeProfileId, setActiveProfileId] = useState(null);
   const { posts, dispatch } = useContext(ProfileContext);
-
+  const [postId, setPostId] = useState(null);
+  const { handelCommentsModal, isCommentsModalOpen } =
+    useContext(ProfileContext);
+  const findPost = useMemo(() => {
+    return posts.find((post) => post.id === postId);
+  }, [postId]);
   function viewProfileHandClick(id) {
     setActiveProfileId(id);
     showProfileToggle(true);
@@ -51,6 +56,7 @@ export default function Feeds() {
       return b.hasUnseenStory - a.hasUnseenStory;
     });
   }, [stories]);
+  useLockBodyScroll(isCommentsModalOpen);
 
   return (
     <Container>
@@ -95,21 +101,30 @@ export default function Feeds() {
             dispatch={dispatch}
             idHandClick={viewProfileHandClick}
             showProfile={showProfile}
+            handleModal={handelCommentsModal}
+            setPostId={setPostId}
           />
         ))}
       </FeedList>
+      {isCommentsModalOpen && (
+        <CommentsModal onClose={handelCommentsModal} data={findPost} />
+      )}
     </Container>
   );
 }
 
-function PostCard({ post, dispatch, idHandClick }) {
+function PostCard(props) {
+  const { post, dispatch, idHandClick, handleModal, setPostId } = props;
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isTagsExpanded, setTagExpanded] = useState(true);
 
   const images = post?.images || [];
   const showPrev = currentIndex > 0;
   const showNext = currentIndex < images.length - 1;
+  const tags = post?.tags;
 
   const handleLike = () => {
     dispatch({
@@ -187,7 +202,6 @@ function PostCard({ post, dispatch, idHandClick }) {
           )}
         </MediaContainer>
       )}
-
       <PostContent>
         <ActionBar>
           <LeftActions>
@@ -201,7 +215,14 @@ function PostCard({ post, dispatch, idHandClick }) {
                 color={post.isLiked ? "#ed4956" : "currentColor"}
               />
             </IconButton>
-            <IconButton type="button" aria-label="Comment">
+            <IconButton
+              onClick={() => {
+                setPostId(post.id);
+                handleModal();
+              }}
+              type="button"
+              aria-label="Comment"
+            >
               <MessageCircle />
             </IconButton>
             <IconButton type="button" aria-label="Share">
@@ -220,20 +241,27 @@ function PostCard({ post, dispatch, idHandClick }) {
             />
           </IconButton>
         </ActionBar>
-
         <LikesCount>{post.likesCount?.toLocaleString()} Likes</LikesCount>
-
         <Caption $isTruncated={!isExpanded}>
           <Username>{post.username}</Username>
           <CaptionText onClick={() => setIsExpanded((prev) => !prev)}>
             {post.caption}
           </CaptionText>
         </Caption>
+        {tags && (
+          <TagsWrraper
+            $isTagsExpanded={isTagsExpanded}
+            onClick={() => setTagExpanded((prev) => !prev)}
+          >
+            {post.tags.map((tag) => (
+              <Tag key={tag}>{tag}</Tag>
+            ))}
+          </TagsWrraper>
+        )}
 
         {post.commentsCount > 0 && (
           <CommentsLink>View all {post.commentsCount} comments</CommentsLink>
         )}
-
         <Timestamp>{post.timestamp}</Timestamp>
       </PostContent>
     </PostArticle>
@@ -484,4 +512,21 @@ const Timestamp = styled.span`
   font-size: 0.7rem;
   color: #8e8e8e;
   text-transform: uppercase;
+`;
+const TagsWrraper = styled.div`
+  margin-top: -10px;
+  ${(props) =>
+    props.$isTagsExpanded &&
+    `
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    `}
+`;
+const Tag = styled.button`
+  background: none;
+  cursor: pointer;
+  margin-right: 3px;
+  font-size: 0.8rem;
 `;

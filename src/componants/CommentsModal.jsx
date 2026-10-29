@@ -1,15 +1,15 @@
 import { MessageCircle, X } from "lucide-react";
 import styled from "styled-components";
 
-export default function ReelsComments(props) {
-  const { comments, onClose, isOpen, caption, avatarUrl, username } = props;
+export default function CommentsModal({ onClose, isOpen, data }) {
+  const { commentsCount, caption, avatarUrl, username } = data;
   return (
     <Container $isOpen={isOpen}>
       <Wrapper>
         <Header>
           <LeftSide>
             <MessageCircle color="#6b38d4" />
-            <CommentsCount>{`Comments (${comments})`}</CommentsCount>
+            <CommentsCount>{`Comments (${commentsCount})`}</CommentsCount>
           </LeftSide>
           <Close onClick={onClose}>
             <X />
@@ -43,7 +43,7 @@ export default function ReelsComments(props) {
 }
 
 const Container = styled.div`
-  display: ${(props) => (props?.$isOpen ? "flex" : "none")};
+  display: flex;
   position: fixed;
   inset: 0;
   top: unset;

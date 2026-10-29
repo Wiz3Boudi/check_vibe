@@ -14,7 +14,11 @@ export default function MainLayout() {
   const [isOpen, setIsOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [posts, dispatch] = useReducer(updatePostsReducer, postsData);
+  const [isCommentsModalOpen, setCommentModal] = useState(false);
 
+  function handelCommentsModal() {
+    setCommentModal((prev) => !prev);
+  }
   function showProfileHandle() {
     setShowProfile((prev) => !prev);
   }
@@ -36,6 +40,8 @@ export default function MainLayout() {
         showProfile,
         posts,
         dispatch,
+        isCommentsModalOpen,
+        handelCommentsModal,
       }}
     >
       <Conntianer>

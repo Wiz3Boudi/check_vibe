@@ -11,26 +11,25 @@ import {
   ChevronDown,
   Check,
 } from "lucide-react";
-import { useReducer, useState } from "react";
+import { useContext, useReducer, useState } from "react";
 import { reels } from "../reducer/reels";
 import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
 import { postDigitsFormater } from "../uitilies/postDigitsFormater";
 import CaptionModal from "../componants/CaptionModal";
-import ReelsComments from "../componants/ReelsComments";
+import CommentsModal from "../componants/CommentsModal";
+import { ProfileContext } from "../Contexts/profileContext";
 
 export default function Reels() {
   const [state, dispatch] = useReducer(reels, initialReels);
   const [isMute, setMute] = useState(false);
   const [isExpanded, setExpand] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isCommentModalOpen, setCommentModal] = useState(false);
+  const { handelCommentsModal, isCommentsModalOpen } =
+    useContext(ProfileContext);
 
   const handleClose = () => {
     setExpand((prev) => !prev);
   };
-  function handleCommentsModal() {
-    setCommentModal((prev) => !prev);
-  }
   const reelsSize = state.length - 1;
   const { likes, comments, shares } = postDigitsFormater(
     state[currentIndex].likesCount,
@@ -62,13 +61,10 @@ export default function Reels() {
         handleClose={handleClose}
         text={state[currentIndex].caption}
       />
-      <ReelsComments
-        comments={state[currentIndex].commentsCount}
-        isOpen={isCommentModalOpen}
-        onClose={handleCommentsModal}
-        caption={state[currentIndex].caption}
-        avatarUrl={state[currentIndex].avatarUrl}
-        username={state[currentIndex].username}
+      <CommentsModal
+        isOpen={isCommentsModalOpen}
+        onClose={handelCommentsModal}
+        data={state[currentIndex]}
       />
       <ReelWrapper>
         <Image src={state[currentIndex].videoBgUrl} />
@@ -111,7 +107,7 @@ export default function Reels() {
             <Span> {likes} </Span>
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button onClick={handleCommentsModal}>
+            <Button onClick={handelCommentsModal}>
               <MessageCircle />
             </Button>
             <Span> {comments} </Span>
