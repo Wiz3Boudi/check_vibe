@@ -18,7 +18,7 @@ const Container = styled.div`
   inset: 0;
   z-index: 1002;
   background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4p);
+  backdrop-filter: blur(4px);
 `;
 const Wrapper = styled.div`
   position: relative;
