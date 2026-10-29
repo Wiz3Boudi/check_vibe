@@ -24,8 +24,12 @@ export default function Feeds() {
   const [activeProfileId, setActiveProfileId] = useState(null);
   const { posts, dispatch } = useContext(ProfileContext);
   const [postId, setPostId] = useState(null);
-  const { handelCommentsModal, isCommentsModalOpen } =
-    useContext(ProfileContext);
+  const [isModalOpen, setModal] = useState(false);
+
+  function modalToggle(id) {
+    setPostId(id);
+    setModal((prev) => !prev);
+  }
   const findPost = useMemo(() => {
     return posts.find((post) => post.id === postId);
   }, [postId]);
@@ -56,7 +60,7 @@ export default function Feeds() {
       return b.hasUnseenStory - a.hasUnseenStory;
     });
   }, [stories]);
-  useLockBodyScroll(isCommentsModalOpen);
+  useLockBodyScroll(isModalOpen);
 
   return (
     <Container>
@@ -101,14 +105,12 @@ export default function Feeds() {
             dispatch={dispatch}
             idHandClick={viewProfileHandClick}
             showProfile={showProfile}
-            handleModal={handelCommentsModal}
+            handleModal={modalToggle}
             setPostId={setPostId}
           />
         ))}
       </FeedList>
-      {isCommentsModalOpen && (
-        <CommentsModal onClose={handelCommentsModal} data={findPost} />
-      )}
+      {isModalOpen && <CommentsModal onClose={modalToggle} data={findPost} />}
     </Container>
   );
 }
@@ -216,10 +218,7 @@ function PostCard(props) {
               />
             </IconButton>
             <IconButton
-              onClick={() => {
-                setPostId(post.id);
-                handleModal();
-              }}
+              onClick={() => handleModal(post.id)}
               type="button"
               aria-label="Comment"
             >

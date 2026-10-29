@@ -11,22 +11,23 @@ import {
   ChevronDown,
   Check,
 } from "lucide-react";
-import { useContext, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import { reels } from "../reducer/reels";
 import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
 import { postDigitsFormater } from "../uitilies/postDigitsFormater";
 import CaptionModal from "../componants/CaptionModal";
 import CommentsModal from "../componants/CommentsModal";
-import { ProfileContext } from "../Contexts/profileContext";
 
 export default function Reels() {
   const [state, dispatch] = useReducer(reels, initialReels);
   const [isMute, setMute] = useState(false);
   const [isExpanded, setExpand] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { handelCommentsModal, isCommentsModalOpen } =
-    useContext(ProfileContext);
+  const [modal, setModal] = useState(false);
 
+  function modalToggle() {
+    setModal((prev) => !prev);
+  }
   const handleClose = () => {
     setExpand((prev) => !prev);
   };
@@ -52,7 +53,7 @@ export default function Reels() {
     }
   };
 
-  useLockBodyScroll(true);
+  useLockBodyScroll(modal);
 
   return (
     <Container>
@@ -62,8 +63,8 @@ export default function Reels() {
         text={state[currentIndex].caption}
       />
       <CommentsModal
-        isOpen={isCommentsModalOpen}
-        onClose={handelCommentsModal}
+        isOpen={modal}
+        onClose={modalToggle}
         data={state[currentIndex]}
       />
       <ReelWrapper>
@@ -107,7 +108,7 @@ export default function Reels() {
             <Span> {likes} </Span>
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button onClick={handelCommentsModal}>
+            <Button onClick={modalToggle}>
               <MessageCircle />
             </Button>
             <Span> {comments} </Span>
