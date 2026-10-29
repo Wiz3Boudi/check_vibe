@@ -17,7 +17,8 @@ const Container = styled.div`
   position: fixed;
   inset: 0;
   z-index: 1002;
-  background-color: rgb(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4p);
 `;
 const Wrapper = styled.div`
   position: relative;
