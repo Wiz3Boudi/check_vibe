@@ -1,4 +1,4 @@
-export const postAPost = ({ visualLiveUrl, inputValues }) => {
+export const postAPost = ({ visualLiveUrl, inputValues, tags }) => {
   return {
     type: "post",
     payload: {
@@ -54,6 +54,7 @@ export const postAPost = ({ visualLiveUrl, inputValues }) => {
           likesCount: 8,
         },
       ],
+      tags: [...tags],
     },
   };
 };

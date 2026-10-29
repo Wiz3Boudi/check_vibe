@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { postAPost } from "../uitilies/post.helper";
 
 export default function CreateStory() {
+  const { dispatch } = useContext(ProfileContext);
+  const hiddenInputRef = useRef(null);
+  const navigate = useNavigate();
   const [category, setCategory] = useState("feed");
   const [isUploaded, setUploaded] = useState(false);
   const [file, setFile] = useState(null);
@@ -17,42 +20,28 @@ export default function CreateStory() {
     location: "",
     caption: "",
   });
-  console.log(file);
-  console.log(visualLiveUrl);
-  const { dispatch } = useContext(ProfileContext);
-  const hiddenInputRef = useRef(null);
-  const navigate = useNavigate();
-  function handleDragOver(e) {
+
+  function setSettings(e) {
     e.preventDefault();
     e.stopPropagation();
-    setUploaded(true);
-    console.log("handleDragOver");
-  }
-  function handleDragLeave(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    setUploaded(true);
-    console.log(".handleDragLeave");
   }
   function handleDrop(e) {
     e.preventDefault();
     e.stopPropagation();
-    setUploaded(true);
 
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const files = Array.from(e.dataTransfer.files);
-      setFile(file);
-      setVisualLiveUrl(file);
+      const file = Array.from(e.dataTransfer.files);
+      setFile(file[0]);
+      setVisualLiveUrl(URL.createObjectURL(file[0]));
+      setUploaded(true);
+      setFileError(null);
     }
     e.dataTransfer.clearData();
-    console.log("handleDrop");
-    console.log(e);
   }
-
   function handlePostToFeeds() {
     if (!visualLiveUrl) return setFileError("Image cant not be impty");
     if (!inputValues.caption) return setFileError("Caption cant not be impty");
-    const res = postAPost({ visualLiveUrl, inputValues });
+    const res = postAPost({ visualLiveUrl, inputValues, tags: buttonIndex });
     dispatch(res);
     setInputValues({ location: "", caption: "" });
     setVisualLiveUrl(null);
@@ -77,6 +66,7 @@ export default function CreateStory() {
   function handleRemoveFile(e) {
     e.stopPropagation();
     setFile(null);
+    setVisualLiveUrl(null);
     setUploaded(false);
   }
   function handleInputRef(e) {
@@ -135,8 +125,8 @@ export default function CreateStory() {
             <FileBody
               onClick={handleInputRef}
               $isActive={file ? true : false}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
+              onDragOver={setSettings}
+              onDragLeave={setSettings}
               onDrop={handleDrop}
             >
               {file && (
@@ -469,6 +459,7 @@ const Caption = styled.textarea`
   color: var(--text-secondary-color);
   padding: 10px;
   font-size: 16px;
+  font-family: sans-serif;
   &:focus {
     border: 2px solid var(--primary);
   }
