@@ -39,7 +39,7 @@ const Footer = styled.form`
 `;
 const Avatar = styled.img`
   width: 30px;
-  aspect-raito: 1/1;
+  height: 30px;
   object-fit: cover;
   flex-shrink: 0;
   border-radius: 50%;
