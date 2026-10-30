@@ -2,15 +2,18 @@ import { MessageCircle, X } from "lucide-react";
 import styled from "styled-components";
 import ViewProfile from "./ViewProfile";
 import { useState } from "react";
-export default function CommentsModal({ onClose, data }) {
+import CommentsBody from "./CommentsBody";
+import CommentsFooter from "./CommentFooter";
+
+export default function CommentsModal({ onClose, data, dispatch }) {
   const { commentsCount, caption, avatarUrl, username } = data;
   const [view, setView] = useState(false);
+  const [isExpanded, setExpanded] = useState(true);
 
   function toggle() {
     setView((prev) => !prev);
     onClose();
   }
-  console.log(data);
   return (
     <Container>
       <Wrapper>
@@ -34,22 +37,34 @@ export default function CommentsModal({ onClose, data }) {
               />
             </AvatarRing>
             <Caption>
-              <span
-                style={{
-                  fontWeight: "bolder",
-                  fontSize: "1.1rem",
-                  marginRight: "10px",
-                }}
+              <Username>{username}</Username>
+              <Text
+                $isExpanded={isExpanded}
+                onClick={() => setExpanded((prev) => !prev)}
               >
-                {username}
-              </span>
-              {caption}
-              <p style={{ color: "rgb(130, 134, 134)", marginTop: "5px" }}>
-                RECENT REEL
-              </p>
+                {caption}
+              </Text>
+              <TimeStamp> RECENT REEL</TimeStamp>
             </Caption>
           </HeaderWrapper>
         </CommentsWrapper>
+        {data.comments?.length > 0 ? (
+          <CommentsBody
+            comments={data.comments}
+            postId={data.id}
+            dispatch={dispatch}
+          />
+        ) : (
+          <Message>
+            <h3>No comments yet.</h3>
+            <p>Start the conversation with your vibe!</p>
+          </Message>
+        )}
+        {view && <ViewProfile data={data} />}
+        <CommentsFooter
+          username={data.comments[0]?.username}
+          URL={data.comments[0]?.avatarUrl}
+        />
       </Wrapper>
     </Container>
   );
@@ -59,23 +74,24 @@ const Container = styled.div`
   display: flex;
   position: fixed;
   inset: 0;
-  top: unset;
-  height: fit-content;
   padding-top: 35px;
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
   z-index: 1003;
   @media (min-width: 768px) {
     inset: 0;
-    height: 100%;
     padding-top: 0;
+    border-radius: 0;
+    height: 100%;
   }
 `;
 const Wrapper = styled.div`
   background-color: white;
+  position: relative;
   width: 100%;
-  max-height: 500px;
-  overflow: auto;
+  height: 95%;
+  border-radius: 20px;
+  overflow: hidden;
   @media (min-width: 768px) {
     width: 40%;
     max-height: 580px;
@@ -87,7 +103,7 @@ const Wrapper = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 15px 30px;
+  padding: 15px 20px;
 `;
 const CommentsCount = styled.h3``;
 const LeftSide = styled.div`
@@ -111,7 +127,7 @@ const CommentsWrapper = styled.div``;
 const HeaderWrapper = styled.div`
   display: grid;
   grid-template-columns: 15% 85%;
-  padding: 20px;
+  padding: 5px;
   border-top: 1px solid #e2e8f0;
   border-bottom: 1px solid #e2e8f0;
   background-color: #f8fafc;
@@ -133,5 +149,31 @@ const AvatarImage = styled.img`
   cursor: pointer;
 `;
 const Caption = styled.div``;
-const Body = styled.div``;
-const Input = styled.input``;
+const Username = styled.h4``;
+const Text = styled.div`
+  color: var(--text-secondary-color);
+  cursor: pointer;
+  ${(props) =>
+    props?.$isExpanded &&
+    ` 
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;`}
+`;
+const TimeStamp = styled.span`
+  color: var(--text-muted);
+`;
+const Message = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  h3 {
+    color: var(--text-secondary-color);
+  }
+  p {
+    color: var(--text-muted);
+  }
+`;

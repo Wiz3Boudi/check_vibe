@@ -110,7 +110,13 @@ export default function Feeds() {
           />
         ))}
       </FeedList>
-      {isModalOpen && <CommentsModal onClose={modalToggle} data={findPost} />}
+      {isModalOpen && (
+        <CommentsModal
+          onClose={modalToggle}
+          dispatch={dispatch}
+          data={findPost}
+        />
+      )}
     </Container>
   );
 }

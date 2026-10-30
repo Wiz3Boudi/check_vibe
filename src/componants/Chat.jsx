@@ -11,9 +11,6 @@ export default function Chat({ onClose, data, suggestionsText, dispatch }) {
   const [unreadMessageCount, setUnreadMessageCount] = useState(0);
   const timerRef = useRef(null);
 
-  console.log(prevMessageLenghtRef.current);
-  console.log(unreadMessageCount);
-
   useEffect(() => {
     setUnreadMessageCount(data.messages.length - prevMessageLenghtRef.current);
   }, [data.messages]);

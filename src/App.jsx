@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route, Routes } from "react-router";
 import Onboarding from "./pages/Onboarding";
 import Login from "./pages/Login";
