@@ -38,12 +38,6 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
               alt={data.avatarUrl}
               onClick={displayImageHandleClick}
             />
-            {displayImage && (
-              <DisplayImage
-                src={data.avatarUrl}
-                displayImageHandleClick={displayImageHandleClick}
-              />
-            )}
             <Name>{converted}</Name>
             <Bio
               onClick={() => setIsExpanded((prev) => !prev)}
@@ -112,6 +106,12 @@ export default function ViewProfile({ data, showProfileToggle, showProfile }) {
           </PostsBody>
         </PostsContainer>
       </Wrapper>
+      {displayImage && (
+        <DisplayImage
+          src={data.avatarUrl}
+          displayImageHandleClick={displayImageHandleClick}
+        />
+      )}
     </Container>
   );
 }
@@ -120,9 +120,12 @@ const Container = styled.div`
   top: 0;
   bottom: 0;
   z-index: 1001;
-  background-color: rgb(0, 0, 0, 0.4);
-  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
   padding-bottom: 2rem;
+  display: flex;
+  height: 100%;
+  align-items: center;
   @media (min-width: 768px) {
     max-width: 450px;
     right: 0;
@@ -131,13 +134,12 @@ const Container = styled.div`
 `;
 const Wrapper = styled.div`
   background-color: white;
-  height: 100%;
-  border-radius: 10px;
+  max-height: 80%;
+  border-radius: 20px;
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: 100vh;
   overflow: auto;
   scrollbar-width: none;
 `;

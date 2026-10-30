@@ -1,10 +1,18 @@
 import { MessageCircle, X } from "lucide-react";
 import styled from "styled-components";
-
-export default function CommentsModal({ onClose, isOpen, data }) {
+import ViewProfile from "./ViewProfile";
+import { useState } from "react";
+export default function CommentsModal({ onClose, data }) {
   const { commentsCount, caption, avatarUrl, username } = data;
+  const [view, setView] = useState(false);
+
+  function toggle() {
+    setView((prev) => !prev);
+    onClose();
+  }
+  console.log(data);
   return (
-    <Container $isOpen={isOpen}>
+    <Container>
       <Wrapper>
         <Header>
           <LeftSide>
@@ -18,7 +26,12 @@ export default function CommentsModal({ onClose, isOpen, data }) {
         <CommentsWrapper>
           <HeaderWrapper>
             <AvatarRing>
-              <AvatarImage src={avatarUrl} alt={avatarUrl} loading="lazy" />
+              <AvatarImage
+                onClick={toggle}
+                src={avatarUrl}
+                alt={avatarUrl}
+                loading="lazy"
+              />
             </AvatarRing>
             <Caption>
               <span
@@ -52,8 +65,6 @@ const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
   z-index: 1003;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
   @media (min-width: 768px) {
     inset: 0;
     height: 100%;

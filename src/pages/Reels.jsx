@@ -62,11 +62,6 @@ export default function Reels() {
         handleClose={handleClose}
         text={state[currentIndex].caption}
       />
-      <CommentsModal
-        isOpen={modal}
-        onClose={modalToggle}
-        data={state[currentIndex]}
-      />
       <ReelWrapper>
         <Image src={state[currentIndex].videoBgUrl} />
         <ReactionWrapper>
@@ -171,6 +166,13 @@ export default function Reels() {
           </Body>
         </Section>
       </ReelWrapper>
+      {modal && (
+        <CommentsModal
+          isOpen={modal}
+          onClose={modalToggle}
+          data={state[currentIndex]}
+        />
+      )}
     </Container>
   );
 }
