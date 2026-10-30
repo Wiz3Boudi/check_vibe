@@ -169,7 +169,7 @@ const Avatar = styled.div`
 const AvatarImg = styled.img`
   width: 130px;
   aspect-ratio: 1/1;
-  object-fit: cocer;
+  object-fit: cover;
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid var(--primary);
