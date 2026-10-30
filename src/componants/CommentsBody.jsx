@@ -59,7 +59,7 @@ const Comment = styled.div`
 const AvatarImage = styled.img`
   object-fit: cover;
   width: 50px;
-  aspect-raito: 1/1;
+  aspect-ratio: 1/1;
   border-radius: 50%;
   cursor: pointer;
   flex-shrink: 0;
