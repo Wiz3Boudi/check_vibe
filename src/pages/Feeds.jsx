@@ -17,6 +17,7 @@ import ViewProfile from "../componants/ViewProfile";
 import { ProfileContext } from "../Contexts/profileContext";
 import CommentsModal from "../componants/CommentsModal";
 import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
+import { convertTime } from "../uitilies/converTimeToLocal";
 
 export default function Feeds() {
   const [stories, setStories] = useState(StoriesData);
@@ -98,18 +99,20 @@ export default function Feeds() {
       )}
 
       <FeedList>
-        {posts?.map((post) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            dispatch={dispatch}
-            idHandClick={viewProfileHandClick}
-            showProfile={showProfile}
-            handleModal={modalToggle}
-            setPostId={setPostId}
-            modalToggle={modalToggle}
-          />
-        ))}
+        {posts?.map((post) => {
+          return (
+            <PostCard
+              key={post.id}
+              post={post}
+              dispatch={dispatch}
+              idHandClick={viewProfileHandClick}
+              showProfile={showProfile}
+              handleModal={modalToggle}
+              setPostId={setPostId}
+              modalToggle={modalToggle}
+            />
+          );
+        })}
       </FeedList>
       {isModalOpen && (
         <CommentsModal
@@ -270,7 +273,7 @@ function PostCard(props) {
             View all {post.commentsCount} comments
           </CommentsLink>
         )}
-        <Timestamp>{post.timestamp}</Timestamp>
+        <Timestamp>{convertTime(post.timestamp)}</Timestamp>
       </PostContent>
     </PostArticle>
   );
