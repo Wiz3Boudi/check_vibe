@@ -32,7 +32,7 @@ export default function Feeds() {
   }
   const findPost = useMemo(() => {
     return posts.find((post) => post.id === postId);
-  }, [postId]);
+  }, [postId, posts]);
   function viewProfileHandClick(id) {
     setActiveProfileId(id);
     showProfileToggle(true);
@@ -107,6 +107,7 @@ export default function Feeds() {
             showProfile={showProfile}
             handleModal={modalToggle}
             setPostId={setPostId}
+            modalToggle={modalToggle}
           />
         ))}
       </FeedList>
@@ -122,7 +123,7 @@ export default function Feeds() {
 }
 
 function PostCard(props) {
-  const { post, dispatch, idHandClick, handleModal, setPostId } = props;
+  const { post, dispatch, idHandClick, handleModal, modalToggle } = props;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -265,7 +266,9 @@ function PostCard(props) {
         )}
 
         {post.commentsCount > 0 && (
-          <CommentsLink>View all {post.commentsCount} comments</CommentsLink>
+          <CommentsLink onClick={() => modalToggle(post.id)}>
+            View all {post.commentsCount} comments
+          </CommentsLink>
         )}
         <Timestamp>{post.timestamp}</Timestamp>
       </PostContent>

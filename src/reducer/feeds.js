@@ -1,5 +1,4 @@
 export const updatePostsReducer = function (state, action) {
-  console.log("action");
   switch (action.type) {
     case "decrease":
       return state.map((post) => {
@@ -30,18 +29,30 @@ export const updatePostsReducer = function (state, action) {
     case "COMMENT_LIKES":
       const { commentId, postId } = action;
       return state.map((post) => {
-        return post.id === postId
-          ? post.comments.map((comment) => {
-              return comment.id === commentId
-                ? {
-                    ...comment,
-                    likesCount: comment.isLiked
-                      ? comment.likesCount - 1
-                      : comment.likesCount + 1,
-                    isLiked: !comment.isLiked,
-                  }
-                : comment;
-            })
+        if (post.id !== postId) return post;
+        return {
+          ...post,
+          comments: post.comments.map((comment) => {
+            if (comment.id !== commentId) return comment;
+            return {
+              ...comment,
+              likesCount: comment.isLiked
+                ? comment.likesCount - 1
+                : comment.likesCount + 1,
+              isLiked: !comment.isLiked,
+            };
+          }),
+        };
+      });
+    case "ADD_COMMENT":
+      const { POST_ID, payload } = action;
+      return state.map((post) => {
+        return post.id === POST_ID
+          ? {
+              ...post,
+              comments: [...post.comments, payload],
+              commentsCount: post.commentsCount++,
+            }
           : post;
       });
     default:

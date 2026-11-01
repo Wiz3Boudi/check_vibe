@@ -2,11 +2,28 @@ import { Send } from "lucide-react";
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function CommentsFooter({ username, URL }) {
+export default function CommentsFooter({ username, URL, dispatch, postId }) {
   const [value, setValue] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!value.trim()) return;
+
+    dispatch({
+      type: "ADD_COMMENT",
+      POST_ID: postId,
+      payload: {
+        id: crypto.randomUUID(),
+        username: "Current User",
+        avatarUrl:
+          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
+        text: value,
+        timestamp: Date.now(),
+        likesCount: 0,
+        isLiked: false,
+      },
+    });
+    setValue("");
   }
 
   return (

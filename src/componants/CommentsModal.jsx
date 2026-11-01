@@ -64,6 +64,8 @@ export default function CommentsModal({ onClose, data, dispatch }) {
         <CommentsFooter
           username={data.comments[0]?.username}
           URL={data.comments[0]?.avatarUrl}
+          dispatch={dispatch}
+          postId={data.id}
         />
       </Wrapper>
     </Container>
@@ -139,6 +141,8 @@ const AvatarRing = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  padding: 1px;
+  background-color: var(--primary);
 `;
 
 const AvatarImage = styled.img`

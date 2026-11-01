@@ -1,7 +1,9 @@
-import { Columns, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
+import { useState } from "react";
 import styled from "styled-components";
 
 export default function CommentsBody({ comments, dispatch, postId }) {
+  const [isExpanded, setExpanded] = useState(true);
   return (
     <Main>
       {comments.map((item, index) => (
@@ -16,7 +18,12 @@ export default function CommentsBody({ comments, dispatch, postId }) {
               <Name> {item.username} </Name>
               <TimeStamp> {item.timestamp} </TimeStamp>
             </BodyHaeder>
-            <Text> {item.text} </Text>
+            <Text
+              $isExpanded={isExpanded}
+              onClick={() => setExpanded((prev) => !prev)}
+            >
+              {item.text}
+            </Text>
           </Body>
           <Reaction>
             <Button
@@ -63,6 +70,8 @@ const AvatarImage = styled.img`
   border-radius: 50%;
   cursor: pointer;
   flex-shrink: 0;
+  background-color: var(--primary);
+  padding: 1px;
 `;
 const Body = styled.div`
   margin-right: auto;
@@ -79,6 +88,15 @@ const TimeStamp = styled.span`
 `;
 const Text = styled.p`
   color: var(--text-secondary-color);
+  cursor: pointer;
+  ${(props) =>
+    props?.$isExpanded &&
+    `
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  `}
 `;
 const Reaction = styled.div`
   display: flex;
