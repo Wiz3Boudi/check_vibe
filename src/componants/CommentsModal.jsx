@@ -9,11 +9,14 @@ export default function CommentsModal({ onClose, data, dispatch }) {
   const { commentsCount, caption, avatarUrl, username } = data;
   const [view, setView] = useState(false);
   const [isExpanded, setExpanded] = useState(true);
+  const [datax, setData] = useState(null);
 
-  function toggle() {
+  function toggle(payload) {
+    setData(payload);
     setView((prev) => !prev);
-    onClose();
   }
+  console.log(datax);
+
   return (
     <Container>
       <Wrapper>
@@ -30,7 +33,7 @@ export default function CommentsModal({ onClose, data, dispatch }) {
           <HeaderWrapper>
             <AvatarRing>
               <AvatarImage
-                onClick={toggle}
+                onClick={() => toggle(data)}
                 src={avatarUrl}
                 alt={avatarUrl}
                 loading="lazy"

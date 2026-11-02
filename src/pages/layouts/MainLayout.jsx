@@ -8,6 +8,8 @@ import { useState, useReducer } from "react";
 import { ProfileContext } from "../../Contexts/profileContext";
 import { initialPosts as postsData } from "../../data/feeds";
 import { updatePostsReducer } from "../../reducer/feeds";
+import { user } from "../../data/users";
+import { currentUserReducer } from "../../reducer/currentUserReducer";
 
 export default function MainLayout() {
   const [profileInfo, setProfileInfo] = useState(profile);
@@ -15,12 +17,17 @@ export default function MainLayout() {
   const [showProfile, setShowProfile] = useState(false);
   const [posts, dispatch] = useReducer(updatePostsReducer, postsData);
   const [isCommentsModalOpen, setCommentModal] = useState(false);
+  const [currentUser, dispatchCurrentUsser] = useReducer(
+    currentUserReducer,
+    user,
+  );
 
   function handelCommentsModal() {
     setCommentModal((prev) => !prev);
   }
-  function showProfileHandle() {
+  function showProfileHandle(e) {
     setShowProfile((prev) => !prev);
+    console.log(e);
   }
   function updateUserInfoState(user) {
     setProfileInfo(user);

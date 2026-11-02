@@ -18,6 +18,7 @@ import { ProfileContext } from "../Contexts/profileContext";
 import CommentsModal from "../componants/CommentsModal";
 import { useLockBodyScroll } from "../uitilies/useLockBodyScroll";
 import { convertTime } from "../uitilies/converTimeToLocal";
+import { convertFirstCharToUpperCase } from "../uitilies/convertFirstCharToUpperCase";
 
 export default function Feeds() {
   const [stories, setStories] = useState(StoriesData);
@@ -133,6 +134,8 @@ function PostCard(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isTagsExpanded, setTagExpanded] = useState(true);
 
+  const username = convertFirstCharToUpperCase(post.username);
+
   const images = post?.images || [];
   const showPrev = currentIndex > 0;
   const showNext = currentIndex < images.length - 1;
@@ -163,7 +166,7 @@ function PostCard(props) {
             onClick={() => idHandClick(post.id)}
           />
           <AuthorMeta>
-            <AuthorName>{post.username}</AuthorName>
+            <AuthorName>{username}</AuthorName>
             {post.location && <Location>{post.location}</Location>}
           </AuthorMeta>
         </UserInfo>
@@ -252,7 +255,7 @@ function PostCard(props) {
         </ActionBar>
         <LikesCount>{post.likesCount?.toLocaleString()} Likes</LikesCount>
         <Caption $isTruncated={!isExpanded}>
-          <Username>{post.username}</Username>
+          <Username>{username}</Username>
           <CaptionText onClick={() => setIsExpanded((prev) => !prev)}>
             {post.caption}
           </CaptionText>

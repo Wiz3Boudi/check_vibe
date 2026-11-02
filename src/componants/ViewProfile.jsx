@@ -3,18 +3,15 @@ import { Share, X, Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Icons } from "../data/profile";
 import DisplayImage from "./DisplayImage";
+import { convertFirstCharToUpperCase } from "../uitilies/convertFirstCharToUpperCase";
 
 export default function ViewProfile({ data, showProfileToggle, showProfile }) {
   const [activeCategroy, setActiveCategrory] = useState("grid");
   const [isExpanded, setIsExpanded] = useState(true);
   const [displayImage, setDisplayImage] = useState(false);
 
-  const converted = data.username
-    .split("")
-    .map((item, index) => {
-      return index === 0 ? item.toUpperCase() : item;
-    })
-    .join("");
+  const converted = convertFirstCharToUpperCase(data.username);
+
   function displayImageHandleClick() {
     setDisplayImage((prev) => !prev);
   }

@@ -18,7 +18,7 @@ export default function CommentsFooter({ username, URL, dispatch, postId }) {
         avatarUrl:
           "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
         text: value,
-        timestamp: Date.now(),
+        timestamp: new Date(),
         likesCount: 0,
         isLiked: false,
       },

@@ -1,49 +1,53 @@
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import styled from "styled-components";
+import { convertTime } from "../uitilies/converTimeToLocal";
 
 export default function CommentsBody({ comments, dispatch, postId }) {
   const [isExpanded, setExpanded] = useState(true);
   return (
     <Main>
-      {comments.map((item, index) => (
-        <Comment key={index}>
-          <AvatarImage
-            src={item.avatarUrl}
-            alt={item.avatarUrl}
-            aria-label="avatar image"
-          />
-          <Body>
-            <BodyHaeder>
-              <Name> {item.username} </Name>
-              <TimeStamp> {item.timestamp} </TimeStamp>
-            </BodyHaeder>
-            <Text
-              $isExpanded={isExpanded}
-              onClick={() => setExpanded((prev) => !prev)}
-            >
-              {item.text}
-            </Text>
-          </Body>
-          <Reaction>
-            <Button
-              onClick={() =>
-                dispatch({
-                  type: "COMMENT_LIKES",
-                  postId: postId,
-                  commentId: item.id,
-                })
-              }
-            >
-              <Heart
-                fill={item.isLiked ? "#6b38d4" : "white"}
-                color={item.isLiked ? "#6b38d4" : "#64748b"}
-              />
-            </Button>
-            <Likes> {item.likesCount || ""} </Likes>
-          </Reaction>
-        </Comment>
-      ))}
+      {comments.map((item, index) => {
+        const timestamp = convertTime(item.timestamp);
+        return (
+          <Comment key={index}>
+            <AvatarImage
+              src={item.avatarUrl}
+              alt={item.avatarUrl}
+              aria-label="avatar image"
+            />
+            <Body>
+              <BodyHaeder>
+                <Name> {item.username} </Name>
+                <TimeStamp> {timestamp} </TimeStamp>
+              </BodyHaeder>
+              <Text
+                $isExpanded={isExpanded}
+                onClick={() => setExpanded((prev) => !prev)}
+              >
+                {item.text}
+              </Text>
+            </Body>
+            <Reaction>
+              <Button
+                onClick={() =>
+                  dispatch({
+                    type: "COMMENT_LIKES",
+                    postId: postId,
+                    commentId: item.id,
+                  })
+                }
+              >
+                <Heart
+                  fill={item.isLiked ? "#6b38d4" : "white"}
+                  color={item.isLiked ? "#6b38d4" : "#64748b"}
+                />
+              </Button>
+              <Likes> {item.likesCount || ""} </Likes>
+            </Reaction>
+          </Comment>
+        );
+      })}
     </Main>
   );
 }
@@ -53,7 +57,7 @@ const Main = styled.div`
   flex-direction: column;
   gap: 15px;
   padding: 10px;
-  height: 63%;
+  max-height: 63%;
   overflow: auto;
   @media (max-width: 768px) {
     scrollbar-width: none;
