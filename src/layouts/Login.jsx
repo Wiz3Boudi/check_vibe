@@ -113,8 +113,7 @@ export default function Login() {
             <button type="submit">Login</button>
           </p>
           <p>
-            Do not have an Account?{" "}
-            <Link to="/create-account"> Register </Link>{" "}
+            Do not have an Account? <Link to="/sing-up"> Register </Link>{" "}
           </p>
           {error && (
             <ErrorModal>

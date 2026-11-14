@@ -11,7 +11,7 @@ export default function AppRouter() {
     <Routes>
       <Route path="/" element={<Onboarding />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/create-account" element={<CreateAccount />} />
+      <Route path="/sing-up" element={<CreateAccount />} />
       <Route element={<MainLayout />}>
         <Route path="/feeds" element={<Feeds />} />
         <Route path="/messages" element={<Messages />} />

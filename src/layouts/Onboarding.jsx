@@ -22,7 +22,7 @@ export default function Onboarding() {
               Connect with creatives, share your vibe, and explore a world of
               inspiration in an airy, sophisticated space.
             </p>
-            <Link to="/create-account">
+            <Link to="/sing-up">
               <button aria-label="get started">
                 {" "}
                 Get Started <ArrowRight />
