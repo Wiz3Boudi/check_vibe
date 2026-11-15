@@ -34,13 +34,19 @@ export default function CreateAccount() {
     if (!formValues.email.trim()) return setInputError("Email can't be empty");
     if (!formValues.password.trim())
       return setInputError("password can't be empty");
-
-    const res = await createAccount(formValues);
-    if (res.ok) {
-      console.log(res.json());
-      return navigate("/feeds");
+    try {
+      const res = await createAccount(formValues);
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+        return navigate("/feeds");
+      }
+      setInputError(data.message);
+      console.log(data);
+    } catch (error) {
+      console.error(error.message);
+      setInputError(error.message);
     }
-    setInputError("something went wrong");
   }
 
   return (

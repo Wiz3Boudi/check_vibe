@@ -26,21 +26,33 @@ export default function Login() {
     setError("");
   }
 
-  function formSubmitHandeler(e) {
+  async function formSubmitHandeler(e) {
     e.preventDefault();
+    setError("");
     if (!formValues.email.trim()) return setError("email can not be empty!");
     if (!formValues.password.trim())
       return setError("password can not be empty!");
-    setError(null);
-    fetch("http://localhost:3000/add-acount", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...formValues }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-    navigate("/feeds");
+    try {
+      console.clear();
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...formValues }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        console.error(data.message);
+        return setError(data.message);
+      }
+      console.log(data);
+      setError("");
+      navigate("/feeds");
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+    }
   }
 
   return (
@@ -110,7 +122,12 @@ export default function Login() {
             Forget Password
           </Link>
           <p className="submit">
-            <button type="submit">Login</button>
+            <button
+              type="submit"
+              disabled={!formValues.email.trim() && !formValues.password.trim()}
+            >
+              Login
+            </button>
           </p>
           <p>
             Do not have an Account? <Link to="/sing-up"> Register </Link>{" "}
@@ -240,6 +257,7 @@ const Form = styled.form`
     padding-right: 20px;
     box-sizing: border-box;
     color: var(--text-secondary-color);
+    border-radius: 20px;
     &:focus {
       border-color: var(--primary);
     }
