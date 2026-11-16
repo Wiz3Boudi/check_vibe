@@ -6,7 +6,8 @@ import google from "/images/google.png";
 import { FaFacebook } from "react-icons/fa6";
 import { Mail, LockIcon, EyeOff, Eye } from "lucide-react";
 import ErrorsModal from "../components/ErrorsModal";
-import { createAccount } from "../APIs/createAccout";
+import { fetchData } from "../APIs/createAccout";
+import { validateSignupForm } from "../uitils/validateFormForFetch";
 
 export default function CreateAccount() {
   const navigate = useNavigate();
@@ -16,35 +17,40 @@ export default function CreateAccount() {
     password: "",
   });
   const [inputError, setInputError] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
 
   function formHandelChange(e) {
+    setInputError("");
     const id = e.target.id;
     const value = e.target.value;
     setFormValues((prev) => {
       return { ...prev, [id]: value };
     });
-    setInputError("");
   }
 
   async function formSubmitHandeler(e) {
     e.preventDefault();
-    if (!formValues.name.trim()) return setInputError("Name can't be empty");
-    if (!formValues.email.trim()) return setInputError("Email can't be empty");
-    if (!formValues.password.trim())
-      return setInputError("password can't be empty");
+    const error = validateSignupForm(formValues);
+    if (error) return setInputError(error);
     try {
-      const res = await createAccount(formValues);
-      const data = await res.json();
-      if (res.ok) {
-        console.log(data);
-        return navigate("/feeds");
+      setLoading(true);
+      const response = await fetchData({
+        method: "POST",
+        body: formValues,
+        URL: "singup",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setLoading(false);
+        return setInputError(data.message);
       }
-      setInputError(data.message);
-      console.log(data);
+      setUser(data);
+      setLoading(false);
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
+      setLoading(false);
       setInputError(error.message);
     }
   }
