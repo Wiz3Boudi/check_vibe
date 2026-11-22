@@ -20,7 +20,6 @@ export default function CreateAccount() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
-
   function formHandelChange(e) {
     setInputError("");
     const id = e.target.id;
@@ -32,26 +31,28 @@ export default function CreateAccount() {
 
   async function formSubmitHandeler(e) {
     e.preventDefault();
+    setInputError("");
     const error = validateSignupForm(formValues);
     if (error) return setInputError(error);
+    setLoading(true);
     try {
-      setLoading(true);
-      const response = await fetchData({
+      const response = await fetch("http://localhost:3000/create-account", {
         method: "POST",
-        body: formValues,
-        URL: "singup",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
       });
       const data = await response.json();
       if (!response.ok) {
-        setLoading(false);
         return setInputError(data.message);
       }
-      setUser(data);
-      setLoading(false);
+      setUser(data.data);
     } catch (error) {
       console.error(error);
-      setLoading(false);
       setInputError(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -136,11 +137,11 @@ export default function CreateAccount() {
             Forget Password
           </Link>
           <button type="submit" className="submit">
-            {" "}
-            Register{" "}
+            {isLoading ? "Registering..." : "Register"}
           </button>
           <p>
-            Do have an Account? <Link to="/login"> Login </Link>{" "}
+            Do have an Account?
+            <Link to="/login"> Login </Link>
           </p>
         </Form>
       </Content>

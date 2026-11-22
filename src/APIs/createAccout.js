@@ -1,4 +1,5 @@
-const baseURL = import.meta.env.BASE_URL;
+// const baseURL = import.meta.env.BASE_URL;
+const baseURL = "http://localhost:3000/create-account";
 
 export class ApiError extends Error {
   constructor(message, status, data) {
@@ -7,15 +8,11 @@ export class ApiError extends Error {
     this.data = data;
   }
 }
-export const fetchData = async ({
-  method = "GET",
-  URL,
-  body,
-  headers = {},
-}) => {
+export const fetchData = async ({ method = "GET", URL, body }) => {
   try {
-    return await fetch(`${baseURL}/${URL}`, {
-      method,
+    console.log(baseURL, URL, body);
+    return await fetch(baseURL, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
