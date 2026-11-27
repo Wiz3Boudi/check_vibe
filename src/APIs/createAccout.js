@@ -1,14 +1,7 @@
-// const baseURL = import.meta.env.BASE_URL;
+import { ApiError } from "../uitils/apiError";
+// const baseURL = import.meta.env.local.BASE_URL;
 const baseURL = "http://localhost:3000";
-
-export class ApiError extends Error {
-  constructor(message, status, data) {
-    super(message);
-    this.status = status;
-    this.data = data;
-  }
-}
-export const API = async ({ method = "GET", URL, body, headers = {} }) => {
+export const fetchAPI = async ({ method = "GET", URL, body, headers = {} }) => {
   const options = {
     method,
     headers: {

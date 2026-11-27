@@ -6,7 +6,7 @@ import google from "/images/google.png";
 import { FaFacebook } from "react-icons/fa6";
 import { Mail, LockIcon, EyeOff, Eye } from "lucide-react";
 import ErrorsModal from "../components/ErrorsModal";
-import { API } from "../APIs/createAccout";
+import { fetchAPI } from "../APIs/createAccout";
 import { validateSignupForm } from "../uitils/validateFormForFetch";
 
 export default function CreateAccount() {
@@ -20,6 +20,7 @@ export default function CreateAccount() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+
   function formHandelChange(e) {
     setInputError("");
     const id = e.target.id;
@@ -38,12 +39,14 @@ export default function CreateAccount() {
 
     try {
       setLoading(true);
-      const user = await API({
+      const user = await fetchAPI({
         method: "POST",
         URL: "create-account",
         body: formValues,
       });
       setUser(user);
+      localStorage.setItem("token", user.token);
+      navigate("/feeds");
     } catch (error) {
       setInputError(error.message);
     } finally {
