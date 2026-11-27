@@ -6,7 +6,7 @@ import google from "/images/google.png";
 import { FaFacebook } from "react-icons/fa6";
 import { Mail, LockIcon, EyeOff, Eye } from "lucide-react";
 import ErrorsModal from "../components/ErrorsModal";
-import { fetchData } from "../APIs/createAccout";
+import { API } from "../APIs/createAccout";
 import { validateSignupForm } from "../uitils/validateFormForFetch";
 
 export default function CreateAccount() {
@@ -32,24 +32,19 @@ export default function CreateAccount() {
   async function formSubmitHandeler(e) {
     e.preventDefault();
     setInputError("");
+
     const error = validateSignupForm(formValues);
     if (error) return setInputError(error);
-    setLoading(true);
+
     try {
-      const response = await fetch("http://localhost:3000/create-account", {
+      setLoading(true);
+      const user = await API({
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
+        URL: "create-account",
+        body: formValues,
       });
-      const data = await response.json();
-      if (!response.ok) {
-        return setInputError(data.message);
-      }
-      setUser(data.data);
+      setUser(user);
     } catch (error) {
-      console.error(error);
       setInputError(error.message);
     } finally {
       setLoading(false);
